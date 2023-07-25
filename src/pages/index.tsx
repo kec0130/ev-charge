@@ -1,6 +1,6 @@
 import { Inter } from 'next/font/google';
-import { Button } from '@chakra-ui/react';
 import Head from 'next/head';
+import Map from '@/components/Map';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -14,8 +14,7 @@ export default function Home() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <main className={inter.className}>
-        <Button colorScheme='blue'>검색</Button>
-        <Button>내 주변</Button>
+        <Map />
       </main>
     </>
   );
