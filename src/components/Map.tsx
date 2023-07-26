@@ -21,10 +21,10 @@ export default function Map() {
   };
 
   const initializeMap = (currentLocation: Coord) => {
-    const location = new naver.maps.LatLng(...currentLocation);
+    const center = new naver.maps.LatLng(...currentLocation);
 
     const mapOptions: naver.maps.MapOptions = {
-      center: location,
+      center,
       zoom: INITIAL_ZOOM,
       minZoom: 10,
       scaleControl: true,
@@ -39,8 +39,19 @@ export default function Map() {
     mapRef.current = map;
 
     const marker = new naver.maps.Marker({
-      position: location,
+      position: center,
       map,
+    });
+
+    naver.maps.Service.reverseGeocode({ coords: center }, (status, response) => {
+      if (status !== naver.maps.Service.Status.OK) {
+        console.log('Something wrong!');
+        return;
+      }
+
+      const city = response.v2.results[0].region.area1.name;
+      const district = response.v2.results[0].region.area2.name;
+      console.log(city, district);
     });
   };
 
