@@ -1,3 +1,5 @@
+import { CHARGER_TYPE, STATUS } from '@/constants/chargerCode';
+
 export interface ChargerResponse {
   resultMsg: string;
   totalCount: number;
@@ -44,7 +46,7 @@ export interface Charger {
   trafficYn: Boolean;
 }
 
-type ChargerType = '01' | '02' | '03' | '04' | '05' | '06' | '07';
-type ChargerStatus = '1' | '2' | '3' | '4' | '5' | '9';
+type ChargerType = keyof typeof CHARGER_TYPE;
+type ChargerStatus = keyof typeof STATUS;
 type ChargerMethod = '단독' | '동시';
 type Boolean = 'Y' | 'N';
