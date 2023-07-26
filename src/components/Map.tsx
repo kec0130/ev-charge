@@ -10,8 +10,8 @@ export default function Map() {
   const [currentLocation, setCurrentPosition] = useState(INITIAL_CENTER);
   const mapRef = useRef<NaverMap | null>(null);
 
-  const getChargers = (districtCode: number) =>
-    axios.get(`api/chargers/${districtCode}`).then((res) => console.log(res.data));
+  const getChargers = (districtCode: string) =>
+    axios.get(`api/chargers`, { params: { districtCode } }).then((res) => console.log(res.data));
 
   const getCurrentLocation = (onSuccess: (loc: Coord) => void, onError?: () => void) => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -57,7 +57,7 @@ export default function Map() {
     // TODO: 현위치 로드 후 실행
     initializeMap(currentLocation);
     // TODO: reverse geocoding
-    getChargers(11140);
+    getChargers('11140');
   }, [currentLocation]);
 
   return <div id={MAP_ID} style={{ width: '100vw', height: '100vh' }} />;

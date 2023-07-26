@@ -5,7 +5,7 @@ const api = axios.create({
   baseURL: 'http://apis.data.go.kr/B552584/EvCharger',
 });
 
-export const getChargersAPI = async (districtCode: number) => {
+export const getChargersAPI = async (districtCode: string) => {
   const res = await api.get<ChargerResponse>('/getChargerInfo', {
     params: {
       serviceKey: process.env.NEXT_PUBLIC_API_SERVICE_KEY,
