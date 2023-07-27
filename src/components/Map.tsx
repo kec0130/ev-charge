@@ -1,18 +1,19 @@
-import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import { Coord, NaverMap } from '@/types/map';
+import { useEffect, useRef, useState } from 'react';
+import { Coord } from '@/types/map';
 import { ChargerDataRes } from '@/types/charger';
 import { CITY_CODE, DISTRICT_CODE } from '@/constants/chargerCode';
+import Marker from './Marker';
 
-const INITIAL_CENTER: Coord = [37.5666103, 126.9783882];
-const INITIAL_ZOOM = 16;
 const MAP_ID = 'map';
-const DEFAULT_DISTRICT_CODE = '11140';
+const INITIAL_ZOOM = 16;
+const INITIAL_CENTER: Coord = [37.5666103, 126.9783882]; // 서울시청
+const DEFAULT_DISTRICT_CODE = '11140'; // 중구
 
 export default function Map() {
   const [currentLocation, setCurrentLocation] = useState<Coord>([0, 0]);
-  // const [currentDistrict, setCurrentDistrict] = useState('');
-  const mapRef = useRef<NaverMap | null>(null);
+  const [map, setMap] = useState<naver.maps.Map>();
+  const [chargers, setChargers] = useState<ChargerDataRes>();
 
   const getChargers = (districtCode: string) =>
     axios.get<ChargerDataRes>(`api/chargers`, { params: { districtCode } }).then((res) => res.data);
@@ -40,12 +41,7 @@ export default function Map() {
     };
 
     const map = new naver.maps.Map(MAP_ID, mapOptions);
-    mapRef.current = map;
-
-    const marker = new naver.maps.Marker({
-      position: center,
-      map,
-    });
+    setMap(map);
   };
 
   const getDistrictFromCoord = (currentLocation: Coord) => {
@@ -86,26 +82,32 @@ export default function Map() {
     getCurrentLocation(setCurrentLocation);
 
     return () => {
-      mapRef.current?.destroy();
+      map?.destroy();
     };
   }, []);
 
   useEffect(() => {
     // TODO: 현위치 로드 후 실행
     initializeMap();
-
     const currentDistrict = getDistrictFromCoord(currentLocation);
-
-    getChargers(currentDistrict).then((chargers) =>
-      Object.keys(chargers.data).map((key) => {
-        const { lat, lng } = chargers.data[key][0];
-        const marker = new naver.maps.Marker({
-          position: new naver.maps.LatLng(parseFloat(lat), parseFloat(lng)),
-          map: mapRef.current!,
-        });
-      })
-    );
+    getChargers(currentDistrict).then(setChargers);
   }, [currentLocation]);
 
-  return <div id={MAP_ID} style={{ width: '100vw', height: '50vh' }} />;
+  return (
+    <div id={MAP_ID} style={{ width: '100vw', height: '50vh' }}>
+      <Marker map={map} coord={INITIAL_CENTER} />
+      {chargers &&
+        Object.keys(chargers.data).map((key) => {
+          const { lat, lng } = chargers.data[key][0];
+          return (
+            <Marker
+              map={map}
+              coord={[parseFloat(lat), parseFloat(lng)]}
+              onClick={() => console.log(key)}
+              key={key}
+            />
+          );
+        })}
+    </div>
+  );
 }
