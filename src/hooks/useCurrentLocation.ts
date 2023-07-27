@@ -4,12 +4,12 @@ import { INITIAL_CENTER } from '@/constants/map';
 
 const useCurrentLocation = () => {
   const [currentLocation, setCurrentLocation] = useState<Coord>(INITIAL_CENTER);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLocationFound, setIsLocationFound] = useState(false);
 
   const onSuccess = (position: GeolocationPosition) => {
     const { latitude, longitude } = position.coords;
     setCurrentLocation([latitude, longitude]);
-    setIsLoaded(true);
+    setIsLocationFound(true);
   };
 
   const onError = () => {
@@ -22,7 +22,7 @@ const useCurrentLocation = () => {
     }
   }, []);
 
-  return { currentLocation, isLoaded };
+  return { currentLocation, isLocationFound };
 };
 
 export default useCurrentLocation;

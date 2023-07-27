@@ -1,20 +1,17 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Coord } from '@/types/map';
-import { ChargerDataRes } from '@/types/charger';
 import { INITIAL_ZOOM, MAP_ID } from '@/constants/map';
 import { CITY_CODE, DISTRICT_CODE } from '@/constants/chargerCode';
 import useCurrentLocation from '@/hooks/useCurrentLocation';
+import useChargers from '@/hooks/useChargers';
 import Marker from './Marker';
 
 export default function Map() {
   const [map, setMap] = useState<naver.maps.Map>();
-  const [chargers, setChargers] = useState<ChargerDataRes>();
   const [districtCode, setDistrictCode] = useState('');
-  const { currentLocation, isLoaded } = useCurrentLocation();
 
-  const getChargers = (districtCode: string) =>
-    axios.get<ChargerDataRes>(`api/chargers`, { params: { districtCode } }).then((res) => res.data);
+  const { currentLocation, isLocationFound } = useCurrentLocation();
+  const { chargers } = useChargers(districtCode);
 
   const getDistrictFromCoord = (coord: Coord) => {
     naver.maps.Service.reverseGeocode(
@@ -65,7 +62,9 @@ export default function Map() {
 
     map?.morph(new naver.maps.LatLng(...currentLocation), INITIAL_ZOOM);
 
-    if (!isLoaded) return;
+    if (!isLocationFound) return;
+    getDistrictFromCoord(currentLocation);
+
     const listener = naver.maps.Event.addListener(map, 'dragend', () => {
       const { x, y } = map.getCenter();
       getDistrictFromCoord([y, x]);
@@ -75,21 +74,11 @@ export default function Map() {
       map?.destroy();
       naver.maps.Event.removeListener(listener);
     };
-  }, [currentLocation, isLoaded]);
-
-  useEffect(() => {
-    if (!isLoaded) return;
-    getDistrictFromCoord(currentLocation);
-  }, [currentLocation, isLoaded]);
-
-  useEffect(() => {
-    if (!districtCode) return;
-    getChargers(districtCode).then(setChargers);
-  }, [districtCode]);
+  }, [currentLocation, isLocationFound]);
 
   return (
     <div id={MAP_ID} style={{ width: '100%', height: '50vh' }}>
-      {isLoaded && <Marker map={map} coord={currentLocation} />}
+      {isLocationFound && <Marker map={map} coord={currentLocation} />}
       {chargers &&
         Object.keys(chargers.data).map((key) => {
           const { lat, lng } = chargers.data[key][0];
