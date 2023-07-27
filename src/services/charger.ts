@@ -3,6 +3,7 @@ import { ChargerAPIRes } from '@/types/charger';
 
 const api = axios.create({
   baseURL: 'http://apis.data.go.kr/B552584/EvCharger',
+  timeout: 5000,
 });
 
 export const getChargersAPI = async (districtCode: string) => {
