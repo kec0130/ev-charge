@@ -61,13 +61,21 @@ export default function Map() {
     };
 
     const map = new naver.maps.Map(MAP_ID, mapOptions);
-    map?.morph(new naver.maps.LatLng(...currentLocation), INITIAL_ZOOM);
     setMap(map);
+
+    map?.morph(new naver.maps.LatLng(...currentLocation), INITIAL_ZOOM);
+
+    if (!isLoaded) return;
+    const listener = naver.maps.Event.addListener(map, 'dragend', () => {
+      const { x, y } = map.getCenter();
+      getDistrictFromCoord([y, x]);
+    });
 
     return () => {
       map?.destroy();
+      naver.maps.Event.removeListener(listener);
     };
-  }, [currentLocation]);
+  }, [currentLocation, isLoaded]);
 
   useEffect(() => {
     if (!isLoaded) return;
