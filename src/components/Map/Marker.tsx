@@ -1,5 +1,5 @@
-import { Coord } from '@/types/map';
 import { useEffect } from 'react';
+import { Coord } from '@/types/map';
 
 interface Props {
   map?: naver.maps.Map;
