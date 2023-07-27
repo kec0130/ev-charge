@@ -1,21 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getChargersAPI } from '@/services/charger';
-import { Charger } from '@/types/charger';
+import { ChargerByStation, ChargerDataRes } from '@/types/charger';
 
 interface Error {
   message: string;
 }
 
-interface Data {
-  data: ChargerByStation;
-  stationCount: number;
-}
-
-interface ChargerByStation {
-  [statId: string]: Charger[];
-}
-
-export default async function handler(req: NextApiRequest, res: NextApiResponse<Data | Error>) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<ChargerDataRes | Error>
+) {
   const { districtCode } = req.query;
 
   if (typeof districtCode !== 'string') {

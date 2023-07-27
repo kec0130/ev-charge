@@ -1,6 +1,6 @@
 import { CHARGER_TYPE, STATUS } from '@/constants/chargerCode';
 
-export interface ChargerResponse {
+export interface ChargerAPIRes {
   resultMsg: string;
   totalCount: number;
   items: {
@@ -50,3 +50,12 @@ type ChargerType = keyof typeof CHARGER_TYPE;
 type ChargerStatus = keyof typeof STATUS;
 type ChargerMethod = '단독' | '동시';
 type Boolean = 'Y' | 'N';
+
+export interface ChargerDataRes {
+  data: ChargerByStation;
+  stationCount: number;
+}
+
+export interface ChargerByStation {
+  [statId: string]: Charger[];
+}

@@ -1,20 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { Coord, NaverMap } from '@/types/map';
+import { ChargerDataRes } from '@/types/charger';
 import { CITY_CODE, DISTRICT_CODE } from '@/constants/chargerCode';
 
 const INITIAL_CENTER: Coord = [37.5666103, 126.9783882];
 const INITIAL_ZOOM = 16;
 const MAP_ID = 'map';
+const DEFAULT_DISTRICT_CODE = '11140';
 
 export default function Map() {
-  const [currentLocation, setCurrentLocation] = useState(INITIAL_CENTER);
-  const [currentDistrict, setCurrentDistrict] = useState('');
+  const [currentLocation, setCurrentLocation] = useState<Coord>([0, 0]);
+  // const [currentDistrict, setCurrentDistrict] = useState('');
   const mapRef = useRef<NaverMap | null>(null);
 
-  // TODO: 리턴 타입 정의
   const getChargers = (districtCode: string) =>
-    axios.get(`api/chargers`, { params: { districtCode } }).then((res) => res.data);
+    axios.get<ChargerDataRes>(`api/chargers`, { params: { districtCode } }).then((res) => res.data);
 
   const getCurrentLocation = (onSuccess: (loc: Coord) => void, onError?: () => void) => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -23,8 +24,8 @@ export default function Map() {
     }, onError);
   };
 
-  const initializeMap = (currentLocation: Coord) => {
-    const center = new naver.maps.LatLng(...currentLocation);
+  const initializeMap = () => {
+    const center = new naver.maps.LatLng(...INITIAL_CENTER);
 
     const mapOptions: naver.maps.MapOptions = {
       center,
@@ -45,11 +46,17 @@ export default function Map() {
       position: center,
       map,
     });
+  };
 
-    naver.maps.Service.reverseGeocode({ coords: center }, (status, response) => {
+  const getDistrictFromCoord = (currentLocation: Coord) => {
+    if (currentLocation.includes(0)) return DEFAULT_DISTRICT_CODE;
+
+    const location = new naver.maps.LatLng(...currentLocation);
+    let districtCode = '';
+
+    naver.maps.Service.reverseGeocode({ coords: location }, (status, response) => {
       if (status !== naver.maps.Service.Status.OK) {
-        console.log('Something wrong!');
-        return;
+        console.log('Failed to reverse geocode.');
       }
 
       try {
@@ -61,19 +68,17 @@ export default function Map() {
 
         if (matchedDistricts.length > 1) {
           const matchedCity = Object.keys(CITY_CODE).find((key) => CITY_CODE[key] === city);
-          const matchedDistrict = matchedDistricts.find((district) =>
-            district.startsWith(matchedCity!)
-          );
-          setCurrentDistrict(matchedDistrict!);
-          return;
+          districtCode =
+            matchedDistricts.find((district) => district.startsWith(matchedCity!)) || '';
         }
 
-        const matchedDistrict = matchedDistricts[0];
-        setCurrentDistrict(matchedDistrict);
+        districtCode = matchedDistricts[0];
       } catch (e) {
         console.log(response.v2.status.message);
       }
     });
+
+    return districtCode || DEFAULT_DISTRICT_CODE;
   };
 
   useEffect(() => {
@@ -87,9 +92,20 @@ export default function Map() {
 
   useEffect(() => {
     // TODO: 현위치 로드 후 실행
-    initializeMap(currentLocation);
-    getChargers(currentDistrict).then((chargers) => console.log(chargers));
-  }, [currentDistrict, currentLocation]);
+    initializeMap();
 
-  return <div id={MAP_ID} style={{ width: '100vw', height: '100vh' }} />;
+    const currentDistrict = getDistrictFromCoord(currentLocation);
+
+    getChargers(currentDistrict).then((chargers) =>
+      Object.keys(chargers.data).map((key) => {
+        const { lat, lng } = chargers.data[key][0];
+        const marker = new naver.maps.Marker({
+          position: new naver.maps.LatLng(parseFloat(lat), parseFloat(lng)),
+          map: mapRef.current!,
+        });
+      })
+    );
+  }, [currentLocation]);
+
+  return <div id={MAP_ID} style={{ width: '100vw', height: '50vh' }} />;
 }
