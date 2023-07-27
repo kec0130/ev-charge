@@ -1,47 +1,15 @@
 import { useEffect, useState } from 'react';
-import { Coord } from '@/types/map';
 import { INITIAL_ZOOM, MAP_ID } from '@/constants/map';
-import { CITY_CODE, DISTRICT_CODE } from '@/constants/chargerCode';
 import useCurrentLocation from '@/hooks/useCurrentLocation';
+import useReverseGeocode from '@/hooks/useReverseGeocode';
 import useChargers from '@/hooks/useChargers';
 import Marker from './Marker';
 
 export default function Map() {
   const [map, setMap] = useState<naver.maps.Map>();
-  const [districtCode, setDistrictCode] = useState('');
-
   const { currentLocation, isLocationFound } = useCurrentLocation();
+  const { districtCode, reverseGeocode } = useReverseGeocode();
   const { chargers } = useChargers(districtCode);
-
-  const getDistrictFromCoord = (coord: Coord) => {
-    naver.maps.Service.reverseGeocode(
-      { coords: new naver.maps.LatLng(...coord) },
-      (status, response) => {
-        if (status !== naver.maps.Service.Status.OK) {
-          console.log('Failed to reverse geocode.');
-        }
-
-        try {
-          const city = response.v2.results[0].region.area1.name;
-          const district = response.v2.results[0].region.area2.name.split(' ')[0];
-          const matchedDistricts = Object.keys(DISTRICT_CODE).filter(
-            (key) => DISTRICT_CODE[key] === district
-          );
-
-          if (matchedDistricts.length > 1) {
-            const matchedCity = Object.keys(CITY_CODE).find((key) => CITY_CODE[key] === city);
-            const matchedDistrict = matchedDistricts.find((district) =>
-              district.startsWith(matchedCity!)
-            );
-            setDistrictCode(matchedDistrict || '');
-          }
-          setDistrictCode(matchedDistricts[0]);
-        } catch (e) {
-          console.log(response.v2.status.message);
-        }
-      }
-    );
-  };
 
   useEffect(() => {
     const mapOptions: naver.maps.MapOptions = {
@@ -63,11 +31,11 @@ export default function Map() {
     map?.morph(new naver.maps.LatLng(...currentLocation), INITIAL_ZOOM);
 
     if (!isLocationFound) return;
-    getDistrictFromCoord(currentLocation);
+    reverseGeocode(currentLocation);
 
     const listener = naver.maps.Event.addListener(map, 'dragend', () => {
       const { x, y } = map.getCenter();
-      getDistrictFromCoord([y, x]);
+      reverseGeocode([y, x]);
     });
 
     return () => {
