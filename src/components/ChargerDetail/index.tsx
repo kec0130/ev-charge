@@ -1,13 +1,11 @@
 import { Box, Divider } from '@chakra-ui/react';
-import Map from '../Map';
 import StationHeader from './StationHeader';
 import ChargerTable from './ChargerTable';
 import StationTable from './StationTable';
 
-const Homepage = () => {
+const ChargerDetail = () => {
   return (
     <>
-      <Map />
       <Box
         position='fixed'
         overflowY='auto'
@@ -31,4 +29,4 @@ const Homepage = () => {
   );
 };
 
-export default Homepage;
+export default ChargerDetail;
