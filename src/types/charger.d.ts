@@ -59,3 +59,7 @@ export interface ChargerDataRes {
 export interface ChargerByStation {
   [statId: string]: Charger[];
 }
+
+export interface Error {
+  message: string;
+}

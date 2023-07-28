@@ -10,7 +10,7 @@ const ChargerDetail = () => {
         position='fixed'
         overflowY='auto'
         h='calc(50vh - 24px - 16px)'
-        w='100%'
+        w='full'
         maxW='8xl'
         m='8px auto'
         sx={{
@@ -20,9 +20,9 @@ const ChargerDetail = () => {
         }}
       >
         <StationHeader />
-        <Divider h={2} mt={2} mb={2} bg='gray.200' />
+        <Divider h={2} mt={1} mb={1} bg='gray.200' />
         <ChargerTable />
-        <Divider h={2} mt={2} mb={2} bg='gray.200' />
+        <Divider h={2} mt={1} mb={1} bg='gray.200' />
         <StationTable />
       </Box>
     </>

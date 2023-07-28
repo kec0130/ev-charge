@@ -1,10 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getChargersAPI } from '@/services/charger';
-import { ChargerByStation, ChargerDataRes } from '@/types/charger';
-
-interface Error {
-  message: string;
-}
+import { ChargerByStation, ChargerDataRes, Error } from '@/types/charger';
 
 export default async function handler(
   req: NextApiRequest,

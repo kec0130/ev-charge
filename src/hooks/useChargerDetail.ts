@@ -4,7 +4,8 @@ import { Charger } from '@/types/charger';
 import { CURRENT_DISTRICT_KEY, CURRENT_STATION_KEY } from '@/constants/map';
 
 interface ChargerDetail {
-  data: Charger[] | null;
+  station: Charger | null;
+  chargers: Charger[] | null;
 }
 
 const useChargerDetail = (): ChargerDetail => {
@@ -14,12 +15,14 @@ const useChargerDetail = (): ChargerDetail => {
 
   if (!stationId || !chargers) {
     return {
-      data: null,
+      station: null,
+      chargers: null,
     };
   }
 
   return {
-    data: chargers.data[stationId],
+    station: chargers.data[stationId][0],
+    chargers: chargers.data[stationId],
   };
 };
 

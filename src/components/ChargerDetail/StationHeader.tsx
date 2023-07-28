@@ -1,12 +1,17 @@
 import { Box, Heading, Text } from '@chakra-ui/react';
+import useChargerDetail from '@/hooks/useChargerDetail';
 
 const StationHeader = () => {
+  const { station } = useChargerDetail();
+
+  if (!station) return null;
+
   return (
     <Box p={4}>
       <Heading as='h1' size='md' mb={2}>
-        충전소 이름
+        {station.statNm}
       </Heading>
-      <Text>충전소 주소</Text>
+      <Text>{station.addr}</Text>
     </Box>
   );
 };
