@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
-import { INITIAL_ZOOM, MAP_ID } from '@/constants/map';
+import useSWR, { mutate } from 'swr';
+
 import useCurrentLocation from '@/hooks/useCurrentLocation';
-import useReverseGeocode from '@/hooks/useReverseGeocode';
 import useChargers from '@/hooks/useChargers';
+import { CURRENT_DISTRICT_KEY, CURRENT_STATION_KEY, INITIAL_ZOOM, MAP_ID } from '@/constants/map';
+import { reverseGeocode } from '@/utils/reversegeocode';
 import Marker from './Marker';
 
 export default function Map() {
   const [map, setMap] = useState<naver.maps.Map>();
-  const { currentLocation, isLocationFound } = useCurrentLocation();
-  const { districtCode, reverseGeocode } = useReverseGeocode();
+  const { data: districtCode } = useSWR(CURRENT_DISTRICT_KEY);
   const { chargers } = useChargers(districtCode);
+  const { currentLocation, isLocationFound } = useCurrentLocation();
 
   useEffect(() => {
     const mapOptions: naver.maps.MapOptions = {
@@ -42,6 +44,7 @@ export default function Map() {
       map?.destroy();
       naver.maps.Event.removeListener(listener);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentLocation, isLocationFound]);
 
   return (
@@ -54,7 +57,7 @@ export default function Map() {
             <Marker
               map={map}
               coord={[parseFloat(lat), parseFloat(lng)]}
-              onClick={() => console.log(key)}
+              onClick={() => mutate(CURRENT_STATION_KEY, key)}
               key={key}
             />
           );
