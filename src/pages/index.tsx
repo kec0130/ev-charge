@@ -1,10 +1,11 @@
 import Head from 'next/head';
 import { Inter } from 'next/font/google';
-import { Container } from '@chakra-ui/react';
+import { Box, Container } from '@chakra-ui/react';
 
 import useCurrentLocation from '@/hooks/useCurrentLocation';
 import Map from '@/components/Map';
 import ChargerDetail from '@/components/ChargerDetail';
+import AddressSelector from '@/components/AddressSelector';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,7 +21,10 @@ export default function Home() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <Container className={inter.className} maxW='8xl' p={0}>
-        <Map isLocationFound={isLocationFound} currentLocation={currentLocation} />
+        <Box>
+          <AddressSelector />
+          <Map isLocationFound={isLocationFound} currentLocation={currentLocation} />
+        </Box>
         <ChargerDetail isLocationFound={isLocationFound} />
       </Container>
     </>

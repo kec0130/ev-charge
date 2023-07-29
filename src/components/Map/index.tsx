@@ -23,13 +23,10 @@ export default function Map({ currentLocation, isLocationFound }: Props) {
       center: new naver.maps.LatLng(...currentLocation),
       zoom: INITIAL_ZOOM,
       minZoom: 12,
+      maxZoom: 18,
       scaleControl: true,
       mapDataControl: true,
-      zoomControl: true,
-      zoomControlOptions: {
-        position: naver.maps.Position.TOP_RIGHT,
-        style: naver.maps.ZoomControlStyle.SMALL,
-      },
+      zoomControl: false,
     };
 
     const map = new naver.maps.Map(MAP_ID, mapOptions);
