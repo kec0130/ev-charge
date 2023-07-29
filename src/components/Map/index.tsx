@@ -1,17 +1,22 @@
 import { useEffect, useState } from 'react';
 import useSWR, { mutate } from 'swr';
 
-import useCurrentLocation from '@/hooks/useCurrentLocation';
-import useChargers from '@/hooks/useChargers';
+import { Coord } from '@/types/map';
 import { CURRENT_DISTRICT_KEY, CURRENT_STATION_KEY, INITIAL_ZOOM, MAP_ID } from '@/constants/map';
-import { reverseGeocode } from '@/utils/reversegeocode';
+import useReverseGeocode from '@/hooks/useReverseGeocode';
+import useChargers from '@/hooks/useChargers';
 import Marker from './Marker';
 
-export default function Map() {
+interface Props {
+  currentLocation: Coord;
+  isLocationFound: boolean;
+}
+
+export default function Map({ currentLocation, isLocationFound }: Props) {
   const [map, setMap] = useState<naver.maps.Map>();
   const { data: districtCode } = useSWR(CURRENT_DISTRICT_KEY);
   const { chargers } = useChargers(districtCode);
-  const { currentLocation, isLocationFound } = useCurrentLocation();
+  const { reverseGeocode } = useReverseGeocode();
 
   useEffect(() => {
     const mapOptions: naver.maps.MapOptions = {

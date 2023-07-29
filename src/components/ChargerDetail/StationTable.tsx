@@ -1,11 +1,8 @@
 import { Table, Tbody, Tr, Td, TableContainer, Heading, Divider } from '@chakra-ui/react';
-import useChargerDetail from '@/hooks/useChargerDetail';
+import { Charger } from '@/types/charger';
+import { FACILITY_TYPE_DETAIL } from '@/constants/chargerCode';
 
-const StationTable = () => {
-  const { station } = useChargerDetail();
-
-  if (!station) return null;
-
+const StationTable = ({ station }: { station: Charger }) => {
   const {
     location,
     limitYn,
@@ -51,7 +48,7 @@ const StationTable = () => {
           {kindDetail && (
             <Tr>
               <Td>장소유형</Td>
-              <Td>{kindDetail}</Td>
+              <Td>{FACILITY_TYPE_DETAIL[kindDetail]}</Td>
             </Tr>
           )}
           <Tr>
