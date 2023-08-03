@@ -1,9 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import useSWR, { mutate } from 'swr';
 
+import {
+  CURRENT_DISTRICT_KEY,
+  CURRENT_STATION_KEY,
+  INITIAL_ZOOM,
+  MAP_ID,
+  MAP_KEY,
+} from '@/constants/map';
 import { Coord } from '@/types/map';
-import { CURRENT_DISTRICT_KEY, CURRENT_STATION_KEY, INITIAL_ZOOM, MAP_ID } from '@/constants/map';
-import useReverseGeocode from '@/hooks/useReverseGeocode';
+import useGeocode from '@/hooks/useGeocode';
 import useChargers from '@/hooks/useChargers';
 import Marker from './Marker';
 
@@ -13,10 +19,10 @@ interface Props {
 }
 
 export default function Map({ currentLocation, isLocationFound }: Props) {
-  const [map, setMap] = useState<naver.maps.Map>();
-  const { data: districtCode } = useSWR(CURRENT_DISTRICT_KEY);
-  const { chargers } = useChargers(districtCode);
-  const { reverseGeocode } = useReverseGeocode();
+  const { data: map } = useSWR<naver.maps.Map>(MAP_KEY);
+  const { data: districtCode } = useSWR<string>(CURRENT_DISTRICT_KEY);
+  const { chargers } = useChargers(districtCode || '');
+  const { reverseGeocode } = useGeocode();
 
   useEffect(() => {
     const mapOptions: naver.maps.MapOptions = {
@@ -30,9 +36,9 @@ export default function Map({ currentLocation, isLocationFound }: Props) {
     };
 
     const map = new naver.maps.Map(MAP_ID, mapOptions);
-    setMap(map);
+    mutate(MAP_KEY, map);
 
-    map?.morph(new naver.maps.LatLng(...currentLocation), INITIAL_ZOOM);
+    map.morph(new naver.maps.LatLng(...currentLocation), INITIAL_ZOOM);
 
     if (!isLocationFound) return;
     reverseGeocode(currentLocation);
@@ -43,7 +49,7 @@ export default function Map({ currentLocation, isLocationFound }: Props) {
     });
 
     return () => {
-      map?.destroy();
+      map.destroy();
       naver.maps.Event.removeListener(listener);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

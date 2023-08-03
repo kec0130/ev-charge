@@ -19,8 +19,9 @@ export default function Marker({ map, coord, onClick }: Props) {
     }
 
     return () => {
-      marker?.setMap(null);
+      marker.setMap(null);
     };
-  }, [coord, map, onClick]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [map]);
   return null;
 }

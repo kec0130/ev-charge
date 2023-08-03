@@ -1,30 +1,33 @@
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 import { MouseEvent, useEffect, useState } from 'react';
 import { Button, Flex, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 
 import { CURRENT_DISTRICT_KEY } from '@/constants/map';
 import { CITY_CODE, DISTRICT_CODE } from '@/constants/chargerCode';
+import useGeocode from '@/hooks/useGeocode';
 
 const AddressSelector = () => {
-  const { data: districtCode, mutate } = useSWR<string>(CURRENT_DISTRICT_KEY);
-  const [displayDistrict, setDisplayDistrict] = useState('');
   const [cityCode, setCityCode] = useState('');
+  const [districtName, setDistrictName] = useState('');
+  const { data: districtCode } = useSWR<string>(CURRENT_DISTRICT_KEY);
+  const { geocode } = useGeocode();
 
   const handleCityChange = (e: MouseEvent<HTMLButtonElement>) => {
     setCityCode(e.currentTarget.value);
-    setDisplayDistrict('');
+    setDistrictName('');
   };
 
   const handleDistrictChange = (e: MouseEvent<HTMLButtonElement>) => {
-    const key = e.currentTarget.value;
-    mutate(key);
-    setDisplayDistrict(DISTRICT_CODE[key]);
+    const { value: newDistrictCode, innerText: newDistrictName } = e.currentTarget;
+    mutate(CURRENT_DISTRICT_KEY, newDistrictCode);
+    setDistrictName(newDistrictName);
+    geocode(cityCode, newDistrictCode);
   };
 
   useEffect(() => {
     if (!districtCode) return;
     setCityCode(districtCode.slice(0, 2));
-    setDisplayDistrict(DISTRICT_CODE[districtCode]);
+    setDistrictName(DISTRICT_CODE[districtCode]);
   }, [districtCode]);
 
   return (
@@ -53,7 +56,7 @@ const AddressSelector = () => {
 
       <Menu>
         <MenuButton as={Button} bgColor='white' size='sm' shadow='base'>
-          {displayDistrict || '시/군/구 선택'}
+          {districtName || '시/군/구 선택'}
         </MenuButton>
         <MenuList
           maxH='30vh'
