@@ -1,15 +1,27 @@
 import useSWR, { mutate } from 'swr';
 import { MouseEvent, useEffect, useState } from 'react';
-import { Button, Flex, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
+import {
+  Button,
+  Flex,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Spacer,
+} from '@chakra-ui/react';
 
-import { CURRENT_DISTRICT_KEY } from '@/constants/map';
+import { CURRENT_DISTRICT_KEY, INITIAL_ZOOM, MAP_KEY } from '@/constants/map';
 import { CITY_CODE, DISTRICT_CODE } from '@/constants/chargerCode';
+import { Coord } from '@/types/map';
 import useGeocode from '@/hooks/useGeocode';
+import { LocationIcon } from '../../../public/icons';
 
-const AddressSelector = () => {
+const AddressSelector = ({ currentLocation }: { currentLocation: Coord }) => {
   const [cityCode, setCityCode] = useState('');
   const [districtName, setDistrictName] = useState('');
   const { data: districtCode } = useSWR<string>(CURRENT_DISTRICT_KEY);
+  const { data: map } = useSWR<naver.maps.Map>(MAP_KEY);
   const { geocode } = useGeocode();
 
   const handleCityChange = (e: MouseEvent<HTMLButtonElement>) => {
@@ -31,7 +43,7 @@ const AddressSelector = () => {
   }, [districtCode]);
 
   return (
-    <Flex pos='absolute' zIndex={100} m={3} gap={3}>
+    <Flex pos='absolute' zIndex={100} w='full' p={3} gap={3}>
       <Menu>
         <MenuButton as={Button} bgColor='white' size='sm' shadow='base'>
           {cityCode ? CITY_CODE[cityCode] : '시/도 선택'}
@@ -77,6 +89,16 @@ const AddressSelector = () => {
             ))}
         </MenuList>
       </Menu>
+
+      <Spacer />
+      <IconButton
+        icon={<LocationIcon />}
+        aria-label='현재 위치로 이동'
+        size='sm'
+        shadow='base'
+        bgColor='white'
+        onClick={() => map?.morph(new naver.maps.LatLng(...currentLocation), INITIAL_ZOOM)}
+      />
     </Flex>
   );
 };

@@ -22,7 +22,7 @@ export default function Home() {
       </Head>
       <Container className={inter.className} maxW='8xl' p={0}>
         <Box>
-          <AddressSelector />
+          <AddressSelector currentLocation={currentLocation} />
           <Map isLocationFound={isLocationFound} currentLocation={currentLocation} />
         </Box>
         <ChargerDetail isLocationFound={isLocationFound} />
