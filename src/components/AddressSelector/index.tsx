@@ -15,7 +15,7 @@ import { CURRENT_DISTRICT_KEY, INITIAL_ZOOM, MAP_KEY } from '@/constants/map';
 import { CITY_CODE, DISTRICT_CODE } from '@/constants/chargerCode';
 import { Coord } from '@/types/map';
 import useGeocode from '@/hooks/useGeocode';
-import { LocationIcon } from '../../../public/icons';
+import { ChevronDownIcon, LocationIcon } from '../../../public/icons';
 
 const AddressSelector = ({ currentLocation }: { currentLocation: Coord }) => {
   const [cityCode, setCityCode] = useState('');
@@ -45,7 +45,13 @@ const AddressSelector = ({ currentLocation }: { currentLocation: Coord }) => {
   return (
     <Flex pos='absolute' zIndex={100} w='full' p={3} gap={3}>
       <Menu>
-        <MenuButton as={Button} bgColor='white' size='sm' shadow='base'>
+        <MenuButton
+          as={Button}
+          size='sm'
+          shadow='md'
+          bgColor='white'
+          rightIcon={<ChevronDownIcon />}
+        >
           {cityCode ? CITY_CODE[cityCode] : '시/도 선택'}
         </MenuButton>
         <MenuList
@@ -67,7 +73,13 @@ const AddressSelector = ({ currentLocation }: { currentLocation: Coord }) => {
       </Menu>
 
       <Menu>
-        <MenuButton as={Button} bgColor='white' size='sm' shadow='base'>
+        <MenuButton
+          as={Button}
+          size='sm'
+          shadow='md'
+          bgColor='white'
+          rightIcon={<ChevronDownIcon />}
+        >
           {districtName || '시/군/구 선택'}
         </MenuButton>
         <MenuList
@@ -95,7 +107,7 @@ const AddressSelector = ({ currentLocation }: { currentLocation: Coord }) => {
         icon={<LocationIcon />}
         aria-label='현재 위치로 이동'
         size='sm'
-        shadow='base'
+        shadow='md'
         bgColor='white'
         onClick={() => map?.morph(new naver.maps.LatLng(...currentLocation), INITIAL_ZOOM)}
       />
