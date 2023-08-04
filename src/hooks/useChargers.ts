@@ -8,7 +8,7 @@ const getChargersByDistrict = async (url: string, districtCode: string) => {
 };
 
 const useChargers = (districtCode: string) => {
-  const { data, error, isLoading } = useSWR(
+  const { data, isLoading } = useSWR(
     districtCode ? ['/api/chargers', districtCode] : null,
     ([url, districtCode]) => getChargersByDistrict(url, districtCode),
     { dedupingInterval: 10000 }
@@ -17,7 +17,6 @@ const useChargers = (districtCode: string) => {
   return {
     chargers: data,
     isLoading,
-    isError: error,
   };
 };
 

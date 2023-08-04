@@ -1,16 +1,17 @@
-import useSWR from 'swr';
 import { useEffect, useRef } from 'react';
 import { Box, Divider, Spinner, Text } from '@chakra-ui/react';
 
-import { CURRENT_DISTRICT_KEY, CURRENT_STATION_KEY } from '@/constants/map';
+import useStation from '@/hooks/useStation';
+import useDistrict from '@/hooks/useDistrict';
 import useChargers from '@/hooks/useChargers';
+
 import StationHeader from './StationHeader';
 import ChargerTable from './ChargerTable';
 import StationTable from './StationTable';
 
 const ChargerDetail = ({ isLocationFound }: { isLocationFound: boolean }) => {
-  const { data: stationId } = useSWR<string>(CURRENT_STATION_KEY);
-  const { data: districtCode } = useSWR<string>(CURRENT_DISTRICT_KEY);
+  const { stationId } = useStation();
+  const { districtCode } = useDistrict();
   const { chargers, isLoading } = useChargers(districtCode || '');
   const scrollRef = useRef<HTMLDivElement>(null);
 

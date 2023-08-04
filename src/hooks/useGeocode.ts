@@ -1,18 +1,18 @@
-import useSWR, { mutate } from 'swr';
-
 import { Coord } from '@/types/map';
-import { CURRENT_DISTRICT_KEY, CURRENT_STATION_KEY } from '@/constants/map';
 import { CITY_CODE, DISTRICT_CODE } from '@/constants/chargerCode';
 import useMap from './useMap';
+import useStation from './useStation';
+import useDistrict from './useDistrict';
 
 const useGeocode = () => {
-  const { data: districtCode } = useSWR<string>(CURRENT_DISTRICT_KEY);
   const { moveMap } = useMap();
+  const { clearStationId } = useStation();
+  const { districtCode, setDistrictCode } = useDistrict();
 
   const updateDistrict = (newDistrictCode: string) => {
     if (districtCode === newDistrictCode) return;
-    mutate(CURRENT_DISTRICT_KEY, newDistrictCode);
-    mutate(CURRENT_STATION_KEY, '');
+    setDistrictCode(newDistrictCode);
+    clearStationId();
   };
 
   const reverseGeocode = (coord: Coord) =>
@@ -60,7 +60,10 @@ const useGeocode = () => {
     );
   };
 
-  return { geocode, reverseGeocode };
+  return {
+    geocode,
+    reverseGeocode,
+  };
 };
 
 export default useGeocode;

@@ -1,11 +1,13 @@
 import { useEffect } from 'react';
-import useSWR, { mutate } from 'swr';
 
-import { CURRENT_DISTRICT_KEY, CURRENT_STATION_KEY, INITIAL_ZOOM, MAP_ID } from '@/constants/map';
+import { INITIAL_ZOOM, MAP_ID } from '@/constants/map';
 import { Coord } from '@/types/map';
 import useMap from '@/hooks/useMap';
 import useGeocode from '@/hooks/useGeocode';
+import useStation from '@/hooks/useStation';
+import useDistrict from '@/hooks/useDistrict';
 import useChargers from '@/hooks/useChargers';
+
 import Marker from './Marker';
 
 interface Props {
@@ -15,9 +17,10 @@ interface Props {
 
 export default function Map({ currentLocation, isLocationFound }: Props) {
   const { map, setMap, moveMap } = useMap();
-  const { data: districtCode } = useSWR<string>(CURRENT_DISTRICT_KEY);
-  const { chargers } = useChargers(districtCode || '');
   const { reverseGeocode } = useGeocode();
+  const { setStationId } = useStation();
+  const { districtCode } = useDistrict();
+  const { chargers } = useChargers(districtCode || '');
 
   useEffect(() => {
     const mapOptions: naver.maps.MapOptions = {
@@ -32,9 +35,9 @@ export default function Map({ currentLocation, isLocationFound }: Props) {
 
     const map = new naver.maps.Map(MAP_ID, mapOptions);
     setMap(map);
-    moveMap(currentLocation);
 
     if (!isLocationFound) return;
+    moveMap(currentLocation);
     reverseGeocode(currentLocation);
 
     const listener = naver.maps.Event.addListener(map, 'dragend', () => {
@@ -53,14 +56,14 @@ export default function Map({ currentLocation, isLocationFound }: Props) {
     <div id={MAP_ID} style={{ width: '100%', height: '50vh' }}>
       {isLocationFound && <Marker map={map} coord={currentLocation} />}
       {chargers &&
-        Object.keys(chargers.data).map((key) => {
-          const { lat, lng } = chargers.data[key][0];
+        Object.keys(chargers.data).map((stationId) => {
+          const { lat, lng } = chargers.data[stationId][0];
           return (
             <Marker
               map={map}
               coord={[parseFloat(lat), parseFloat(lng)]}
-              onClick={() => mutate(CURRENT_STATION_KEY, key)}
-              key={key}
+              onClick={() => setStationId(stationId)}
+              key={stationId}
             />
           );
         })}

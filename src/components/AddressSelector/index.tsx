@@ -1,4 +1,3 @@
-import useSWR, { mutate } from 'swr';
 import { MouseEvent, useEffect, useState } from 'react';
 import {
   Button,
@@ -11,17 +10,21 @@ import {
   Spacer,
 } from '@chakra-ui/react';
 
-import { CURRENT_DISTRICT_KEY } from '@/constants/map';
 import { CITY_CODE, DISTRICT_CODE } from '@/constants/chargerCode';
 import { Coord } from '@/types/map';
 import useMap from '@/hooks/useMap';
 import useGeocode from '@/hooks/useGeocode';
+import useDistrict from '@/hooks/useDistrict';
+import useStation from '@/hooks/useStation';
+
 import { ChevronDownIcon, LocationIcon } from '../../../public/icons';
 
 const AddressSelector = ({ currentLocation }: { currentLocation: Coord }) => {
   const [cityCode, setCityCode] = useState('');
   const [districtName, setDistrictName] = useState('');
-  const { data: districtCode } = useSWR<string>(CURRENT_DISTRICT_KEY);
+
+  const { districtCode, setDistrictCode } = useDistrict();
+  const { clearStationId } = useStation();
   const { moveMap } = useMap();
   const { geocode } = useGeocode();
 
@@ -32,9 +35,10 @@ const AddressSelector = ({ currentLocation }: { currentLocation: Coord }) => {
 
   const handleDistrictChange = (e: MouseEvent<HTMLButtonElement>) => {
     const { value: newDistrictCode, innerText: newDistrictName } = e.currentTarget;
-    mutate(CURRENT_DISTRICT_KEY, newDistrictCode);
+    setDistrictCode(newDistrictCode);
     setDistrictName(newDistrictName);
     geocode(cityCode, newDistrictCode);
+    clearStationId();
   };
 
   useEffect(() => {

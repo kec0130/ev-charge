@@ -22,7 +22,10 @@ const useCurrentLocation = () => {
     }
   }, []);
 
-  return { currentLocation, isLocationFound };
+  return {
+    currentLocation,
+    isLocationFound,
+  };
 };
 
 export default useCurrentLocation;
