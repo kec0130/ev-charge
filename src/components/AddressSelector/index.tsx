@@ -26,7 +26,7 @@ const AddressSelector = ({ currentLocation }: { currentLocation: Coord }) => {
   const { districtCode, setDistrictCode } = useDistrict();
   const { clearStationId } = useStation();
   const { moveMap } = useMap();
-  const { geocode } = useGeocode();
+  const { geocode, reverseGeocode } = useGeocode();
 
   const handleCityChange = (e: MouseEvent<HTMLButtonElement>) => {
     setCityCode(e.currentTarget.value);
@@ -39,6 +39,11 @@ const AddressSelector = ({ currentLocation }: { currentLocation: Coord }) => {
     setDistrictName(newDistrictName);
     geocode(cityCode, newDistrictCode);
     clearStationId();
+  };
+
+  const handleCurrentLocationClick = () => {
+    moveMap(currentLocation);
+    reverseGeocode(currentLocation);
   };
 
   useEffect(() => {
@@ -114,7 +119,7 @@ const AddressSelector = ({ currentLocation }: { currentLocation: Coord }) => {
         size='sm'
         shadow='md'
         bgColor='white'
-        onClick={() => moveMap(currentLocation)}
+        onClick={handleCurrentLocationClick}
       />
     </Flex>
   );
