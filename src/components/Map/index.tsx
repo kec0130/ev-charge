@@ -18,7 +18,7 @@ interface Props {
 export default function Map({ currentLocation, isLocationFound }: Props) {
   const { map, setMap, moveMap } = useMap();
   const { reverseGeocode } = useGeocode();
-  const { setStationId } = useStation();
+  const { setStationId, clearStationId } = useStation();
   const { districtCode } = useDistrict();
   const { chargers } = useChargers(districtCode || '');
 
@@ -28,7 +28,7 @@ export default function Map({ currentLocation, isLocationFound }: Props) {
       zoom: INITIAL_ZOOM,
       minZoom: 12,
       maxZoom: 18,
-      scaleControl: true,
+      scaleControl: false,
       mapDataControl: true,
       zoomControl: false,
     };
@@ -40,14 +40,18 @@ export default function Map({ currentLocation, isLocationFound }: Props) {
     moveMap(currentLocation);
     reverseGeocode(currentLocation);
 
-    const listener = naver.maps.Event.addListener(map, 'dragend', () => {
+    const dragListener = naver.maps.Event.addListener(map, 'dragend', () => {
       const { x, y } = map.getCenter();
       reverseGeocode([y, x]);
     });
 
+    const clickListener = naver.maps.Event.addListener(map, 'click', () => {
+      clearStationId();
+    });
+
     return () => {
       map.destroy();
-      naver.maps.Event.removeListener(listener);
+      naver.maps.Event.removeListener([dragListener, clickListener]);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentLocation, isLocationFound]);
