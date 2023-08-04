@@ -11,9 +11,10 @@ import {
   Spacer,
 } from '@chakra-ui/react';
 
-import { CURRENT_DISTRICT_KEY, INITIAL_ZOOM, MAP_KEY } from '@/constants/map';
+import { CURRENT_DISTRICT_KEY } from '@/constants/map';
 import { CITY_CODE, DISTRICT_CODE } from '@/constants/chargerCode';
 import { Coord } from '@/types/map';
+import useMap from '@/hooks/useMap';
 import useGeocode from '@/hooks/useGeocode';
 import { ChevronDownIcon, LocationIcon } from '../../../public/icons';
 
@@ -21,7 +22,7 @@ const AddressSelector = ({ currentLocation }: { currentLocation: Coord }) => {
   const [cityCode, setCityCode] = useState('');
   const [districtName, setDistrictName] = useState('');
   const { data: districtCode } = useSWR<string>(CURRENT_DISTRICT_KEY);
-  const { data: map } = useSWR<naver.maps.Map>(MAP_KEY);
+  const { moveMap } = useMap();
   const { geocode } = useGeocode();
 
   const handleCityChange = (e: MouseEvent<HTMLButtonElement>) => {
@@ -109,7 +110,7 @@ const AddressSelector = ({ currentLocation }: { currentLocation: Coord }) => {
         size='sm'
         shadow='md'
         bgColor='white'
-        onClick={() => map?.morph(new naver.maps.LatLng(...currentLocation), INITIAL_ZOOM)}
+        onClick={() => moveMap(currentLocation)}
       />
     </Flex>
   );

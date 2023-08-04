@@ -1,11 +1,13 @@
 import useSWR, { mutate } from 'swr';
+
 import { Coord } from '@/types/map';
-import { CURRENT_DISTRICT_KEY, CURRENT_STATION_KEY, INITIAL_ZOOM, MAP_KEY } from '@/constants/map';
+import { CURRENT_DISTRICT_KEY, CURRENT_STATION_KEY } from '@/constants/map';
 import { CITY_CODE, DISTRICT_CODE } from '@/constants/chargerCode';
+import useMap from './useMap';
 
 const useGeocode = () => {
   const { data: districtCode } = useSWR<string>(CURRENT_DISTRICT_KEY);
-  const { data: map } = useSWR<naver.maps.Map>(MAP_KEY);
+  const { moveMap } = useMap();
 
   const updateDistrict = (newDistrictCode: string) => {
     if (districtCode === newDistrictCode) return;
@@ -49,7 +51,7 @@ const useGeocode = () => {
 
         try {
           const { x, y } = response.v2.addresses[0];
-          map?.morph(new naver.maps.LatLng(parseFloat(y), parseFloat(x)), INITIAL_ZOOM);
+          moveMap([parseFloat(y), parseFloat(x)]);
           updateDistrict(districtCode);
         } catch (e) {
           console.log(response.v2.errorMessage);
