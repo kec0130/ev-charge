@@ -23,7 +23,7 @@ const StationTable = ({ station }: { station: Charger }) => {
         충전소 정보
       </Heading>
       <Divider w='full' />
-      <Table variant='simple' size='sm'>
+      <Table variant='simple' size='sm' sx={{ 'tr > td:last-child': { whiteSpace: 'normal' } }}>
         <Tbody>
           {location && location !== 'null' && (
             <Tr>

@@ -54,7 +54,7 @@ const ChargerDetail = ({ isLocationFound }: { isLocationFound: boolean }) => {
         <div ref={scrollRef}>
           <StationHeader station={chargers.data[stationId][0]} />
           <Divider h={2} mt={1} mb={1} bg='gray.200' />
-          <ChargerTable />
+          <ChargerTable chargers={chargers.data[stationId]} />
           <Divider h={2} mt={1} mb={1} bg='gray.200' />
           <StationTable station={chargers.data[stationId][0]} />
         </div>

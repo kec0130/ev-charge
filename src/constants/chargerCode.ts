@@ -5,6 +5,7 @@ export const STATUS = {
   '3': '충전중',
   '4': '운영중지',
   '5': '점검중',
+  '9': '상태미확인',
 } as const;
 
 export const CHARGER_TYPE = {
