@@ -38,20 +38,20 @@ const ChargerTable = ({ chargers }: { chargers: Charger[] }) => {
           },
         }}
       >
-        <Table variant='simple' size='sm' sx={{ 'tr > td:last-child': { whiteSpace: 'normal' } }}>
+        <Table variant='simple' size='sm'>
           <Tbody>
             {chargers.map((charger) => {
               const { chgerId, chgerType, output, stat } = charger;
               return (
                 <Tr key={chgerId}>
-                  <Td>{chgerId}</Td>
-                  <Td>{STATUS[stat]}</Td>
+                  <Td sx={{ width: '50px' }}>{chgerId}</Td>
+                  <Td sx={{ width: '90px' }}>{STATUS[stat]}</Td>
                   {output && (
-                    <Td>
+                    <Td sx={{ width: '100px' }}>
                       {parseInt(output) >= 50 ? '급속' : '완속'} {output}kW
                     </Td>
                   )}
-                  <Td>{CHARGER_TYPE[chgerType]}</Td>
+                  <Td sx={{ whiteSpace: 'normal' }}>{CHARGER_TYPE[chgerType]}</Td>
                 </Tr>
               );
             })}
