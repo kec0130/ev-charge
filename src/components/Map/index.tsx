@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Box, useTheme } from '@chakra-ui/react';
 
 import { INITIAL_ZOOM, MAP_ID } from '@/constants/map';
 import { Coord } from '@/types/map';
@@ -21,6 +22,7 @@ export default function Map({ currentLocation, isLocationFound }: Props) {
   const { setStationId, clearStationId } = useStation();
   const { districtCode } = useDistrict();
   const { chargers } = useChargers(districtCode || '');
+  const theme = useTheme();
 
   useEffect(() => {
     const mapOptions: naver.maps.MapOptions = {
@@ -57,7 +59,7 @@ export default function Map({ currentLocation, isLocationFound }: Props) {
   }, [currentLocation, isLocationFound]);
 
   return (
-    <div id={MAP_ID} style={{ width: '100%', height: '50vh' }}>
+    <Box id={MAP_ID} sx={{ w: '100%', h: theme.sizes.mapHeight }}>
       {isLocationFound && <Marker map={map} coord={currentLocation} />}
       {chargers &&
         Object.keys(chargers.data).map((stationId) => {
@@ -71,6 +73,6 @@ export default function Map({ currentLocation, isLocationFound }: Props) {
             />
           );
         })}
-    </div>
+    </Box>
   );
 }

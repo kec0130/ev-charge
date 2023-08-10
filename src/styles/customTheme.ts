@@ -7,6 +7,10 @@ const customTheme = extendTheme({
     accent: '#F7CE00',
     warning: '#FF6666',
   },
+  sizes: {
+    navHeight: '50px',
+    mapHeight: '50vh',
+  },
 });
 
 export default customTheme;

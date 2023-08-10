@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Box, Divider, Spinner, Text } from '@chakra-ui/react';
+import { Box, Divider, Spinner, Text, useTheme } from '@chakra-ui/react';
 
 import useStation from '@/hooks/useStation';
 import useDistrict from '@/hooks/useDistrict';
@@ -14,6 +14,7 @@ const ChargerDetail = ({ isLocationFound }: { isLocationFound: boolean }) => {
   const { districtCode } = useDistrict();
   const { chargers, isLoading } = useChargers(districtCode || '');
   const scrollRef = useRef<HTMLDivElement>(null);
+  const theme = useTheme();
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView();
@@ -23,10 +24,10 @@ const ChargerDetail = ({ isLocationFound }: { isLocationFound: boolean }) => {
     <Box
       position='fixed'
       overflowY='auto'
-      h='calc(50vh - 24px - 16px)'
+      h={`calc(${theme.sizes.mapHeight} - ${theme.sizes.navHeight} - 16px)`}
       w='full'
       maxW='8xl'
-      m='8px auto'
+      my={2}
       sx={{
         '&::-webkit-scrollbar': {
           display: 'none',

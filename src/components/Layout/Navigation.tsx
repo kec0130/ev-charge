@@ -19,18 +19,18 @@ const Navigation = () => {
   const theme = useTheme();
 
   return (
-    <Flex px={[4, 8]} py={2}>
+    <Flex px={[4, 8]} h={theme.sizes.navHeight} alignItems='center'>
       <Link href='/'>
-        <Image src='/images/letter-logo.png' alt='logo' width={84} height={35} />
+        <Image src='/images/letter-logo.png' alt='logo' width={80} height={34} />
       </Link>
       <Spacer />
       <nav style={{ display: 'flex', alignItems: 'center' }}>
-        <List display='flex' justifyContent='center' alignItems='center' gap={5}>
+        <List display='flex' justifyContent='center' alignItems='center' gap={[5, 7]}>
           {MENU_LIST.map((menu) => (
             <ListItem
               key={menu.name}
               color={router.asPath === menu.href ? theme.colors.primary : 'chakra-body-text._dark'}
-              fontSize='lg'
+              fontSize={{ base: 'md', sm: 'lg' }}
               fontWeight='semibold'
             >
               <Link href={menu.href}>{menu.name}</Link>
