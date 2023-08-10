@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Box, Divider, Spinner, Text, useTheme } from '@chakra-ui/react';
+import { Box, Divider, Spinner, useTheme } from '@chakra-ui/react';
 
 import useStation from '@/hooks/useStation';
 import useDistrict from '@/hooks/useDistrict';
@@ -8,6 +8,8 @@ import useChargers from '@/hooks/useChargers';
 import StationHeader from './StationHeader';
 import ChargerTable from './ChargerTable';
 import StationTable from './StationTable';
+import Loading from './Loading';
+import { CarLogoIcon } from '../../../public/icons';
 
 const ChargerDetail = ({ isLocationFound }: { isLocationFound: boolean }) => {
   const { stationId } = useStation();
@@ -34,22 +36,21 @@ const ChargerDetail = ({ isLocationFound }: { isLocationFound: boolean }) => {
         },
       }}
     >
-      {!isLocationFound || isLoading ? (
-        <Box p={4} textAlign='center'>
-          <Spinner />
-          <Text mt={2}>
-            {!isLocationFound
-              ? '현재 위치를 찾는 중입니다...'
-              : '충전소 정보를 불러오는 중입니다...'}
-          </Text>
-        </Box>
-      ) : null}
-
-      {chargers && !stationId && (
-        <Box p={4} textAlign='center'>
-          충전소를 선택해주세요.
-        </Box>
+      {!isLocationFound && (
+        <Loading
+          icon={<Spinner color={theme.colors.primary} size='xl' />}
+          text='현재 위치를 찾는 중입니다...'
+        />
       )}
+
+      {isLoading && (
+        <Loading
+          icon={<Spinner color={theme.colors.primary} size='xl' />}
+          text='충전소 정보를 불러오는 중입니다...'
+        />
+      )}
+
+      {chargers && !stationId && <Loading icon={<CarLogoIcon />} text='충전소를 선택해주세요.' />}
 
       {chargers && stationId && (
         <div ref={scrollRef}>
