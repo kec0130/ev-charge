@@ -1,8 +1,10 @@
+import Navigation from './Navigation';
+
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <header>
-        <nav>전기차지</nav>
+        <Navigation />
       </header>
       <main>{children}</main>
     </>
