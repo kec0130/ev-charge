@@ -19,25 +19,39 @@ const Navigation = () => {
   const theme = useTheme();
 
   return (
-    <Flex px={4} mx='auto' maxW='8xl' h={theme.sizes.navHeight} alignItems='center'>
-      <Link href='/'>
-        <FullLogoIcon />
-      </Link>
-      <Spacer />
-      <nav style={{ display: 'flex', alignItems: 'center' }}>
-        <List display='flex' justifyContent='center' alignItems='center' gap={[5, 7]}>
-          {MENU_LIST.map((menu) => (
-            <ListItem
-              key={menu.name}
-              color={router.asPath === menu.href ? theme.colors.primary : 'chakra-body-text._dark'}
-              fontSize={{ base: 'md', sm: 'lg' }}
-              fontWeight='semibold'
-            >
-              <Link href={menu.href}>{menu.name}</Link>
-            </ListItem>
-          ))}
-        </List>
-      </nav>
+    <Flex as='header' justifyContent='center'>
+      <Flex
+        position='fixed'
+        top={0}
+        zIndex={100}
+        alignItems='center'
+        h={theme.sizes.navHeight}
+        w='full'
+        maxW='8xl'
+        px={4}
+        bgColor='white'
+      >
+        <Link href='/'>
+          <FullLogoIcon />
+        </Link>
+        <Spacer />
+        <Flex as='nav'>
+          <List display='flex' justifyContent='center' alignItems='center' gap={[5, 7]}>
+            {MENU_LIST.map((menu) => (
+              <ListItem
+                key={menu.name}
+                color={
+                  router.asPath === menu.href ? theme.colors.primary : 'chakra-body-text._dark'
+                }
+                fontSize={{ base: 'md', sm: 'lg' }}
+                fontWeight='semibold'
+              >
+                <Link href={menu.href}>{menu.name}</Link>
+              </ListItem>
+            ))}
+          </List>
+        </Flex>
+      </Flex>
     </Flex>
   );
 };

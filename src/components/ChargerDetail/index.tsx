@@ -25,6 +25,7 @@ const ChargerDetail = ({ isLocationFound }: { isLocationFound: boolean }) => {
   return (
     <Box
       position='fixed'
+      bottom={0}
       overflowY='auto'
       h={`calc(${theme.sizes.mapHeight} - ${theme.sizes.navHeight} - 16px)`}
       w='full'
