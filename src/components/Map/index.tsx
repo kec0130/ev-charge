@@ -20,7 +20,7 @@ export default function Map({ currentLocation, isLocationFound }: Props) {
   const { map, setMap, moveMap } = useMap();
   const { reverseGeocode } = useGeocode();
   const { stationId, clearStationId } = useStation();
-  const { districtCode } = useDistrict();
+  const { districtCode, clearDistrictCode } = useDistrict();
   const { chargers } = useChargers(districtCode || '');
   const theme = useTheme();
 
@@ -54,6 +54,8 @@ export default function Map({ currentLocation, isLocationFound }: Props) {
     return () => {
       map.destroy();
       naver.maps.Event.removeListener([dragListener, clickListener]);
+      clearStationId();
+      clearDistrictCode();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentLocation, isLocationFound]);

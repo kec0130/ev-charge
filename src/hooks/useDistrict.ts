@@ -9,9 +9,14 @@ const useDistrict = () => {
     mutate(districtCode);
   };
 
+  const clearDistrictCode = () => {
+    mutate('');
+  };
+
   return {
     districtCode,
     setDistrictCode,
+    clearDistrictCode,
   };
 };
 
