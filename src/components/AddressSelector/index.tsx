@@ -7,7 +7,6 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  Spacer,
   useTheme,
 } from '@chakra-ui/react';
 
@@ -55,7 +54,7 @@ const AddressSelector = ({ currentLocation }: { currentLocation: Coord }) => {
   }, [districtCode]);
 
   return (
-    <Flex pos='absolute' zIndex={100} w='full' maxW='8xl' p={3} gap={3}>
+    <Flex pos='absolute' zIndex={10} p={3} gap={3}>
       <Menu>
         <MenuButton
           as={Button}
@@ -114,9 +113,8 @@ const AddressSelector = ({ currentLocation }: { currentLocation: Coord }) => {
         </MenuList>
       </Menu>
 
-      <Spacer />
       <IconButton
-        icon={<LocationIcon style={{ fill: theme.colors.primary }} />}
+        icon={<LocationIcon style={{ fill: theme.colors.warning }} />}
         aria-label='현재 위치로 이동'
         size='sm'
         shadow='md'

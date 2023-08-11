@@ -31,7 +31,7 @@ export default function Map({ currentLocation, isLocationFound }: Props) {
       minZoom: 12,
       maxZoom: 18,
       scaleControl: false,
-      mapDataControl: true,
+      mapDataControl: false,
       zoomControl: false,
     };
 
