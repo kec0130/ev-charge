@@ -16,13 +16,10 @@ const StationHeader = ({ station }: { station: Charger }) => {
       <Flex gap={1}>
         <Text>{station.addr}</Text>
         <IconButton
-          icon={<CopyIcon />}
+          icon={<CopyIcon style={{ fill: 'var(--chakra-colors-gray-400)' }} />}
           aria-label='복사하기'
           size='xs'
           variant='ghost'
-          sx={{
-            svg: { fill: 'gray.400' },
-          }}
           value={station.addr}
           onClick={handleCopy}
         />

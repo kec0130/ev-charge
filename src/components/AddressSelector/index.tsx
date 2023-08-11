@@ -8,6 +8,7 @@ import {
   MenuItem,
   MenuList,
   Spacer,
+  useTheme,
 } from '@chakra-ui/react';
 
 import { CITY_CODE, DISTRICT_CODE } from '@/constants/chargerCode';
@@ -27,6 +28,7 @@ const AddressSelector = ({ currentLocation }: { currentLocation: Coord }) => {
   const { clearStationId } = useStation();
   const { moveMap } = useMap();
   const { geocode, reverseGeocode } = useGeocode();
+  const theme = useTheme();
 
   const handleCityChange = (e: MouseEvent<HTMLButtonElement>) => {
     setCityCode(e.currentTarget.value);
@@ -114,11 +116,12 @@ const AddressSelector = ({ currentLocation }: { currentLocation: Coord }) => {
 
       <Spacer />
       <IconButton
-        icon={<LocationIcon />}
+        icon={<LocationIcon style={{ fill: theme.colors.primary }} />}
         aria-label='현재 위치로 이동'
         size='sm'
         shadow='md'
         bgColor='white'
+        rounded='full'
         onClick={handleCurrentLocationClick}
       />
     </Flex>
