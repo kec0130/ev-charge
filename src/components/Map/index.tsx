@@ -19,7 +19,7 @@ interface Props {
 export default function Map({ currentLocation, isLocationFound }: Props) {
   const { map, setMap, moveMap } = useMap();
   const { reverseGeocode } = useGeocode();
-  const { setStationId, clearStationId } = useStation();
+  const { stationId, clearStationId } = useStation();
   const { districtCode } = useDistrict();
   const { chargers } = useChargers(districtCode || '');
   const theme = useTheme();
@@ -60,16 +60,17 @@ export default function Map({ currentLocation, isLocationFound }: Props) {
 
   return (
     <Box id={MAP_ID} sx={{ w: '100%', h: theme.sizes.mapHeight }}>
-      {isLocationFound && <Marker map={map} coord={currentLocation} />}
+      {isLocationFound && <Marker map={map} coord={currentLocation} type='currentLocation' />}
       {chargers &&
-        Object.keys(chargers.data).map((stationId) => {
-          const { lat, lng } = chargers.data[stationId][0];
+        Object.keys(chargers.data).map((id) => {
+          const { lat, lng } = chargers.data[id][0];
           return (
             <Marker
               map={map}
               coord={[parseFloat(lat), parseFloat(lng)]}
-              onClick={() => setStationId(stationId)}
-              key={stationId}
+              type={stationId === id ? 'selected' : 'default'}
+              id={id}
+              key={id}
             />
           );
         })}

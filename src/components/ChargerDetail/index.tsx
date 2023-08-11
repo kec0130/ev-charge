@@ -38,14 +38,14 @@ const ChargerDetail = ({ isLocationFound }: { isLocationFound: boolean }) => {
     >
       {!isLocationFound && (
         <Loading
-          icon={<Spinner color={theme.colors.primary} size='xl' />}
+          icon={<Spinner color={theme.colors.primary} size='xl' thickness='3px' />}
           text='현재 위치를 찾는 중입니다...'
         />
       )}
 
       {isLoading && (
         <Loading
-          icon={<Spinner color={theme.colors.primary} size='xl' />}
+          icon={<Spinner color={theme.colors.primary} size='xl' thickness='3px' />}
           text='충전소 정보를 불러오는 중입니다...'
         />
       )}
