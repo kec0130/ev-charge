@@ -19,7 +19,7 @@ const Navigation = () => {
   const theme = useTheme();
 
   return (
-    <Flex px={[4, 8]} h={theme.sizes.navHeight} alignItems='center'>
+    <Flex px={4} mx='auto' maxW='8xl' h={theme.sizes.navHeight} alignItems='center'>
       <Link href='/'>
         <FullLogoIcon />
       </Link>
