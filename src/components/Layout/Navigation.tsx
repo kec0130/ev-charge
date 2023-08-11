@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Flex, List, ListItem, Spacer, useTheme } from '@chakra-ui/react';
+import { FullLogoIcon } from '../../../public/icons';
 
 const MENU_LIST = [
   {
@@ -21,7 +21,7 @@ const Navigation = () => {
   return (
     <Flex px={[4, 8]} h={theme.sizes.navHeight} alignItems='center'>
       <Link href='/'>
-        <Image src='/images/letter-logo.png' alt='logo' width={80} height={34} />
+        <FullLogoIcon />
       </Link>
       <Spacer />
       <nav style={{ display: 'flex', alignItems: 'center' }}>
