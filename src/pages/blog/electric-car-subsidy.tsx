@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Image from 'next/image';
 import { Heading, Text, Table, Tr, Td, Th, Tbody, Thead, TableContainer } from '@chakra-ui/react';
 
 const ElectricCarSubsidy = () => {
@@ -10,7 +11,7 @@ const ElectricCarSubsidy = () => {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <Heading as='h2' size='xl' my={5}>
+      <Heading as='h2' size='xl' mb={5}>
         2023 전기차 보조금, 신청방법 핵심정보 요약
       </Heading>
       <Text mb={5}>
@@ -19,7 +20,13 @@ const ElectricCarSubsidy = () => {
         정해져 있기 때문에 선착순으로 혜택을 받으실 수 있는데요, 2023년 전기차 보조금과 관련한
         정보와 지자체별 금액 등에 대해서 살펴보겠습니다.
       </Text>
-      <Text>썸네일 사진</Text>
+      <Image
+        src='/images/blog/electric-car-subsidy/01.png'
+        alt='Picture of electric car and subsidy'
+        width={1200}
+        height={630}
+        layout='responsive'
+      />
       <br />
 
       <Heading as='h3' size='lg' my={5}>
@@ -451,11 +458,18 @@ const ElectricCarSubsidy = () => {
       <Heading as='h3' size='lg' my={5}>
         전기차 보조금 신청 절차 방법
       </Heading>
-      <Text>이미지</Text>
       <Text mb={5}>
         구매자는 차량구매대금과 보조금의 차액을 자동차 제조‧수입사에 납부하고, 자동차 제조‧수입사는
         지방자치단체(국비보조금+지방비보조금)로부터 보조금 수령합니다.
       </Text>
+      <Image
+        src='/images/blog/electric-car-subsidy/02.png'
+        alt='Picture of an electric car'
+        width={1200}
+        height={630}
+        layout='responsive'
+      />
+      <br />
 
       <TableContainer>
         <Table
