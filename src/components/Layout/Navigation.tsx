@@ -15,8 +15,9 @@ const MENU_LIST = [
 ];
 
 const Navigation = () => {
-  const router = useRouter();
   const theme = useTheme();
+  const router = useRouter();
+  const currentPath = `/${router.asPath.split('/')[1]}`;
 
   return (
     <Flex as='header' justifyContent='center'>
@@ -40,9 +41,7 @@ const Navigation = () => {
             {MENU_LIST.map((menu) => (
               <ListItem
                 key={menu.name}
-                color={
-                  router.asPath === menu.href ? theme.colors.primary : 'chakra-body-text._dark'
-                }
+                color={currentPath === menu.href ? theme.colors.primary : 'chakra-body-text._dark'}
                 fontSize={{ base: 'md', sm: 'lg' }}
                 fontWeight='semibold'
               >
