@@ -22,7 +22,7 @@ const ElectricCarSubsidy = () => {
       </Text>
       <Image
         src='/images/blog/electric-car-subsidy/01.png'
-        alt='Picture of electric car and subsidy'
+        alt='전기차 보조금'
         width={1200}
         height={630}
         layout='responsive'
@@ -455,6 +455,15 @@ const ElectricCarSubsidy = () => {
       </TableContainer>
       <br />
 
+      <Image
+        src='/images/blog/electric-car-subsidy/02.png'
+        alt='전기차 보조금 신청 기간'
+        width={1200}
+        height={630}
+        layout='responsive'
+      />
+      <br />
+
       <Heading as='h3' size='lg' my={5}>
         전기차 보조금 신청 절차 및 기간
       </Heading>
@@ -462,14 +471,6 @@ const ElectricCarSubsidy = () => {
         구매자는 차량구매대금과 보조금의 차액을 자동차 제조‧수입사에 납부하고, 자동차 제조‧수입사는
         지방자치단체(국비보조금+지방비보조금)로부터 보조금을 수령합니다.
       </Text>
-      <Image
-        src='/images/blog/electric-car-subsidy/02.png'
-        alt='Picture of an electric car'
-        width={1200}
-        height={630}
-        layout='responsive'
-      />
-      <br />
 
       <TableContainer>
         <Table
