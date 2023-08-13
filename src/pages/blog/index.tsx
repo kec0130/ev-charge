@@ -16,13 +16,24 @@ const Blog = () => {
         <ListItem mb={12}>
           <Link href='/blog/electric-car-subsidy'>
             <Flex w='full' flexDir={['column', 'row']}>
-              <Box mr={[0, 8]} mb={[4, 0]}>
+              <Box
+                mr={[0, 8]}
+                mb={[4, 0]}
+                w='full'
+                maxW={['full', 300]}
+                borderRadius='md'
+                overflow='hidden'
+              >
                 <Image
-                  src='/images/blog/electric-car-subsidy/01.png'
+                  src='/images/blog/electric-car-subsidy/01.jpg'
                   alt='전기차 보조금'
                   width={300}
                   height={158}
-                  layout='responsive'
+                  style={{
+                    objectFit: 'cover',
+                    width: '100%',
+                    height: '100%',
+                  }}
                 />
               </Box>
               <Box>

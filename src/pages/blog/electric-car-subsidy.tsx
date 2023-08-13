@@ -21,11 +21,14 @@ const ElectricCarSubsidy = () => {
         정보와 지자체별 금액 등에 대해서 살펴보겠습니다.
       </Text>
       <Image
-        src='/images/blog/electric-car-subsidy/01.png'
+        src='/images/blog/electric-car-subsidy/01.jpg'
         alt='전기차 보조금'
         width={1200}
         height={630}
-        layout='responsive'
+        style={{
+          width: '100%',
+          height: 'auto',
+        }}
       />
       <br />
 
@@ -456,11 +459,14 @@ const ElectricCarSubsidy = () => {
       <br />
 
       <Image
-        src='/images/blog/electric-car-subsidy/02.png'
+        src='/images/blog/electric-car-subsidy/02.jpg'
         alt='전기차 보조금 신청 기간'
         width={1200}
         height={630}
-        layout='responsive'
+        style={{
+          width: '100%',
+          height: 'auto',
+        }}
       />
       <br />
 
