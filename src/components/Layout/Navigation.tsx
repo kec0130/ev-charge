@@ -28,7 +28,7 @@ const Navigation = () => {
         alignItems='center'
         h={theme.sizes.navHeight}
         w='full'
-        maxW='8xl'
+        maxW='container.xl'
         px={4}
         bgColor='white'
       >

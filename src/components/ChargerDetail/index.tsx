@@ -29,7 +29,7 @@ const ChargerDetail = ({ isLocationFound }: { isLocationFound: boolean }) => {
       overflowY='auto'
       h={`calc(${theme.sizes.mapHeight} - ${theme.sizes.navHeight} - 16px)`}
       w='full'
-      maxW='8xl'
+      maxW='container.xl'
       my={2}
       sx={{
         '&::-webkit-scrollbar': {

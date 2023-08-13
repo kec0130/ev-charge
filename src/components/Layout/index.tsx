@@ -10,13 +10,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Navigation />
-      <Container
-        as='main'
-        maxW='8xl'
-        mt={theme.sizes.navHeight}
-        px={mapPage ? 0 : 4}
-        py={mapPage ? 0 : 6}
-      >
+      <Container as='main' maxW='container.xl' mt={theme.sizes.navHeight} p={mapPage ? 0 : 6}>
         {children}
       </Container>
     </>
