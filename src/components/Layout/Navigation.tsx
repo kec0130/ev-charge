@@ -1,7 +1,7 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Flex, List, ListItem, Spacer, useTheme } from '@chakra-ui/react';
-import { FullLogoIcon } from '../../../public/icons';
 
 const MENU_LIST = [
   {
@@ -32,9 +32,11 @@ const Navigation = () => {
         px={4}
         bgColor='white'
       >
-        <Link href='/'>
-          <FullLogoIcon />
-        </Link>
+        <h1>
+          <Link href='/'>
+            <Image src='/images/common/logo.png' alt='전기차 충전소 찾기' width={90} height={38} />
+          </Link>
+        </h1>
         <Spacer />
         <Flex as='nav'>
           <List display='flex' justifyContent='center' alignItems='center' gap={[5, 7]}>
@@ -42,7 +44,7 @@ const Navigation = () => {
               <ListItem
                 key={menu.name}
                 color={currentPath === menu.href ? theme.colors.primary : 'chakra-body-text._dark'}
-                fontSize={{ base: 'md', sm: 'lg' }}
+                fontSize='lg'
                 fontWeight='semibold'
               >
                 <Link href={menu.href}>{menu.name}</Link>
