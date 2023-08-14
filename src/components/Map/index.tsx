@@ -12,11 +12,11 @@ import useChargers from '@/hooks/useChargers';
 import Marker from './Marker';
 
 interface Props {
+  isLoadingLocation: boolean;
   currentLocation: Coord;
-  isLocationFound: boolean;
 }
 
-export default function Map({ currentLocation, isLocationFound }: Props) {
+export default function Map({ isLoadingLocation, currentLocation }: Props) {
   const { map, setMap, moveMap } = useMap();
   const { reverseGeocode } = useGeocode();
   const { stationId, clearStationId } = useStation();
@@ -38,7 +38,7 @@ export default function Map({ currentLocation, isLocationFound }: Props) {
     const map = new naver.maps.Map(MAP_ID, mapOptions);
     setMap(map);
 
-    if (!isLocationFound) return;
+    if (isLoadingLocation) return;
     moveMap(currentLocation);
     reverseGeocode(currentLocation);
 
@@ -58,11 +58,11 @@ export default function Map({ currentLocation, isLocationFound }: Props) {
       clearDistrictCode();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentLocation, isLocationFound]);
+  }, [currentLocation, isLoadingLocation]);
 
   return (
     <Box id={MAP_ID} sx={{ w: '100%', h: theme.sizes.mapHeight }}>
-      {isLocationFound && <Marker map={map} coord={currentLocation} type='currentLocation' />}
+      {!isLoadingLocation && <Marker map={map} coord={currentLocation} type='currentLocation' />}
       {chargers &&
         Object.keys(chargers.data).map((id) => {
           const { lat, lng } = chargers.data[id][0];

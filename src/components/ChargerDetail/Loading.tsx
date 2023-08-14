@@ -1,15 +1,19 @@
 import { Flex, Text } from '@chakra-ui/react';
 
 interface Props {
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
   text: string;
+  footer?: React.ReactNode;
 }
 
-const Loading = ({ icon, text }: Props) => {
+const Loading = ({ icon, text, footer }: Props) => {
   return (
     <Flex h='full' justify='center' align='center' flexDir='column' gap={6}>
       {icon}
-      <Text color='gray.600'>{text}</Text>
+      <Text color='gray.600' whiteSpace='pre' textAlign='center'>
+        {text}
+      </Text>
+      {footer}
     </Flex>
   );
 };

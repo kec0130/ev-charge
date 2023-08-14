@@ -3,28 +3,27 @@ import { Coord } from '@/types/map';
 import { INITIAL_CENTER } from '@/constants/map';
 
 const useCurrentLocation = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [currentLocation, setCurrentLocation] = useState<Coord>(INITIAL_CENTER);
-  const [isLocationFound, setIsLocationFound] = useState(false);
 
   const onSuccess = (position: GeolocationPosition) => {
     const { latitude, longitude } = position.coords;
     setCurrentLocation([latitude, longitude]);
-    setIsLocationFound(true);
+    setIsLoading(false);
   };
 
   const onError = () => {
-    console.error('Failed to get current location');
+    alert('현 위치 근처 충전소를 찾기 위해 위치 서비스 권한을 허용해주세요.');
+    setIsLoading(false);
   };
 
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(onSuccess, onError);
-    }
+    navigator.geolocation.getCurrentPosition(onSuccess, onError);
   }, []);
 
   return {
+    isLoading,
     currentLocation,
-    isLocationFound,
   };
 };
 

@@ -5,14 +5,14 @@ import AddressSelector from '@/components/AddressSelector';
 import Metadata from '@/components/Metadata';
 
 export default function Home() {
-  const { currentLocation, isLocationFound } = useCurrentLocation();
+  const { isLoading, currentLocation } = useCurrentLocation();
 
   return (
     <>
       <Metadata url='/' />
       <AddressSelector currentLocation={currentLocation} />
-      <Map isLocationFound={isLocationFound} currentLocation={currentLocation} />
-      <ChargerDetail isLocationFound={isLocationFound} />
+      <Map isLoadingLocation={isLoading} currentLocation={currentLocation} />
+      <ChargerDetail isLoadingLocation={isLoading} />
     </>
   );
 }
