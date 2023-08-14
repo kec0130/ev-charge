@@ -54,7 +54,7 @@ const AddressSelector = ({ currentLocation }: { currentLocation: Coord }) => {
   }, [districtCode]);
 
   return (
-    <Flex pos='absolute' zIndex={10} p={3} gap={3}>
+    <Flex pos='absolute' zIndex={theme.zIndex.select} p={3} gap={3}>
       <Menu>
         <MenuButton
           as={Button}

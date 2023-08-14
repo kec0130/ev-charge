@@ -9,7 +9,11 @@ const customTheme = extendTheme({
   },
   sizes: {
     navHeight: '50px',
-    mapHeight: '50vh',
+    mapHeight: '40vh',
+  },
+  zIndex: {
+    nav: 200,
+    select: 10,
   },
 });
 

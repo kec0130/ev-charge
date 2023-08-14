@@ -24,7 +24,7 @@ const Navigation = () => {
       <Flex
         position='fixed'
         top={0}
-        zIndex={100}
+        zIndex={theme.zIndex.nav}
         alignItems='center'
         h={theme.sizes.navHeight}
         w='full'

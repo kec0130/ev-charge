@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { Box, Divider, Spinner, useTheme } from '@chakra-ui/react';
 
 import useStation from '@/hooks/useStation';
@@ -18,25 +18,8 @@ const ChargerDetail = ({ isLocationFound }: { isLocationFound: boolean }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
 
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView();
-  }, [stationId]);
-
   return (
-    <Box
-      position='fixed'
-      bottom={0}
-      overflowY='auto'
-      h={`calc(${theme.sizes.mapHeight} - ${theme.sizes.navHeight} - 16px)`}
-      w='full'
-      maxW='container.xl'
-      my={2}
-      sx={{
-        '&::-webkit-scrollbar': {
-          display: 'none',
-        },
-      }}
-    >
+    <Box w='full' maxW='container.xl' pt={stationId ? 2 : 20} pb={stationId ? 6 : 0}>
       {!isLocationFound && (
         <Loading
           icon={<Spinner color={theme.colors.primary} size='xl' thickness='3px' />}
