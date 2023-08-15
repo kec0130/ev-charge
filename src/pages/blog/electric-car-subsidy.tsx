@@ -1,19 +1,31 @@
 import Image from 'next/image';
-import { Heading, Text, Table, Tr, Td, Th, Tbody, Thead, TableContainer } from '@chakra-ui/react';
+import {
+  Heading,
+  Text,
+  Table,
+  Tr,
+  Td,
+  Th,
+  Tbody,
+  Thead,
+  TableContainer,
+  Divider,
+} from '@chakra-ui/react';
 import Metadata from '@/components/Metadata';
 
 const ElectricCarSubsidy = () => {
   return (
     <>
       <Metadata
-        title='2023 전기차 보조금, 신청방법 핵심정보 요약 - 전기차지'
+        title='2023 전기차 보조금, 신청방법 핵심정보 요약'
         description='2023년 전기차 보조금과 관련한 정보와 지자체별 금액 등에 대해서 살펴보겠습니다.'
         keywords='전기차 보조금, 전기차 보조금 금액, 지자체별 전기차 보조금, 전기차 차량별 보조금, 전기차 보조금 신청, 전기차 보조금 신청 방법'
         url='/blog/electric-car-subsidy'
       />
-      <Heading as='h2' size='xl' mb={5}>
+      <Heading as='h2' size='xl'>
         2023 전기차 보조금, 신청방법 핵심정보 요약
       </Heading>
+      <Divider my={5} />
       <Text mb={5}>
         최근 전기차 수요가 급증하고 있습니다. 각 브랜드에서도 뛰어난 기술력으로 전기차를 출시하고
         있는데요. 또 하나의 특장점은 바로 보조금입니다. 그러나 전기차 보조금은 1년 단위로 수량이
