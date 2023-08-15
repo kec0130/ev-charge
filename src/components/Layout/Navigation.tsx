@@ -34,7 +34,7 @@ const Navigation = () => {
       >
         <h1>
           <Link href='/'>
-            <Image src='/images/common/logo.png' alt='전기차 충전소 찾기' width={90} height={38} />
+            <Image src='/logo.png' alt='전기차 충전소 찾기' width={90} height={38} />
           </Link>
         </h1>
         <Spacer />

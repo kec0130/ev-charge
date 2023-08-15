@@ -10,7 +10,7 @@ export default async function generateRssFeed() {
     description: '전기차와 관련된 유용한 정보를 알려드립니다.',
     site_url: siteURL,
     feed_url: `${siteURL}/rss.xml`,
-    image_url: `${siteURL}/images/common/logo.png`,
+    image_url: `${siteURL}/logo.png`,
   };
 
   const feed = new RSS(feedOptions);

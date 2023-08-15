@@ -26,7 +26,7 @@ const Blog = () => {
                 overflow='hidden'
               >
                 <Image
-                  src='/images/common/og.png'
+                  src='/og.png'
                   alt='전기차G'
                   width={300}
                   height={158}
