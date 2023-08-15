@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Box, Flex, Heading, List, ListItem, Text } from '@chakra-ui/react';
 import Metadata from '@/components/Metadata';
+import generateRssFeed from '@/utils/rss';
 
 const Blog = () => {
   return (
@@ -92,6 +93,14 @@ const Blog = () => {
       </List>
     </>
   );
+};
+
+export const getStaticProps = async () => {
+  generateRssFeed();
+
+  return {
+    props: {},
+  };
 };
 
 export default Blog;
