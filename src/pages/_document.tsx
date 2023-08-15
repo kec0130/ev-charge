@@ -10,6 +10,12 @@ export default function Document() {
           type='text/javascript'
           src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NCP_CLIENT_ID}&submodules=geocoder`}
         />
+        <Script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GOOGLE_ADS_CLIENT_ID}`}
+          crossOrigin='anonymous'
+          strategy='afterInteractive'
+        />
       </Head>
       <body>
         <Main />

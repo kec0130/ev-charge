@@ -12,7 +12,7 @@ const DEFAULT_META = {
   title: '전기차 충전소 찾기 - 전기차G',
   description: '전기차 충전소의 위치와 상세 정보, 실시간 충전 현황을 지도에서 확인하세요.',
   keywords: '전기차, 충전소, 전기차 충전소, 충전소 위치, 충전소 정보, 충전기 현황, 급속 충전',
-  url: 'https://ev-charge.vercel.app',
+  url: 'https://ev-charge.kr',
   image: '/images/common/og.png',
 };
 
