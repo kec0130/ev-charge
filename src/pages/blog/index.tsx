@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Box, Flex, Heading, List, ListItem, Text } from '@chakra-ui/react';
-import Metadata from '@/components/Metadata';
+import { Box, Divider, Flex, Heading, List, ListItem, Text } from '@chakra-ui/react';
+
 import generateRssFeed from '@/utils/rss';
+import Metadata from '@/components/Metadata';
 
 const Blog = () => {
   return (
@@ -13,8 +14,9 @@ const Blog = () => {
         keywords='전기차 블로그, 전기차 정보, 전기차 팁'
         url='/blog'
       />
+
       <List>
-        <ListItem mb={12}>
+        <ListItem>
           <Link href='/blog/ev-charge-introduction'>
             <Flex w='full' flexDir={['column', 'row']}>
               <Box
@@ -52,8 +54,9 @@ const Blog = () => {
             </Flex>
           </Link>
         </ListItem>
+        <Divider my={6} />
 
-        <ListItem mb={12}>
+        <ListItem>
           <Link href='/blog/electric-car-subsidy'>
             <Flex w='full' flexDir={['column', 'row']}>
               <Box
@@ -90,6 +93,7 @@ const Blog = () => {
             </Flex>
           </Link>
         </ListItem>
+        <Divider my={6} />
       </List>
     </>
   );
