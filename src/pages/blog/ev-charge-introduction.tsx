@@ -56,12 +56,8 @@ const EvChargeIntroduction = () => {
       <Image
         src='/images/blog/ev-charge-introduction/02.jpeg'
         alt='전기차 보조금'
-        width={1200}
-        height={630}
-        style={{
-          width: '100%',
-          height: 'auto',
-        }}
+        width={800}
+        height={879}
       />
       <br />
       <Text mb={5}>
