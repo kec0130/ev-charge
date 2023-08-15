@@ -39,7 +39,7 @@ const EvChargeIntroduction = () => {
         <strong>&apos;위치정보 팝업&apos;</strong> 동의를 하셔야 합니다.
       </Text>
       <Image
-        src='/images/blog/ev-charge-introduction/001.jpeg'
+        src='/images/blog/ev-charge-introduction/0001.jpeg'
         alt='전기차G 사용 방법'
         width={1200}
         height={630}
@@ -54,10 +54,14 @@ const EvChargeIntroduction = () => {
         내용처럼 이름과 주소가 표시되며, &apos;복사&apos; 기능도 활용하실 수 있습니다.
       </Text>
       <Image
-        src='/images/blog/ev-charge-introduction/002.jpeg'
+        src='/images/blog/ev-charge-introduction/0002.jpeg'
         alt='전기차G 사용 방법'
-        width={800}
-        height={879}
+        width={1200}
+        height={470}
+        style={{
+          width: '100%',
+          height: 'auto',
+        }}
       />
       <br />
       <Text mb={5}>
@@ -65,14 +69,10 @@ const EvChargeIntroduction = () => {
         후 선택도 가능합니다.
       </Text>
       <Image
-        src='/images/blog/ev-charge-introduction/003.jpeg'
+        src='/images/blog/ev-charge-introduction/0003.jpeg'
         alt='전기차G 사용 방법'
-        width={1200}
-        height={630}
-        style={{
-          width: '100%',
-          height: 'auto',
-        }}
+        width={800}
+        height={879}
       />
       <br />
     </>
