@@ -1,5 +1,5 @@
-import PostDetail from '@/components/blog/PostDetail';
-import Subsidy from '@/components/blog/content/Subsidy';
+import PostDetail from '@/components/Blog/PostDetail';
+import Subsidy from '@/components/Blog/Content/Subsidy';
 
 const Post = () => {
   return (

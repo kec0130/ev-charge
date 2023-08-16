@@ -1,5 +1,5 @@
-import PostDetail from '@/components/blog/PostDetail';
-import Introduction from '@/components/blog/content/Introduction';
+import PostDetail from '@/components/Blog/PostDetail';
+import Introduction from '@/components/Blog/Content/Introduction';
 
 const Post = () => {
   return (
