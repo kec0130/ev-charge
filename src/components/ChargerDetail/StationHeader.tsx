@@ -10,7 +10,7 @@ const StationHeader = ({ station }: { station: Charger }) => {
 
   return (
     <Box p={4}>
-      <Heading as='h1' size='md' mb={2}>
+      <Heading as='h2' size='md' mb={2}>
         {station.statNm}
       </Heading>
       <Flex gap={1}>

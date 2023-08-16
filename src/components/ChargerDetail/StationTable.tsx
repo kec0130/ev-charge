@@ -19,7 +19,7 @@ const StationTable = ({ station }: { station: Charger }) => {
 
   return (
     <TableContainer p={4}>
-      <Heading size='sm' mb={3}>
+      <Heading as='h3' size='sm' mb={3}>
         충전소 정보
       </Heading>
       <Divider w='full' />

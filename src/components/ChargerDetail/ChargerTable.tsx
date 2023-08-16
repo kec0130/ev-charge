@@ -18,7 +18,9 @@ const ChargerTable = ({ chargers }: { chargers: Charger[] }) => {
   return (
     <TableContainer p={4}>
       <Flex alignItems='center' gap={3} mb={3}>
-        <Heading size='sm'>충전기 현황</Heading>
+        <Heading as='h3' size='sm'>
+          충전기 현황
+        </Heading>
         <Text fontSize='sm' color='gray.500'>
           사용가능 {chargers.filter((charger) => charger.stat === '2').length}대 / 전체{' '}
           {chargers.length}대

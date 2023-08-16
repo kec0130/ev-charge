@@ -1,4 +1,4 @@
-import { Box, Divider, Spinner, useTheme } from '@chakra-ui/react';
+import { Box, Divider, Spinner, Text, useTheme } from '@chakra-ui/react';
 
 import useStation from '@/hooks/useStation';
 import useDistrict from '@/hooks/useDistrict';
@@ -21,7 +21,7 @@ const ChargerDetail = ({ isLoadingLocation }: Props) => {
   const theme = useTheme();
 
   return (
-    <Box w='full' maxW='container.xl' pt={stationId ? 2 : 20} pb={stationId ? 6 : 0}>
+    <Box w='full' maxW='container.xl' pt={stationId ? 2 : 20}>
       {isLoadingLocation && (
         <Loading
           icon={<Spinner color={theme.colors.primary} size='xl' thickness='3px' />}
@@ -45,6 +45,9 @@ const ChargerDetail = ({ isLoadingLocation }: Props) => {
           <ChargerTable chargers={chargers.data[stationId]} />
           <Divider h={2} mt={1} mb={1} bg='gray.200' />
           <StationTable station={chargers.data[stationId][0]} />
+          <Text color='gray.400' fontSize='xs' textAlign='center' mt={2} mb={6}>
+            데이터 출처: 한국환경공단
+          </Text>
         </>
       )}
     </Box>
