@@ -1,8 +1,8 @@
 import { Table, Tbody, Tr, Td, TableContainer, Heading, Divider } from '@chakra-ui/react';
-import { Charger } from '@/types/charger';
+import { ChargerDTO } from '@/types/charger';
 import { FACILITY_TYPE_DETAIL } from '@/constants/chargerCode';
 
-const StationTable = ({ station }: { station: Charger }) => {
+const StationTable = ({ station }: { station: ChargerDTO }) => {
   const {
     location,
     limitYn,

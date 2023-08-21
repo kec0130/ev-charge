@@ -1,11 +1,11 @@
-import { Charger } from '@/types/charger';
+import { ChargerDTO } from '@/types/charger';
 import useStation from './useStation';
 import useDistrict from './useDistrict';
 import useChargers from './useChargers';
 
 interface ChargerDetail {
-  station: Charger | null;
-  chargers: Charger[] | null;
+  station: ChargerDTO | null;
+  chargers: ChargerDTO[] | null;
 }
 
 const useChargerDetail = (): ChargerDetail => {

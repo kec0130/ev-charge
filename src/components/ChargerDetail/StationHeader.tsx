@@ -1,8 +1,8 @@
 import { Box, Flex, Heading, IconButton, Text } from '@chakra-ui/react';
-import { Charger } from '@/types/charger';
+import { ChargerDTO } from '@/types/charger';
 import { CopyIcon } from '../../../public/icons';
 
-const StationHeader = ({ station }: { station: Charger }) => {
+const StationHeader = ({ station }: { station: ChargerDTO }) => {
   const handleCopy: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     const { value } = e.currentTarget;
     navigator.clipboard.writeText(value);

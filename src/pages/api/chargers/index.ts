@@ -13,7 +13,7 @@ export default async function handler(
     return;
   }
 
-  const chargers = await getChargersAPI(districtCode);
+  const chargers = await getChargersAPI({ districtCode });
 
   const chargerByStation = chargers.items.item.reduce<ChargerByStation>((acc, item) => {
     if (!acc[item.statId]) {

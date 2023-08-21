@@ -4,14 +4,14 @@ export interface ChargerAPIRes {
   resultMsg: string;
   totalCount: number;
   items: {
-    item: Charger[];
+    item: ChargerDTO[];
   };
   pageNo: number;
   resultCode: string;
   numOfRows: number;
 }
 
-export interface Charger {
+export interface ChargerDTO {
   statNm: string;
   statId: string;
   chgerId: string;
@@ -57,9 +57,56 @@ export interface ChargerDataRes {
 }
 
 export interface ChargerByStation {
-  [statId: string]: Charger[];
+  [statId: string]: ChargerDTO[];
 }
 
 export interface Error {
   message: string;
+}
+
+export interface StationListRes {
+  stations: StationSimpleDTO[];
+  stationCount: number;
+  chargerCount: number;
+}
+
+export interface StationSimpleDTO {
+  statId: string;
+  statNm: string;
+  addr: string;
+  lat: string;
+  lng: string;
+  isAvailable: boolean;
+  hasFastCharger: boolean;
+}
+
+export interface StationDetailRes {
+  statId: string;
+  statNm: string;
+  addr: string;
+  location: string;
+  useTime: string;
+  bnm: string;
+  busiCall: string;
+  kindDetail: string;
+  parkingFree: Boolean;
+  note: string;
+  limitYn: Boolean;
+  limitDetail: string;
+  delYn: Boolean;
+  delDetail: string;
+  chargers: ChargerSimpleDTO[];
+  chargerCount: number;
+  availableChargerCount: number;
+}
+
+export interface ChargerSimpleDTO {
+  chgerId: string;
+  chgerType: ChargerType;
+  stat: ChargerStatus;
+  statUpdDt: string;
+  lastTsdt: string;
+  lastTedt: string;
+  nowTsdt: string;
+  output: string;
 }

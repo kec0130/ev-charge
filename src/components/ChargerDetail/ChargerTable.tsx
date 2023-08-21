@@ -11,10 +11,11 @@ import {
   Flex,
 } from '@chakra-ui/react';
 
-import { Charger } from '@/types/charger';
+import { ChargerDTO } from '@/types/charger';
 import { CHARGER_TYPE, STATUS } from '@/constants/chargerCode';
+import { isFastCharge } from '@/utils/charger';
 
-const ChargerTable = ({ chargers }: { chargers: Charger[] }) => {
+const ChargerTable = ({ chargers }: { chargers: ChargerDTO[] }) => {
   return (
     <TableContainer p={4}>
       <Flex alignItems='center' gap={3} mb={3}>
@@ -50,7 +51,7 @@ const ChargerTable = ({ chargers }: { chargers: Charger[] }) => {
                   <Td sx={{ width: '90px' }}>{STATUS[stat]}</Td>
                   {output && (
                     <Td sx={{ width: '100px' }}>
-                      {parseInt(output) >= 50 ? '급속' : '완속'} {output}kW
+                      {isFastCharge(output) ? '급속' : '완속'} {output}kW
                     </Td>
                   )}
                   <Td sx={{ whiteSpace: 'normal' }}>{CHARGER_TYPE[chgerType]}</Td>
