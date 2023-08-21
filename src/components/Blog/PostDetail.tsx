@@ -17,7 +17,9 @@ const PostDetail = ({ title, description, keywords, slug, content }: Props) => {
         {title}
       </Heading>
       <Divider my={6} />
-      <Box mb={6}>{content}</Box>
+      <Box as='section' mb={6}>
+        {content}
+      </Box>
     </>
   );
 };

@@ -1,10 +1,22 @@
 import Image from 'next/image';
-import { Heading, Text, UnorderedList, ListItem } from '@chakra-ui/react';
+import { Heading, Text, UnorderedList, ListItem, useTheme } from '@chakra-ui/react';
+import { convertToSlug } from '@/utils/blog';
+import TableOfContents from '../TableOfContents';
 
 const Introduction = () => {
+  const theme = useTheme();
+
   return (
     <>
-      <Heading as='h3' size='lg' my={5}>
+      <TableOfContents titles={['전기차충전소 찾기 - 전기차G 소개', '전기차G 이용방법']} />
+
+      <Heading
+        id={convertToSlug('전기차충전소 찾기 - 전기차G 소개')}
+        as='h3'
+        size='lg'
+        pt={theme.sizes.navHeight}
+        mb={5}
+      >
         전기차충전소 찾기 - 전기차G 소개
       </Heading>
       <UnorderedList mb={5}>
@@ -17,9 +29,14 @@ const Introduction = () => {
           충전소 이외 전기차 관련 부가서비스 정보제공을 지속 업데이트 할 예정입니다.
         </ListItem>
       </UnorderedList>
-      <br />
 
-      <Heading as='h3' size='lg' my={5}>
+      <Heading
+        id={convertToSlug('전기차G 이용방법')}
+        as='h3'
+        size='lg'
+        pt={theme.sizes.navHeight}
+        mb={5}
+      >
         전기차G 이용방법
       </Heading>
       <Text mb={5}>

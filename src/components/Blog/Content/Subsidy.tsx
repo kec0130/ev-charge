@@ -1,10 +1,34 @@
 import Image from 'next/image';
-import { Heading, Text, Table, Tr, Td, Th, Tbody, Thead, TableContainer } from '@chakra-ui/react';
+import {
+  Heading,
+  Text,
+  Table,
+  Tr,
+  Td,
+  Th,
+  Tbody,
+  Thead,
+  TableContainer,
+  useTheme,
+} from '@chakra-ui/react';
+
+import { convertToSlug } from '@/utils/blog';
+import TableOfContents from '../TableOfContents';
 
 const Subsidy = () => {
+  const theme = useTheme();
+
   return (
     <>
-      <Text mb={5}>
+      <TableOfContents
+        titles={[
+          '지자체별 전기차 보조금',
+          '차량별 국고 보조금 지원 금액',
+          '전기차 보조금 신청 절차 및 기간',
+        ]}
+      />
+
+      <Text my={5}>
         최근 전기차 수요가 급증하고 있습니다. 각 브랜드에서도 뛰어난 기술력으로 전기차를 출시하고
         있는데요. 또 하나의 특장점은 바로 보조금입니다. 그러나 전기차 보조금은 1년 단위로 수량이
         정해져 있기 때문에 선착순으로 혜택을 받으실 수 있는데요, 2023년 전기차 보조금과 관련한
@@ -20,9 +44,14 @@ const Subsidy = () => {
           height: 'auto',
         }}
       />
-      <br />
 
-      <Heading as='h3' size='lg' my={5}>
+      <Heading
+        id={convertToSlug('지자체별 전기차 보조금')}
+        as='h3'
+        size='lg'
+        pt={theme.sizes.navHeight}
+        mb={5}
+      >
         지자체별 전기차 보조금
       </Heading>
       <Text mb={5}>
@@ -104,9 +133,14 @@ const Subsidy = () => {
           </Tbody>
         </Table>
       </TableContainer>
-      <br />
 
-      <Heading as='h3' size='lg' my={5}>
+      <Heading
+        id={convertToSlug('차량별 국고 보조금 지원 금액')}
+        as='h3'
+        size='lg'
+        pt={theme.sizes.navHeight}
+        mb={5}
+      >
         차량별 국고 보조금 지원 금액
       </Heading>
       <Text mb={5}>
@@ -458,9 +492,14 @@ const Subsidy = () => {
           height: 'auto',
         }}
       />
-      <br />
 
-      <Heading as='h3' size='lg' my={5}>
+      <Heading
+        id={convertToSlug('전기차 보조금 신청 절차 및 기간')}
+        as='h3'
+        size='lg'
+        pt={theme.sizes.navHeight}
+        mb={5}
+      >
         전기차 보조금 신청 절차 및 기간
       </Heading>
       <Text mb={5}>
