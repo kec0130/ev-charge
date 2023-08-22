@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { ChargerSimpleDTO, Error, StationDetailRes } from '@/types/charger';
+import { ChargerSimpleDTO, Error, StationDetail } from '@/types/charger';
 import { getChargersAPI } from '@/services/charger';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<StationDetailRes | Error>
+  res: NextApiResponse<StationDetail | Error>
 ) {
   const { stationId } = req.query;
 
@@ -16,7 +16,7 @@ export default async function handler(
   const chargerData = await getChargersAPI({ stationId });
 
   const {
-    items: { item },
+    items: { item: data },
   } = chargerData;
 
   const {
@@ -34,9 +34,9 @@ export default async function handler(
     limitDetail,
     delYn,
     delDetail,
-  } = item[0];
+  } = data[0];
 
-  const chargers = item.reduce<ChargerSimpleDTO[]>((acc, cur) => {
+  const chargers = data.reduce<ChargerSimpleDTO[]>((acc, cur) => {
     const { chgerId, chgerType, stat, statUpdDt, lastTsdt, lastTedt, nowTsdt, output } = cur;
     return [...acc, { chgerId, chgerType, stat, statUpdDt, lastTsdt, lastTedt, nowTsdt, output }];
   }, []);
@@ -58,8 +58,8 @@ export default async function handler(
     limitDetail,
     delYn,
     delDetail,
-    chargers,
     chargerCount: chargers.length,
     availableChargerCount,
+    chargers,
   });
 }

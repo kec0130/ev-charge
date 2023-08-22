@@ -2,7 +2,8 @@ import { Box, Divider, Spinner, Text, useTheme } from '@chakra-ui/react';
 
 import useStation from '@/hooks/useStation';
 import useDistrict from '@/hooks/useDistrict';
-import useChargers from '@/hooks/useChargers';
+import useStations from '@/hooks/useStations';
+import useStationDetail from '@/hooks/useStationDetail';
 
 import StationHeader from './StationHeader';
 import ChargerTable from './ChargerTable';
@@ -17,7 +18,8 @@ interface Props {
 const ChargerDetail = ({ isLoadingLocation }: Props) => {
   const { stationId } = useStation();
   const { districtCode } = useDistrict();
-  const { chargers, isLoading: isLoadingData } = useChargers(districtCode || '');
+  const { data: stations, isLoading: isLoadingChargers } = useStations(districtCode || '');
+  const { data: stationDetail } = useStationDetail(stationId || '');
   const theme = useTheme();
 
   return (
@@ -29,22 +31,22 @@ const ChargerDetail = ({ isLoadingLocation }: Props) => {
         />
       )}
 
-      {isLoadingData && (
+      {isLoadingChargers && (
         <Loading
           icon={<Spinner color={theme.colors.primary} size='xl' thickness='3px' />}
           text='충전소 정보를 불러오는 중입니다...'
         />
       )}
 
-      {chargers && !stationId && <Loading icon={<CarLogoIcon />} text='충전소를 선택해주세요.' />}
+      {stations && !stationId && <Loading icon={<CarLogoIcon />} text='충전소를 선택해주세요.' />}
 
-      {chargers && stationId && (
+      {stations && stationId && (
         <>
-          <StationHeader station={chargers.data[stationId][0]} />
+          {/* <StationHeader station={chargers.data[stationId][0]} />
           <Divider h={2} mt={1} mb={1} bg='gray.200' />
           <ChargerTable chargers={chargers.data[stationId]} />
           <Divider h={2} mt={1} mb={1} bg='gray.200' />
-          <StationTable station={chargers.data[stationId][0]} />
+          <StationTable station={chargers.data[stationId][0]} /> */}
           <Text color='gray.400' fontSize='xs' textAlign='center' mt={2} mb={6}>
             데이터 출처: 한국환경공단
           </Text>

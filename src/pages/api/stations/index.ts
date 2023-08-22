@@ -1,11 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { Error, StationListRes, StationSimpleDTO } from '@/types/charger';
+import { Error, StationList, StationSimpleDTO } from '@/types/charger';
 import { getChargersAPI } from '@/services/charger';
 import { isFastCharge } from '@/utils/charger';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<StationListRes | Error>
+  res: NextApiResponse<StationList | Error>
 ) {
   const { districtCode } = req.query;
 
@@ -18,10 +18,10 @@ export default async function handler(
 
   const {
     totalCount,
-    items: { item },
+    items: { item: data },
   } = chargerData;
 
-  const stations = item.reduce<StationSimpleDTO[]>((acc, cur) => {
+  const stations = data.reduce<StationSimpleDTO[]>((acc, cur) => {
     const { statId, statNm, addr, lat, lng, stat, output } = cur;
     const existingStation = acc.find((station) => station.statId === statId);
     const isAvailable = stat === '2';
@@ -46,8 +46,8 @@ export default async function handler(
   }, []);
 
   res.status(200).json({
-    stations,
-    stationCount: stations.length,
     chargerCount: totalCount,
+    stationCount: stations.length,
+    stations,
   });
 }

@@ -2,10 +2,10 @@ import { Coord } from '@/types/map';
 import useMap from '@/hooks/useMap';
 import useStation from '@/hooks/useStation';
 import useDistrict from '@/hooks/useDistrict';
-import useChargers from '@/hooks/useChargers';
+import useStations from '@/hooks/useStations';
 
-import Marker from './NaverMap/Marker';
 import NaverMap from './NaverMap';
+import Marker from './NaverMap/Marker';
 import AddressSelector from './AddressSelector';
 
 interface Props {
@@ -17,26 +17,23 @@ export default function Map({ isLoadingLocation, currentLocation }: Props) {
   const { map } = useMap();
   const { stationId } = useStation();
   const { districtCode } = useDistrict();
-  const { chargers } = useChargers(districtCode || '');
+  const { data } = useStations(districtCode || '');
 
   return (
     <>
       <AddressSelector currentLocation={currentLocation} />
       <NaverMap isLoadingLocation={isLoadingLocation} currentLocation={currentLocation}>
         {!isLoadingLocation && <Marker map={map} coord={currentLocation} type='currentLocation' />}
-        {chargers &&
-          Object.keys(chargers.data).map((id) => {
-            const { lat, lng } = chargers.data[id][0];
-            return (
-              <Marker
-                map={map}
-                coord={[parseFloat(lat), parseFloat(lng)]}
-                type={stationId === id ? 'selected' : 'default'}
-                id={id}
-                key={id}
-              />
-            );
-          })}
+        {data &&
+          data.stations.map((station) => (
+            <Marker
+              map={map}
+              coord={[parseFloat(station.lat), parseFloat(station.lng)]}
+              type={stationId === station.statId ? 'selected' : 'default'}
+              id={station.statId}
+              key={station.statId}
+            />
+          ))}
       </NaverMap>
     </>
   );

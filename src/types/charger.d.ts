@@ -51,20 +51,11 @@ type ChargerStatus = keyof typeof STATUS;
 type ChargerMethod = '단독' | '동시';
 type Boolean = 'Y' | 'N';
 
-export interface ChargerDataRes {
-  data: ChargerByStation;
-  stationCount: number;
-}
-
-export interface ChargerByStation {
-  [statId: string]: ChargerDTO[];
-}
-
 export interface Error {
   message: string;
 }
 
-export interface StationListRes {
+export interface StationList {
   stations: StationSimpleDTO[];
   stationCount: number;
   chargerCount: number;
@@ -80,7 +71,7 @@ export interface StationSimpleDTO {
   hasFastCharger: boolean;
 }
 
-export interface StationDetailRes {
+export interface StationDetail {
   statId: string;
   statNm: string;
   addr: string;
