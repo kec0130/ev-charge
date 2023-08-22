@@ -11,11 +11,17 @@ import {
   Flex,
 } from '@chakra-ui/react';
 
-import { ChargerDTO } from '@/types/charger';
+import { ChargerSimpleDTO } from '@/types/charger';
 import { CHARGER_TYPE, STATUS } from '@/constants/chargerCode';
 import { isFastCharge } from '@/utils/charger';
 
-const ChargerTable = ({ chargers }: { chargers: ChargerDTO[] }) => {
+interface Props {
+  chargers: ChargerSimpleDTO[];
+  chargerCount: number;
+  availableCount: number;
+}
+
+const ChargerTable = ({ chargers, chargerCount, availableCount }: Props) => {
   return (
     <TableContainer p={4}>
       <Flex alignItems='center' gap={3} mb={3}>
@@ -23,8 +29,7 @@ const ChargerTable = ({ chargers }: { chargers: ChargerDTO[] }) => {
           충전기 현황
         </Heading>
         <Text fontSize='sm' color='gray.500'>
-          사용가능 {chargers.filter((charger) => charger.stat === '2').length}대 / 전체{' '}
-          {chargers.length}대
+          사용가능 {availableCount}대 / 전체 {chargerCount}대
         </Text>
       </Flex>
       <Divider w='full' />

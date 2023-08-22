@@ -1,8 +1,10 @@
 import { Table, Tbody, Tr, Td, TableContainer, Heading, Divider } from '@chakra-ui/react';
-import { ChargerDTO } from '@/types/charger';
+import { StationDetail } from '@/types/charger';
 import { FACILITY_TYPE_DETAIL } from '@/constants/chargerCode';
 
-const StationTable = ({ station }: { station: ChargerDTO }) => {
+const NO_DATA = '확인필요';
+
+const StationTable = ({ station }: { station: StationDetail }) => {
   const {
     location,
     limitYn,
@@ -46,11 +48,11 @@ const StationTable = ({ station }: { station: ChargerDTO }) => {
           )}
           <Tr>
             <Td>이용제한</Td>
-            <Td>{limitYn === 'N' ? '없음' : limitDetail || '확인 필요'}</Td>
+            <Td>{limitYn === 'N' ? '없음' : limitDetail || NO_DATA}</Td>
           </Tr>
           <Tr>
             <Td>주차요금</Td>
-            <Td>{!parkingFree ? '확인 필요' : parkingFree === 'Y' ? '유료' : '무료'}</Td>
+            <Td>{!parkingFree ? NO_DATA : parkingFree === 'Y' ? '유료' : '무료'}</Td>
           </Tr>
           {kindDetail && (
             <Tr>
@@ -60,7 +62,7 @@ const StationTable = ({ station }: { station: ChargerDTO }) => {
           )}
           <Tr>
             <Td>운영시간</Td>
-            <Td>{useTime.startsWith('24') ? '24시간' : useTime || '확인 필요'}</Td>
+            <Td>{useTime.startsWith('24') ? '24시간' : useTime || NO_DATA}</Td>
           </Tr>
           <Tr>
             <Td>운영기관</Td>
@@ -68,7 +70,7 @@ const StationTable = ({ station }: { station: ChargerDTO }) => {
           </Tr>
           <Tr>
             <Td>연락처</Td>
-            <Td>{busiCall}</Td>
+            <Td>{busiCall === 'null' ? NO_DATA : busiCall}</Td>
           </Tr>
 
           {delYn === 'Y' && (
