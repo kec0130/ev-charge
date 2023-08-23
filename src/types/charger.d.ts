@@ -91,12 +91,37 @@ export interface StationDetail {
   availableChargerCount: number;
 }
 
+export interface ChargerInfoRes {
+  chargerCount: number;
+  stationCount: number;
+  stations: StationDTO[];
+}
+
+export interface StationDTO {
+  statId: string;
+  lat: string;
+  lng: string;
+  statNm: string;
+  addr: string;
+  location: string;
+  useTime: string;
+  bnm: string;
+  busiCall: string;
+  kindDetail: string;
+  parkingFree: boolean | null;
+  note: string;
+  limitDetail: string;
+  delDetail: string;
+  availableCount: number;
+  hasFastCharger: boolean;
+  chargers: ChargerSimpleDTO[];
+}
+
 export interface ChargerSimpleDTO {
   chgerId: string;
   chgerType: ChargerType;
   stat: ChargerStatus;
   statUpdDt: string;
-  lastTsdt: string;
   lastTedt: string;
   nowTsdt: string;
   output: string;
