@@ -16,7 +16,6 @@ export const CHARGER_TYPE = {
   '05': 'DC차데모+DC콤보',
   '06': 'DC차데모+AC3상+DC콤보',
   '07': 'AC3상',
-  '89': 'H2',
 } as const;
 
 export const CITY_CODE: Record<string, string> = {

@@ -51,11 +51,9 @@ const ChargerTable = ({ chargers, availableCount }: Props) => {
               <Tr key={chgerId}>
                 <Td sx={{ width: '50px' }}>{chgerId}</Td>
                 <Td sx={{ width: '90px' }}>{STATUS[stat]}</Td>
-                {output && (
-                  <Td sx={{ width: '100px' }}>
-                    {isFastCharge(output) ? '급속' : '완속'} {output}kW
-                  </Td>
-                )}
+                <Td sx={{ width: '100px' }}>
+                  {isFastCharge(chgerType) ? '급속' : '완속'} {output && `${output}kW`}
+                </Td>
                 <Td sx={{ whiteSpace: 'normal' }}>{CHARGER_TYPE[chgerType]}</Td>
               </Tr>
             ))}

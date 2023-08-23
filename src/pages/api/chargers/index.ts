@@ -72,7 +72,7 @@ export default async function handler(
         limitDetail: removeNullString(limitDetail),
         delDetail: removeNullString(delDetail),
         availableCount: isAvailable(stat) ? 1 : 0,
-        hasFastCharger: isFastCharge(output),
+        hasFastCharger: isFastCharge(chgerType),
         chargers: [
           {
             chgerId,
@@ -87,7 +87,7 @@ export default async function handler(
       });
     } else {
       existingStation.availableCount += isAvailable(stat) ? 1 : 0;
-      existingStation.hasFastCharger = existingStation.hasFastCharger || isFastCharge(output);
+      existingStation.hasFastCharger = existingStation.hasFastCharger || isFastCharge(chgerType);
       existingStation.chargers.push({
         chgerId,
         chgerType,

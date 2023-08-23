@@ -1,7 +1,7 @@
-import { ChargerStatus } from '@/types/charger';
+import { ChargerStatus, ChargerType } from '@/types/charger';
 
-export function isFastCharge(output: string) {
-  return parseInt(output) >= 50;
+export function isFastCharge(chargerType: ChargerType) {
+  return chargerType !== '02';
 }
 
 export function isAvailable(stat: ChargerStatus) {
