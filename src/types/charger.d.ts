@@ -1,4 +1,5 @@
 import { CHARGER_TYPE, STATUS } from '@/constants/chargerCode';
+import { MarkerType } from './map';
 
 export interface ChargerAPIRes {
   resultMsg: string;
@@ -78,6 +79,7 @@ export interface StationDTO {
   delDetail: string;
   availableCount: number;
   hasFastCharger: boolean;
+  markerType: MarkerType;
   chargers: ChargerSimpleDTO[];
 }
 

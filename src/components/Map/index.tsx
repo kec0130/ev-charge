@@ -1,4 +1,4 @@
-import { Coord, MarkerType } from '@/types/map';
+import { Coord } from '@/types/map';
 import useMap from '@/hooks/useMap';
 import useStation from '@/hooks/useStation';
 import useDistrict from '@/hooks/useDistrict';
@@ -19,22 +19,18 @@ export default function Map({ isLoadingLocation, currentLocation }: Props) {
   const { districtCode } = useDistrict();
   const { data } = useChargers(districtCode || '');
 
-  const getMarkerType = (availableCount: number, hasFastCharger: boolean): MarkerType => {
-    return `${availableCount ? 'AVAILABLE' : 'UNAVAILABLE'}_${hasFastCharger ? 'FAST' : 'SLOW'}`;
-  };
-
   return (
     <>
       <AddressSelector currentLocation={currentLocation} />
       <NaverMap isLoadingLocation={isLoadingLocation} currentLocation={currentLocation}>
-        {!isLoadingLocation && <Marker map={map} coord={currentLocation} type='CURRENT_LOCATION' />}
+        {!isLoadingLocation && <Marker map={map} coord={currentLocation} isCurrentLocation />}
         {data &&
-          data.stations.map(({ lat, lng, statId, availableCount, hasFastCharger }) => (
+          data.stations.map(({ lat, lng, statId, markerType }) => (
             <Marker
               map={map}
               coord={[parseFloat(lat), parseFloat(lng)]}
-              type={getMarkerType(availableCount, hasFastCharger)}
-              selected={stationId === statId}
+              type={markerType}
+              isSelected={stationId === statId}
               id={statId}
               key={statId}
             />

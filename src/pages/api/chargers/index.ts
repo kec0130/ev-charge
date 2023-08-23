@@ -5,6 +5,7 @@ import { getChargersAPI } from '@/services/charger';
 import {
   convertToBooleanOrNull,
   convertUseTime,
+  getMarkerType,
   isAvailable,
   isFastCharge,
   removeNullString,
@@ -73,6 +74,7 @@ export default async function handler(
         delDetail: removeNullString(delDetail),
         availableCount: isAvailable(stat) ? 1 : 0,
         hasFastCharger: isFastCharge(chgerType),
+        markerType: 0,
         chargers: [
           {
             chgerId,
@@ -102,9 +104,14 @@ export default async function handler(
     return acc;
   }, []);
 
+  const stationsWithMarkerType = stations.map((station) => ({
+    ...station,
+    markerType: getMarkerType(station.availableCount, station.hasFastCharger),
+  }));
+
   res.status(200).json({
     chargerCount: totalCount,
     stationCount: stations.length,
-    stations,
+    stations: stationsWithMarkerType,
   });
 }

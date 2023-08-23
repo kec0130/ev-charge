@@ -1,4 +1,5 @@
 import { ChargerStatus, ChargerType } from '@/types/charger';
+import { MarkerType } from '@/types/map';
 
 export function isFastCharge(chargerType: ChargerType) {
   return chargerType !== '02';
@@ -23,3 +24,10 @@ export function convertToBooleanOrNull(text: string) {
 export function convertUseTime(useTime: string) {
   return useTime.startsWith('24') ? '24시간' : removeNullString(useTime);
 }
+
+export const getMarkerType = (availableCount: number, hasFastCharger: boolean): MarkerType => {
+  if (availableCount > 0) {
+    return hasFastCharger ? 0 : 1;
+  }
+  return hasFastCharger ? 2 : 3;
+};
