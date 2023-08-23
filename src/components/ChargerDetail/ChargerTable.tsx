@@ -17,11 +17,10 @@ import { isFastCharge } from '@/utils/charger';
 
 interface Props {
   chargers: ChargerSimpleDTO[];
-  chargerCount: number;
   availableCount: number;
 }
 
-const ChargerTable = ({ chargers, chargerCount, availableCount }: Props) => {
+const ChargerTable = ({ chargers, availableCount }: Props) => {
   return (
     <TableContainer p={4}>
       <Flex alignItems='center' gap={3} mb={3}>
@@ -29,7 +28,7 @@ const ChargerTable = ({ chargers, chargerCount, availableCount }: Props) => {
           충전기 현황
         </Heading>
         <Text fontSize='sm' color='gray.500'>
-          사용가능 {availableCount}대 / 전체 {chargerCount}대
+          사용가능 {availableCount}대 / 전체 {chargers.length}대
         </Text>
       </Flex>
       <Divider w='full' />
@@ -48,21 +47,18 @@ const ChargerTable = ({ chargers, chargerCount, availableCount }: Props) => {
       >
         <Table variant='simple' size='sm'>
           <Tbody>
-            {chargers.map((charger) => {
-              const { chgerId, chgerType, output, stat } = charger;
-              return (
-                <Tr key={chgerId}>
-                  <Td sx={{ width: '50px' }}>{chgerId}</Td>
-                  <Td sx={{ width: '90px' }}>{STATUS[stat]}</Td>
-                  {output && (
-                    <Td sx={{ width: '100px' }}>
-                      {isFastCharge(output) ? '급속' : '완속'} {output}kW
-                    </Td>
-                  )}
-                  <Td sx={{ whiteSpace: 'normal' }}>{CHARGER_TYPE[chgerType]}</Td>
-                </Tr>
-              );
-            })}
+            {chargers.map(({ chgerId, chgerType, output, stat }) => (
+              <Tr key={chgerId}>
+                <Td sx={{ width: '50px' }}>{chgerId}</Td>
+                <Td sx={{ width: '90px' }}>{STATUS[stat]}</Td>
+                {output && (
+                  <Td sx={{ width: '100px' }}>
+                    {isFastCharge(output) ? '급속' : '완속'} {output}kW
+                  </Td>
+                )}
+                <Td sx={{ whiteSpace: 'normal' }}>{CHARGER_TYPE[chgerType]}</Td>
+              </Tr>
+            ))}
           </Tbody>
         </Table>
       </Box>

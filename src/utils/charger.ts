@@ -19,3 +19,7 @@ export function convertToBoolean(text: string) {
 export function convertToBooleanOrNull(text: string) {
   return text === 'Y' ? true : text === 'N' ? false : null;
 }
+
+export function convertUseTime(useTime: string) {
+  return useTime.startsWith('24') ? '24시간' : removeNullString(useTime);
+}

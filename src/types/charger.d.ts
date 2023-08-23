@@ -55,42 +55,6 @@ export interface Error {
   message: string;
 }
 
-export interface StationList {
-  stations: StationSimpleDTO[];
-  stationCount: number;
-  chargerCount: number;
-}
-
-export interface StationSimpleDTO {
-  statId: string;
-  statNm: string;
-  addr: string;
-  lat: string;
-  lng: string;
-  isAvailable: boolean;
-  hasFastCharger: boolean;
-}
-
-export interface StationDetail {
-  statId: string;
-  statNm: string;
-  addr: string;
-  location: string;
-  useTime: string;
-  bnm: string;
-  busiCall: string;
-  kindDetail: string;
-  parkingFree: Boolean;
-  note: string;
-  limitYn: Boolean;
-  limitDetail: string;
-  delYn: Boolean;
-  delDetail: string;
-  chargers: ChargerSimpleDTO[];
-  chargerCount: number;
-  availableChargerCount: number;
-}
-
 export interface ChargerInfoRes {
   chargerCount: number;
   stationCount: number;

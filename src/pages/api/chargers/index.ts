@@ -4,6 +4,7 @@ import { ChargerInfoRes, Error, StationDTO } from '@/types/charger';
 import { getChargersAPI } from '@/services/charger';
 import {
   convertToBooleanOrNull,
+  convertUseTime,
   isAvailable,
   isFastCharge,
   removeNullString,
@@ -62,7 +63,7 @@ export default async function handler(
         statNm,
         addr,
         location: removeNullString(location),
-        useTime: removeNullString(useTime),
+        useTime: convertUseTime(useTime),
         bnm: removeNullString(bnm),
         busiCall: removeNullString(busiCall),
         kindDetail: removeNullString(kindDetail),
