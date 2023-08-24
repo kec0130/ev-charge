@@ -8,7 +8,7 @@ const TableOfContents = ({ titles }: { titles: string[] }) => {
       <Text fontWeight='bold' mb={1}>
         목차
       </Text>
-      <UnorderedList>
+      <UnorderedList sx={{ '& a:hover': { textDecor: 'underline' } }}>
         {titles.map((title) => (
           <ListItem key={title}>
             <Link href={`#${convertToSlug(title)}`}>{title}</Link>
