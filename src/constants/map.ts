@@ -6,16 +6,18 @@ export const INITIAL_CENTER: Coord = [37.5666103, 126.9783882]; // 서울시청
 export const INITIAL_DISTRICT_CODE = '11140'; // 중구
 
 export const MARKER_TYPE = {
-  0: 'AVAILABLE_FAST',
-  1: 'AVAILABLE_SLOW',
-  2: 'UNAVAILABLE_FAST',
-  3: 'UNAVAILABLE_SLOW',
+  AVAILABLE_FAST: 0,
+  AVAILABLE_SLOW: 1,
+  UNAVAILABLE_FAST: 2,
+  UNAVAILABLE_SLOW: 3,
 } as const;
 
-export const MARKER_IMAGE = {
-  AVAILABLE_FAST: '/images/markers/available-fast.png',
-  AVAILABLE_SLOW: '/images/markers/available-slow.png',
-  UNAVAILABLE_FAST: '/images/markers/unavailable-fast.png',
-  UNAVAILABLE_SLOW: '/images/markers/unavailable-slow.png',
-  CURRENT_LOCATION: '/images/markers/current-location.png',
-};
+export type MarkerType = (typeof MARKER_TYPE)[keyof typeof MARKER_TYPE];
+
+export const MARKER_IMAGES = [
+  '/images/markers/available-fast.png',
+  '/images/markers/available-slow.png',
+  '/images/markers/unavailable-fast.png',
+  '/images/markers/unavailable-slow.png',
+  '/images/markers/current-location.png',
+];

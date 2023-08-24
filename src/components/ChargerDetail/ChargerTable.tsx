@@ -38,6 +38,7 @@ const ChargerTable = ({ chargers, availableCount }: Props) => {
         sx={{
           '&::-webkit-scrollbar': {
             width: '4px',
+            height: '4px',
           },
           '&::-webkit-scrollbar-thumb': {
             bg: 'gray.300',

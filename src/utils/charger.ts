@@ -1,5 +1,5 @@
+import { MARKER_TYPE, MarkerType } from '@/constants/map';
 import { ChargerStatus, ChargerType } from '@/types/charger';
-import { MarkerType } from '@/types/map';
 
 export function isFastCharge(chargerType: ChargerType) {
   return chargerType !== '02';
@@ -27,7 +27,7 @@ export function convertUseTime(useTime: string) {
 
 export const getMarkerType = (availableCount: number, hasFastCharger: boolean): MarkerType => {
   if (availableCount > 0) {
-    return hasFastCharger ? 0 : 1;
+    return hasFastCharger ? MARKER_TYPE.AVAILABLE_FAST : MARKER_TYPE.AVAILABLE_SLOW;
   }
-  return hasFastCharger ? 2 : 3;
+  return hasFastCharger ? MARKER_TYPE.UNAVAILABLE_FAST : MARKER_TYPE.UNAVAILABLE_SLOW;
 };

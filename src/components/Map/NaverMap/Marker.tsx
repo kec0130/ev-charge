@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
-import { Coord, MarkerType, NaverMap } from '@/types/map';
-import { INITIAL_ZOOM, MARKER_IMAGE, MARKER_TYPE } from '@/constants/map';
+import { Coord, NaverMap } from '@/types/map';
+import { INITIAL_ZOOM, MARKER_IMAGES, MarkerType } from '@/constants/map';
 import useStation from '@/hooks/useStation';
 import useMap from '@/hooks/useMap';
 
@@ -31,11 +31,11 @@ export default function Marker({ map, coord, type, id, isSelected, isCurrentLoca
   useEffect(() => {
     const markerIcon: naver.maps.ImageIcon = isCurrentLocation
       ? {
-          url: MARKER_IMAGE.CURRENT_LOCATION,
+          url: MARKER_IMAGES[MARKER_IMAGES.length - 1],
           scaledSize: new naver.maps.Size(24, 24),
         }
       : {
-          url: MARKER_IMAGE[MARKER_TYPE[type!]],
+          url: MARKER_IMAGES[type!],
           scaledSize: new naver.maps.Size(isSelected ? [36, 44] : [24, 32]),
         };
 

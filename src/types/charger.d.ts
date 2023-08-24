@@ -1,5 +1,5 @@
 import { CHARGER_TYPE, STATUS } from '@/constants/chargerCode';
-import { MarkerType } from './map';
+import { MarkerType } from '@/constants/map';
 
 export interface ChargerAPIRes {
   resultMsg: string;
