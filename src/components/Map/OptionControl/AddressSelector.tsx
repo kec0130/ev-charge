@@ -69,7 +69,6 @@ const AddressSelector = ({ currentLocation }: { currentLocation: Coord }) => {
         icon={<LocationIcon style={{ fill: theme.colors.warning }} />}
         aria-label='현재 위치로 이동'
         size='sm'
-        shadow='md'
         bgColor='white'
         rounded='full'
         onClick={handleCurrentLocationClick}

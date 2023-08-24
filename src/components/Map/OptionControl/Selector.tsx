@@ -9,7 +9,7 @@ interface Props {
 const Selector = ({ buttonText, children }: Props) => {
   return (
     <Menu>
-      <MenuButton as={Button} size='sm' shadow='md' bgColor='white' rightIcon={<ChevronDownIcon />}>
+      <MenuButton as={Button} size='sm' bgColor='white' rightIcon={<ChevronDownIcon />}>
         {buttonText}
       </MenuButton>
       <MenuList
