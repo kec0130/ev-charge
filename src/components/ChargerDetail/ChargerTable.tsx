@@ -9,6 +9,8 @@ import {
   Box,
   Text,
   Flex,
+  useTheme,
+  Circle,
 } from '@chakra-ui/react';
 
 import { ChargerSimpleDTO } from '@/types/charger';
@@ -21,6 +23,19 @@ interface Props {
 }
 
 const ChargerTable = ({ chargers, availableCount }: Props) => {
+  const theme = useTheme();
+
+  const getStatusColor = (stat: string) => {
+    switch (stat) {
+      case '2':
+        return theme.colors.primary;
+      case '3':
+        return theme.colors.accent;
+      default:
+        return theme.colors.gray[300];
+    }
+  };
+
   return (
     <TableContainer p={4}>
       <Flex alignItems='center' gap={3} mb={3}>
@@ -50,9 +65,14 @@ const ChargerTable = ({ chargers, availableCount }: Props) => {
           <Tbody>
             {chargers.map(({ chgerId, chgerType, output, stat }) => (
               <Tr key={chgerId}>
-                <Td sx={{ width: '50px' }}>{chgerId}</Td>
-                <Td sx={{ width: '90px' }}>{STATUS[stat]}</Td>
-                <Td sx={{ width: '100px' }}>
+                <Td w={50}>{chgerId}</Td>
+                <Td w={105}>
+                  <Flex alignItems='center' gap={1.5}>
+                    {STATUS[stat]}
+                    <Circle size='7px' bg={getStatusColor(stat)} />
+                  </Flex>
+                </Td>
+                <Td w={100}>
                   {isFastCharge(chgerType) ? '급속' : '완속'} {output && `${output}kW`}
                 </Td>
                 <Td sx={{ whiteSpace: 'normal' }}>{CHARGER_TYPE[chgerType]}</Td>
