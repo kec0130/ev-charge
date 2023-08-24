@@ -6,7 +6,7 @@ import useChargers from '@/hooks/useChargers';
 
 import NaverMap from './NaverMap';
 import Marker from './NaverMap/Marker';
-import AddressSelector from './AddressSelector';
+import OptionControl from './OptionControl';
 
 interface Props {
   isLoadingLocation: boolean;
@@ -21,7 +21,7 @@ export default function Map({ isLoadingLocation, currentLocation }: Props) {
 
   return (
     <>
-      <AddressSelector currentLocation={currentLocation} />
+      <OptionControl currentLocation={currentLocation} />
       <NaverMap isLoadingLocation={isLoadingLocation} currentLocation={currentLocation}>
         {!isLoadingLocation && <Marker map={map} coord={currentLocation} isCurrentLocation />}
         {data &&

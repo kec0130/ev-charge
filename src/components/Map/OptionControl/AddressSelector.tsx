@@ -1,5 +1,5 @@
 import { MouseEventHandler, useEffect, useState } from 'react';
-import { Flex, IconButton, MenuItem, useTheme } from '@chakra-ui/react';
+import { IconButton, MenuItem, useTheme } from '@chakra-ui/react';
 
 import { CITY_CODE, DISTRICT_CODE } from '@/constants/chargerCode';
 import { Coord } from '@/types/map';
@@ -46,7 +46,7 @@ const AddressSelector = ({ currentLocation }: { currentLocation: Coord }) => {
   }, [districtCode]);
 
   return (
-    <Flex pos='absolute' zIndex={theme.zIndex.select} p={3} gap={3}>
+    <>
       <Selector buttonText={cityCode ? CITY_CODE[cityCode] : '시/도 선택'}>
         {Object.keys(CITY_CODE).map((key) => (
           <MenuItem key={key} value={key} onClick={handleCityChange}>
@@ -74,7 +74,7 @@ const AddressSelector = ({ currentLocation }: { currentLocation: Coord }) => {
         rounded='full'
         onClick={handleCurrentLocationClick}
       />
-    </Flex>
+    </>
   );
 };
 
