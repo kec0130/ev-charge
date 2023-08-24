@@ -1,39 +1,26 @@
 import { useEffect } from 'react';
 
-import { Coord, MarkerType, NaverMap } from '@/types/map';
-import { INITIAL_ZOOM } from '@/constants/map';
+import { Coord, NaverMap } from '@/types/map';
+import { INITIAL_ZOOM, MARKER_IMAGES, MarkerType } from '@/constants/map';
 import useStation from '@/hooks/useStation';
 import useMap from '@/hooks/useMap';
 
 interface Props {
   map?: NaverMap;
   coord: Coord;
-  type: MarkerType;
+  type?: MarkerType;
   id?: string;
+  isSelected?: boolean;
+  isCurrentLocation?: boolean;
 }
 
-export default function Marker({ map, coord, type, id }: Props) {
+export default function Marker({ map, coord, type, id, isSelected, isCurrentLocation }: Props) {
   const { setStationId, clearStationId } = useStation();
   const { moveMap } = useMap();
 
-  const markerIcons: Record<MarkerType, naver.maps.ImageIcon> = {
-    default: {
-      url: '/images/markers/default.png',
-      scaledSize: new naver.maps.Size(24, 32),
-    },
-    selected: {
-      url: '/images/markers/default.png',
-      scaledSize: new naver.maps.Size(36, 44),
-    },
-    currentLocation: {
-      url: '/images/markers/current-location.png',
-      scaledSize: new naver.maps.Size(24, 24),
-    },
-  };
-
   const handleMarkerClick = () => {
-    if (!id) return;
-    if (type === 'selected') {
+    if (!id || isCurrentLocation) return;
+    if (isSelected) {
       clearStationId();
       return;
     }
@@ -42,11 +29,21 @@ export default function Marker({ map, coord, type, id }: Props) {
   };
 
   useEffect(() => {
+    const markerIcon: naver.maps.ImageIcon = isCurrentLocation
+      ? {
+          url: MARKER_IMAGES[MARKER_IMAGES.length - 1],
+          scaledSize: new naver.maps.Size(24, 24),
+        }
+      : {
+          url: MARKER_IMAGES[type!],
+          scaledSize: new naver.maps.Size(isSelected ? [36, 44] : [24, 32]),
+        };
+
     const markerOptions: naver.maps.MarkerOptions = {
       map,
       position: new naver.maps.LatLng(...coord),
-      icon: markerIcons[type],
-      zIndex: type === 'selected' ? 1 : 0,
+      icon: markerIcon,
+      zIndex: isSelected ? 1 : 0,
     };
 
     const marker = new naver.maps.Marker(markerOptions);
@@ -57,7 +54,7 @@ export default function Marker({ map, coord, type, id }: Props) {
       marker.setMap(null);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [map, type]);
+  }, [map, isSelected]);
 
   return <></>;
 }

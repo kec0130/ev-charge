@@ -9,7 +9,7 @@ export const getChargersAPI = async (districtCode: string) => {
   const res = await api.get<ChargerAPIRes>('/getChargerInfo', {
     params: {
       serviceKey: process.env.NEXT_PUBLIC_API_SERVICE_KEY,
-      numOfRows: 10000,
+      numOfRows: 9999,
       pageNo: 1,
       dataType: 'JSON',
       zscode: districtCode,

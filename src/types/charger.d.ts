@@ -1,17 +1,18 @@
 import { CHARGER_TYPE, STATUS } from '@/constants/chargerCode';
+import { MarkerType } from '@/constants/map';
 
 export interface ChargerAPIRes {
   resultMsg: string;
   totalCount: number;
   items: {
-    item: Charger[];
+    item: ChargerDTO[];
   };
   pageNo: number;
   resultCode: string;
   numOfRows: number;
 }
 
-export interface Charger {
+export interface ChargerDTO {
   statNm: string;
   statId: string;
   chgerId: string;
@@ -51,15 +52,43 @@ type ChargerStatus = keyof typeof STATUS;
 type ChargerMethod = '단독' | '동시';
 type Boolean = 'Y' | 'N';
 
-export interface ChargerDataRes {
-  data: ChargerByStation;
-  stationCount: number;
-}
-
-export interface ChargerByStation {
-  [statId: string]: Charger[];
-}
-
 export interface Error {
   message: string;
+}
+
+export interface ChargerInfoRes {
+  chargerCount: number;
+  stationCount: number;
+  stations: StationDTO[];
+}
+
+export interface StationDTO {
+  statId: string;
+  lat: string;
+  lng: string;
+  statNm: string;
+  addr: string;
+  location: string;
+  useTime: string;
+  bnm: string;
+  busiCall: string;
+  kindDetail: string;
+  parkingFree: boolean | null;
+  note: string;
+  limitDetail: string;
+  delDetail: string;
+  availableCount: number;
+  hasFastCharger: boolean;
+  markerType: MarkerType;
+  chargers: ChargerSimpleDTO[];
+}
+
+export interface ChargerSimpleDTO {
+  chgerId: string;
+  chgerType: ChargerType;
+  stat: ChargerStatus;
+  statUpdDt: string;
+  lastTedt: string;
+  nowTsdt: string;
+  output: string;
 }

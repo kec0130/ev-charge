@@ -11,10 +11,16 @@ import {
   Flex,
 } from '@chakra-ui/react';
 
-import { Charger } from '@/types/charger';
+import { ChargerSimpleDTO } from '@/types/charger';
 import { CHARGER_TYPE, STATUS } from '@/constants/chargerCode';
+import { isFastCharge } from '@/utils/charger';
 
-const ChargerTable = ({ chargers }: { chargers: Charger[] }) => {
+interface Props {
+  chargers: ChargerSimpleDTO[];
+  availableCount: number;
+}
+
+const ChargerTable = ({ chargers, availableCount }: Props) => {
   return (
     <TableContainer p={4}>
       <Flex alignItems='center' gap={3} mb={3}>
@@ -22,8 +28,7 @@ const ChargerTable = ({ chargers }: { chargers: Charger[] }) => {
           충전기 현황
         </Heading>
         <Text fontSize='sm' color='gray.500'>
-          사용가능 {chargers.filter((charger) => charger.stat === '2').length}대 / 전체{' '}
-          {chargers.length}대
+          사용가능 {availableCount}대 / 전체 {chargers.length}대
         </Text>
       </Flex>
       <Divider w='full' />
@@ -33,6 +38,7 @@ const ChargerTable = ({ chargers }: { chargers: Charger[] }) => {
         sx={{
           '&::-webkit-scrollbar': {
             width: '4px',
+            height: '4px',
           },
           '&::-webkit-scrollbar-thumb': {
             bg: 'gray.300',
@@ -42,21 +48,16 @@ const ChargerTable = ({ chargers }: { chargers: Charger[] }) => {
       >
         <Table variant='simple' size='sm'>
           <Tbody>
-            {chargers.map((charger) => {
-              const { chgerId, chgerType, output, stat } = charger;
-              return (
-                <Tr key={chgerId}>
-                  <Td sx={{ width: '50px' }}>{chgerId}</Td>
-                  <Td sx={{ width: '90px' }}>{STATUS[stat]}</Td>
-                  {output && (
-                    <Td sx={{ width: '100px' }}>
-                      {parseInt(output) >= 50 ? '급속' : '완속'} {output}kW
-                    </Td>
-                  )}
-                  <Td sx={{ whiteSpace: 'normal' }}>{CHARGER_TYPE[chgerType]}</Td>
-                </Tr>
-              );
-            })}
+            {chargers.map(({ chgerId, chgerType, output, stat }) => (
+              <Tr key={chgerId}>
+                <Td sx={{ width: '50px' }}>{chgerId}</Td>
+                <Td sx={{ width: '90px' }}>{STATUS[stat]}</Td>
+                <Td sx={{ width: '100px' }}>
+                  {isFastCharge(chgerType) ? '급속' : '완속'} {output && `${output}kW`}
+                </Td>
+                <Td sx={{ whiteSpace: 'normal' }}>{CHARGER_TYPE[chgerType]}</Td>
+              </Tr>
+            ))}
           </Tbody>
         </Table>
       </Box>

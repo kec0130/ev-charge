@@ -10,14 +10,11 @@ import StationTable from './StationTable';
 import Loading from './Loading';
 import { CarLogoIcon } from '../../../public/icons';
 
-interface Props {
-  isLoadingLocation: boolean;
-}
-
-const ChargerDetail = ({ isLoadingLocation }: Props) => {
+const ChargerDetail = ({ isLoadingLocation }: { isLoadingLocation: boolean }) => {
   const { stationId } = useStation();
   const { districtCode } = useDistrict();
-  const { chargers, isLoading: isLoadingData } = useChargers(districtCode || '');
+  const { data, isLoading: isLoadingChargers } = useChargers(districtCode || '');
+  const station = data?.stations.find((station) => station.statId === stationId);
   const theme = useTheme();
 
   return (
@@ -25,26 +22,26 @@ const ChargerDetail = ({ isLoadingLocation }: Props) => {
       {isLoadingLocation && (
         <Loading
           icon={<Spinner color={theme.colors.primary} size='xl' thickness='3px' />}
-          text='현 위치를 찾는 중입니다...'
+          text='현 위치를 찾는 중입니다.'
         />
       )}
 
-      {isLoadingData && (
+      {isLoadingChargers && (
         <Loading
           icon={<Spinner color={theme.colors.primary} size='xl' thickness='3px' />}
-          text='충전소 정보를 불러오는 중입니다...'
+          text='충전소 정보를 불러오는 중입니다.'
         />
       )}
 
-      {chargers && !stationId && <Loading icon={<CarLogoIcon />} text='충전소를 선택해주세요.' />}
+      {data && !station && <Loading icon={<CarLogoIcon />} text='충전소를 선택해주세요.' />}
 
-      {chargers && stationId && (
+      {data && station && (
         <>
-          <StationHeader station={chargers.data[stationId][0]} />
+          <StationHeader station={station} />
           <Divider h={2} mt={1} mb={1} bg='gray.200' />
-          <ChargerTable chargers={chargers.data[stationId]} />
+          <ChargerTable chargers={station.chargers} availableCount={station.availableCount} />
           <Divider h={2} mt={1} mb={1} bg='gray.200' />
-          <StationTable station={chargers.data[stationId][0]} />
+          <StationTable station={station} />
           <Text color='gray.400' fontSize='xs' textAlign='center' mt={2} mb={6}>
             데이터 출처: 한국환경공단
           </Text>

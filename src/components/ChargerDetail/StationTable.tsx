@@ -1,19 +1,19 @@
 import { Table, Tbody, Tr, Td, TableContainer, Heading, Divider } from '@chakra-ui/react';
-import { Charger } from '@/types/charger';
+import { StationDTO } from '@/types/charger';
 import { FACILITY_TYPE_DETAIL } from '@/constants/chargerCode';
 
-const StationTable = ({ station }: { station: Charger }) => {
+const NO_DATA = '확인필요';
+
+const StationTable = ({ station }: { station: StationDTO }) => {
   const {
     location,
-    limitYn,
+    note,
     limitDetail,
     parkingFree,
     kindDetail,
     useTime,
     bnm,
     busiCall,
-    note,
-    delYn,
     delDetail,
   } = station;
 
@@ -32,7 +32,7 @@ const StationTable = ({ station }: { station: Charger }) => {
         }}
       >
         <Tbody>
-          {location && location !== 'null' && (
+          {location && (
             <Tr>
               <Td>상세위치</Td>
               <Td>{location}</Td>
@@ -46,11 +46,11 @@ const StationTable = ({ station }: { station: Charger }) => {
           )}
           <Tr>
             <Td>이용제한</Td>
-            <Td>{limitYn === 'N' ? '없음' : limitDetail || '확인 필요'}</Td>
+            <Td>{limitDetail || '없음'}</Td>
           </Tr>
           <Tr>
             <Td>주차요금</Td>
-            <Td>{!parkingFree ? '확인 필요' : parkingFree === 'Y' ? '유료' : '무료'}</Td>
+            <Td>{parkingFree === null ? NO_DATA : parkingFree ? '무료' : '유료'}</Td>
           </Tr>
           {kindDetail && (
             <Tr>
@@ -60,21 +60,20 @@ const StationTable = ({ station }: { station: Charger }) => {
           )}
           <Tr>
             <Td>운영시간</Td>
-            <Td>{useTime.startsWith('24') ? '24시간' : useTime || '확인 필요'}</Td>
+            <Td>{useTime || NO_DATA}</Td>
           </Tr>
           <Tr>
             <Td>운영기관</Td>
-            <Td>{bnm}</Td>
+            <Td>{bnm || NO_DATA}</Td>
           </Tr>
           <Tr>
             <Td>연락처</Td>
-            <Td>{busiCall}</Td>
+            <Td>{busiCall || NO_DATA}</Td>
           </Tr>
-
-          {delYn === 'Y' && (
+          {delDetail && (
             <Tr>
               <Td>삭제 여부</Td>
-              <Td>{delDetail || '삭제됨'}</Td>
+              <Td>{delDetail}</Td>
             </Tr>
           )}
         </Tbody>

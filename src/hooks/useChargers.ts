@@ -1,21 +1,19 @@
-import axios from 'axios';
 import useSWR from 'swr';
-import { ChargerDataRes } from '@/types/charger';
+import axios from 'axios';
+import { ChargerInfoRes } from '@/types/charger';
 
-const getChargersByDistrict = async (url: string, districtCode: string) => {
-  const res = await axios.get<ChargerDataRes>(url, { params: { districtCode } });
-  return res.data;
-};
+const fetcher = (url: string, districtCode: string) =>
+  axios.get<ChargerInfoRes>(url, { params: { districtCode } }).then((res) => res.data);
 
 const useChargers = (districtCode: string) => {
   const { data, isLoading } = useSWR(
     districtCode ? ['/api/chargers', districtCode] : null,
-    ([url, districtCode]) => getChargersByDistrict(url, districtCode),
-    { dedupingInterval: 10000 }
+    ([url, districtCode]) => fetcher(url, districtCode),
+    { dedupingInterval: 1000 * 10 }
   );
 
   return {
-    chargers: data,
+    data,
     isLoading,
   };
 };
