@@ -3,6 +3,7 @@ import { Box, Divider, Spinner, Text, useTheme } from '@chakra-ui/react';
 import useStation from '@/hooks/useStation';
 import useDistrict from '@/hooks/useDistrict';
 import useChargers from '@/hooks/useChargers';
+import useFilters from '@/hooks/useFilters';
 
 import StationHeader from './StationHeader';
 import ChargerTable from './ChargerTable';
@@ -13,7 +14,8 @@ import { CarLogoIcon } from '../../../public/icons';
 const ChargerDetail = ({ isLoadingLocation }: { isLoadingLocation: boolean }) => {
   const { stationId } = useStation();
   const { districtCode } = useDistrict();
-  const { data, isLoading: isLoadingChargers } = useChargers(districtCode || '');
+  const { filterOption } = useFilters();
+  const { data, isLoading: isLoadingChargers } = useChargers(districtCode || '', filterOption);
   const station = data?.stations.find((station) => station.statId === stationId);
   const theme = useTheme();
 
@@ -33,7 +35,9 @@ const ChargerDetail = ({ isLoadingLocation }: { isLoadingLocation: boolean }) =>
         />
       )}
 
-      {data && !station && <Loading icon={<CarLogoIcon />} text='충전소를 선택해주세요.' />}
+      {!isLoadingChargers && data && !station && (
+        <Loading icon={<CarLogoIcon />} text='충전소를 선택해주세요.' />
+      )}
 
       {data && station && (
         <>
