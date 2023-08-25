@@ -1,9 +1,7 @@
 import { Box, Divider, Spinner, Text, useTheme } from '@chakra-ui/react';
 
 import useCurrentStation from '@/hooks/useCurrentStation';
-import useCurrentDistrict from '@/hooks/useCurrentDistrict';
 import useChargers from '@/hooks/useChargers';
-import useFilters from '@/hooks/useFilters';
 
 import StationHeader from './StationHeader';
 import ChargerTable from './ChargerTable';
@@ -13,18 +11,12 @@ import { CarLogoIcon, MarkerErrorIcon } from '../../../public/icons';
 
 const ChargerDetail = ({ isLoadingLocation }: { isLoadingLocation: boolean }) => {
   const { currentStation } = useCurrentStation();
-  const { currentDistrict } = useCurrentDistrict();
-  const { filterOption } = useFilters();
-  const {
-    data,
-    isLoading: isLoadingData,
-    error,
-  } = useChargers(currentDistrict || '', filterOption);
+  const { data, isLoading: isLoadingData, error } = useChargers();
   const station = data?.stations.find((station) => station.statId === currentStation);
   const theme = useTheme();
 
   return (
-    <Box w='full' maxW='container.xl' pt={currentStation ? 2 : 20}>
+    <Box w='full' maxW='container.xl'>
       {isLoadingLocation && (
         <Status
           icon={<Spinner color={theme.colors.primary} size='xl' thickness='3px' />}
@@ -52,7 +44,7 @@ const ChargerDetail = ({ isLoadingLocation }: { isLoadingLocation: boolean }) =>
       )}
 
       {data && station && (
-        <>
+        <Box pt={2}>
           <StationHeader station={station} />
           <Divider h={2} mt={1} mb={1} bg='gray.200' />
           <ChargerTable chargers={station.chargers} availableCount={station.availableCount} />
@@ -61,7 +53,7 @@ const ChargerDetail = ({ isLoadingLocation }: { isLoadingLocation: boolean }) =>
           <Text color='gray.400' fontSize='xs' textAlign='center' mt={2} mb={6}>
             데이터 출처: 한국환경공단
           </Text>
-        </>
+        </Box>
       )}
     </Box>
   );

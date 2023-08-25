@@ -1,9 +1,7 @@
 import { Coord } from '@/types/map';
 import useMap from '@/hooks/useMap';
 import useCurrentStation from '@/hooks/useCurrentStation';
-import useCurrentDistrict from '@/hooks/useCurrentDistrict';
 import useChargers from '@/hooks/useChargers';
-import useFilters from '@/hooks/useFilters';
 
 import NaverMap from './NaverMap';
 import Marker from './NaverMap/Marker';
@@ -17,9 +15,7 @@ interface Props {
 export default function Map({ isLoadingLocation, currentLocation }: Props) {
   const { map } = useMap();
   const { currentStation } = useCurrentStation();
-  const { currentDistrict } = useCurrentDistrict();
-  const { filterOption } = useFilters();
-  const { data } = useChargers(currentDistrict || '', filterOption);
+  const { data } = useChargers();
 
   return (
     <>

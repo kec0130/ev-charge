@@ -8,7 +8,7 @@ interface Props {
 
 const Status = ({ icon, text, footer }: Props) => {
   return (
-    <Flex h='full' justify='center' align='center' flexDir='column' gap={6}>
+    <Flex h='40vh' justify='center' align='center' flexDir='column' gap={6}>
       {icon}
       <Text color='gray.600' whiteSpace='pre' textAlign='center'>
         {text}
