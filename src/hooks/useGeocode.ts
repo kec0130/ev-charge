@@ -23,6 +23,12 @@ const useGeocode = () => {
 
         try {
           const city = response.v2.results[0].region.area1.name;
+
+          if (city === '세종특별자치시') {
+            updateDistrict('36110');
+            return;
+          }
+
           const district = response.v2.results[0].region.area2.name.split(' ')[0];
           const matchedDistricts = Object.keys(DISTRICT_CODE).filter(
             (key) => DISTRICT_CODE[key] === district
@@ -34,6 +40,7 @@ const useGeocode = () => {
               district.startsWith(matchedCity!)
             );
             updateDistrict(matchedDistrict || '');
+            return;
           }
 
           updateDistrict(matchedDistricts[0]);
@@ -44,20 +51,22 @@ const useGeocode = () => {
     );
 
   const geocode = (cityCode: string, districtCode: string) => {
-    naver.maps.Service.geocode(
-      { query: `${CITY_CODE[cityCode]} ${DISTRICT_CODE[districtCode]}` },
-      (status, response) => {
-        if (status !== naver.maps.Service.Status.OK) return;
+    const query =
+      cityCode === '36'
+        ? CITY_CODE[cityCode]
+        : `${CITY_CODE[cityCode]} ${DISTRICT_CODE[districtCode]}`;
 
-        try {
-          const { x, y } = response.v2.addresses[0];
-          moveMap([parseFloat(y), parseFloat(x)]);
-          updateDistrict(districtCode);
-        } catch (e) {
-          console.log(response.v2.errorMessage);
-        }
+    naver.maps.Service.geocode({ query }, (status, response) => {
+      if (status !== naver.maps.Service.Status.OK) return;
+
+      try {
+        const { x, y } = response.v2.addresses[0];
+        moveMap([parseFloat(y), parseFloat(x)]);
+        updateDistrict(districtCode);
+      } catch (e) {
+        console.log(response.v2.errorMessage);
       }
-    );
+    });
   };
 
   return {
