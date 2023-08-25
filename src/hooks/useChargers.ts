@@ -10,7 +10,7 @@ const fetcher = (url: string, districtCode: string) =>
 const useChargers = (districtCode: string, option: FilterOption) => {
   const [filteredData, setFilteredData] = useState<ChargerInfoRes>();
 
-  const { data, isLoading } = useSWR(
+  const { data, isLoading, error } = useSWR(
     districtCode ? ['/api/chargers', districtCode] : null,
     ([url, districtCode]) => fetcher(url, districtCode),
     {
@@ -41,6 +41,7 @@ const useChargers = (districtCode: string, option: FilterOption) => {
   return {
     data: filteredData,
     isLoading,
+    error,
   };
 };
 

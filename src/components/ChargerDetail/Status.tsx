@@ -6,7 +6,7 @@ interface Props {
   footer?: React.ReactNode;
 }
 
-const Loading = ({ icon, text, footer }: Props) => {
+const Status = ({ icon, text, footer }: Props) => {
   return (
     <Flex h='full' justify='center' align='center' flexDir='column' gap={6}>
       {icon}
@@ -18,4 +18,4 @@ const Loading = ({ icon, text, footer }: Props) => {
   );
 };
 
-export default Loading;
+export default Status;
