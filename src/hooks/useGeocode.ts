@@ -1,18 +1,18 @@
 import { Coord } from '@/types/map';
 import { CITY_CODE, DISTRICT_CODE } from '@/constants/chargerCode';
 import useMap from './useMap';
-import useStation from './useStation';
-import useDistrict from './useDistrict';
+import useCurrentStation from './useCurrentStation';
+import useCurrentDistrict from './useCurrentDistrict';
 
 const useGeocode = () => {
   const { moveMap } = useMap();
-  const { clearStationId } = useStation();
-  const { districtCode, setDistrictCode } = useDistrict();
+  const { clearCurrentStation } = useCurrentStation();
+  const { currentDistrict, setCurrentDistrict } = useCurrentDistrict();
 
   const updateDistrict = (newDistrictCode: string) => {
-    if (districtCode === newDistrictCode) return;
-    setDistrictCode(newDistrictCode);
-    clearStationId();
+    if (currentDistrict === newDistrictCode) return;
+    setCurrentDistrict(newDistrictCode);
+    clearCurrentStation();
   };
 
   const reverseGeocode = (coord: Coord) =>

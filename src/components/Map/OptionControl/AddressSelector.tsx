@@ -5,8 +5,8 @@ import { CITY_CODE, DISTRICT_CODE } from '@/constants/chargerCode';
 import { Coord } from '@/types/map';
 import useMap from '@/hooks/useMap';
 import useGeocode from '@/hooks/useGeocode';
-import useDistrict from '@/hooks/useDistrict';
-import useStation from '@/hooks/useStation';
+import useCurrentDistrict from '@/hooks/useCurrentDistrict';
+import useCurrentStation from '@/hooks/useCurrentStation';
 
 import Selector from './Selector';
 import { LocationIcon } from '../../../../public/icons';
@@ -15,8 +15,8 @@ const AddressSelector = ({ currentLocation }: { currentLocation: Coord }) => {
   const [cityCode, setCityCode] = useState('');
   const [districtName, setDistrictName] = useState('');
 
-  const { districtCode, setDistrictCode } = useDistrict();
-  const { clearStationId } = useStation();
+  const { currentDistrict, setCurrentDistrict } = useCurrentDistrict();
+  const { clearCurrentStation } = useCurrentStation();
   const { moveMap } = useMap();
   const { geocode, reverseGeocode } = useGeocode();
   const theme = useTheme();
@@ -28,10 +28,10 @@ const AddressSelector = ({ currentLocation }: { currentLocation: Coord }) => {
 
   const handleDistrictChange: MouseEventHandler<HTMLButtonElement> = (e) => {
     const { value: newDistrictCode, innerText: newDistrictName } = e.currentTarget;
-    setDistrictCode(newDistrictCode);
+    setCurrentDistrict(newDistrictCode);
     setDistrictName(newDistrictName);
     geocode(cityCode, newDistrictCode);
-    clearStationId();
+    clearCurrentStation();
   };
 
   const handleCurrentLocationClick = () => {
@@ -40,10 +40,10 @@ const AddressSelector = ({ currentLocation }: { currentLocation: Coord }) => {
   };
 
   useEffect(() => {
-    if (!districtCode) return;
-    setCityCode(districtCode.slice(0, 2));
-    setDistrictName(DISTRICT_CODE[districtCode]);
-  }, [districtCode]);
+    if (!currentDistrict) return;
+    setCityCode(currentDistrict.slice(0, 2));
+    setDistrictName(DISTRICT_CODE[currentDistrict]);
+  }, [currentDistrict]);
 
   return (
     <>

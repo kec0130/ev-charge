@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { Coord, NaverMap } from '@/types/map';
 import { INITIAL_ZOOM, MARKER_IMAGES, MarkerType } from '@/constants/map';
-import useStation from '@/hooks/useStation';
+import useCurrentStation from '@/hooks/useCurrentStation';
 import useMap from '@/hooks/useMap';
 
 interface Props {
@@ -15,17 +15,18 @@ interface Props {
 }
 
 export default function Marker({ map, coord, type, id, isSelected, isCurrentLocation }: Props) {
-  const { setStationId, clearStationId } = useStation();
+  const { setCurrentStation, clearCurrentStation } = useCurrentStation();
   const { moveMap } = useMap();
 
   const handleMarkerClick = () => {
     if (!id || isCurrentLocation) return;
     if (isSelected) {
-      clearStationId();
+      clearCurrentStation();
       return;
     }
+
     map?.getZoom()! < INITIAL_ZOOM - 1 && moveMap(coord);
-    setStationId(id);
+    setCurrentStation(id);
   };
 
   useEffect(() => {

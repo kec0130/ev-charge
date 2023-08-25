@@ -5,8 +5,8 @@ import { INITIAL_ZOOM, MAP_ID } from '@/constants/map';
 import { Coord } from '@/types/map';
 import useMap from '@/hooks/useMap';
 import useGeocode from '@/hooks/useGeocode';
-import useStation from '@/hooks/useStation';
-import useDistrict from '@/hooks/useDistrict';
+import useCurrentStation from '@/hooks/useCurrentStation';
+import useCurrentDistrict from '@/hooks/useCurrentDistrict';
 
 interface Props {
   isLoadingLocation: boolean;
@@ -17,8 +17,8 @@ interface Props {
 const NaverMap = ({ isLoadingLocation, currentLocation, children }: Props) => {
   const { setMap, moveMap } = useMap();
   const { reverseGeocode } = useGeocode();
-  const { clearStationId } = useStation();
-  const { clearDistrictCode } = useDistrict();
+  const { clearCurrentStation } = useCurrentStation();
+  const { clearCurrentDistrict } = useCurrentDistrict();
   const theme = useTheme();
 
   useEffect(() => {
@@ -45,14 +45,14 @@ const NaverMap = ({ isLoadingLocation, currentLocation, children }: Props) => {
     });
 
     const clickListener = naver.maps.Event.addListener(map, 'click', () => {
-      clearStationId();
+      clearCurrentStation();
     });
 
     return () => {
       map.destroy();
       naver.maps.Event.removeListener([dragListener, clickListener]);
-      clearStationId();
-      clearDistrictCode();
+      clearCurrentStation();
+      clearCurrentDistrict();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentLocation, isLoadingLocation]);

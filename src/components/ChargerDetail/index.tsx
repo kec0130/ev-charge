@@ -1,7 +1,7 @@
 import { Box, Divider, Spinner, Text, useTheme } from '@chakra-ui/react';
 
-import useStation from '@/hooks/useStation';
-import useDistrict from '@/hooks/useDistrict';
+import useCurrentStation from '@/hooks/useCurrentStation';
+import useCurrentDistrict from '@/hooks/useCurrentDistrict';
 import useChargers from '@/hooks/useChargers';
 import useFilters from '@/hooks/useFilters';
 
@@ -12,15 +12,19 @@ import Status from './Status';
 import { CarLogoIcon, MarkerErrorIcon } from '../../../public/icons';
 
 const ChargerDetail = ({ isLoadingLocation }: { isLoadingLocation: boolean }) => {
-  const { stationId } = useStation();
-  const { districtCode } = useDistrict();
+  const { currentStation } = useCurrentStation();
+  const { currentDistrict } = useCurrentDistrict();
   const { filterOption } = useFilters();
-  const { data, isLoading: isLoadingData, error } = useChargers(districtCode || '', filterOption);
-  const station = data?.stations.find((station) => station.statId === stationId);
+  const {
+    data,
+    isLoading: isLoadingData,
+    error,
+  } = useChargers(currentDistrict || '', filterOption);
+  const station = data?.stations.find((station) => station.statId === currentStation);
   const theme = useTheme();
 
   return (
-    <Box w='full' maxW='container.xl' pt={stationId ? 2 : 20}>
+    <Box w='full' maxW='container.xl' pt={currentStation ? 2 : 20}>
       {isLoadingLocation && (
         <Status
           icon={<Spinner color={theme.colors.primary} size='xl' thickness='3px' />}
@@ -35,15 +39,16 @@ const ChargerDetail = ({ isLoadingLocation }: { isLoadingLocation: boolean }) =>
         />
       )}
 
-      {!isLoadingData && data && !station && (
-        <Status icon={<CarLogoIcon />} text='충전소를 선택해주세요.' />
-      )}
+      {(!isLoadingData && error) ||
+        (!isLoadingData && data && data.chargerCount === 0 && (
+          <Status
+            icon={<MarkerErrorIcon />}
+            text={`충전소 정보를 불러올 수 없습니다.\n다시 시도해주세요.`}
+          />
+        ))}
 
-      {!isLoadingData && (error || data?.chargerCount === 0) && (
-        <Status
-          icon={<MarkerErrorIcon />}
-          text={`충전소 정보를 불러올 수 없습니다.\n다시 시도해주세요.`}
-        />
+      {!isLoadingData && data && data.chargerCount > 0 && !station && (
+        <Status icon={<CarLogoIcon />} text='충전소를 선택해주세요.' />
       )}
 
       {data && station && (

@@ -15,14 +15,14 @@ const useFilters = () => {
     mutate(option);
   };
 
-  const resetFilterOption = () => {
+  const clearFilterOption = () => {
     mutate(DEFAULT_FILTER_OPTION);
   };
 
   return {
     filterOption: data,
     setFilterOption,
-    resetFilterOption,
+    clearFilterOption,
   };
 };
 

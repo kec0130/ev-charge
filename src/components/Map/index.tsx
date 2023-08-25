@@ -1,7 +1,7 @@
 import { Coord } from '@/types/map';
 import useMap from '@/hooks/useMap';
-import useStation from '@/hooks/useStation';
-import useDistrict from '@/hooks/useDistrict';
+import useCurrentStation from '@/hooks/useCurrentStation';
+import useCurrentDistrict from '@/hooks/useCurrentDistrict';
 import useChargers from '@/hooks/useChargers';
 import useFilters from '@/hooks/useFilters';
 
@@ -16,10 +16,10 @@ interface Props {
 
 export default function Map({ isLoadingLocation, currentLocation }: Props) {
   const { map } = useMap();
-  const { stationId } = useStation();
-  const { districtCode } = useDistrict();
+  const { currentStation } = useCurrentStation();
+  const { currentDistrict } = useCurrentDistrict();
   const { filterOption } = useFilters();
-  const { data } = useChargers(districtCode || '', filterOption);
+  const { data } = useChargers(currentDistrict || '', filterOption);
 
   return (
     <>
@@ -32,7 +32,7 @@ export default function Map({ isLoadingLocation, currentLocation }: Props) {
               map={map}
               coord={[parseFloat(lat), parseFloat(lng)]}
               type={markerType}
-              isSelected={stationId === statId}
+              isSelected={statId === currentStation}
               id={statId}
               key={statId}
             />
