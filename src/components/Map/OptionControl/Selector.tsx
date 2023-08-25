@@ -1,4 +1,4 @@
-import { Button, Menu, MenuButton, MenuList } from '@chakra-ui/react';
+import { Button, Menu, MenuButton, MenuList, useTheme } from '@chakra-ui/react';
 import { ChevronDownIcon } from '../../../../public/icons';
 
 interface Props {
@@ -7,9 +7,17 @@ interface Props {
 }
 
 const Selector = ({ buttonText, children }: Props) => {
+  const theme = useTheme();
+
   return (
     <Menu>
-      <MenuButton as={Button} size='sm' bgColor='white' rightIcon={<ChevronDownIcon />}>
+      <MenuButton
+        as={Button}
+        size='sm'
+        bgColor='white'
+        shadow={theme.shadows.onMap}
+        rightIcon={<ChevronDownIcon />}
+      >
         {buttonText}
       </MenuButton>
       <MenuList

@@ -1,9 +1,10 @@
-import { Card, Checkbox, CheckboxGroup, Flex, Text } from '@chakra-ui/react';
+import { Card, Checkbox, CheckboxGroup, Flex, Text, useTheme } from '@chakra-ui/react';
 import { FilterOption, FilterType } from '@/types/charger';
 import useFilters from '@/hooks/useFilters';
 
 const Filter = () => {
   const { setFilterOption } = useFilters();
+  const theme = useTheme();
 
   const handleFilterChange = (value: string[]) => {
     const filterKeys: FilterType[] = ['onlyAvailable', 'onlyFastCharger'];
@@ -17,7 +18,7 @@ const Filter = () => {
   };
 
   return (
-    <Card className='filter' px={3}>
+    <Card px={3} shadow={theme.shadows.onMap}>
       <CheckboxGroup colorScheme='green' size='sm' onChange={handleFilterChange}>
         <Flex alignItems='center' gap={3} h={8}>
           <Text as='span' fontSize='sm' fontWeight='semibold'>

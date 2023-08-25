@@ -71,6 +71,7 @@ const AddressSelector = ({ currentLocation }: { currentLocation: Coord }) => {
         size='sm'
         bgColor='white'
         rounded='full'
+        shadow={theme.shadows.onMap}
         onClick={handleCurrentLocationClick}
       />
     </>

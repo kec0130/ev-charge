@@ -11,6 +11,7 @@ import {
   ModalOverlay,
   Text,
   useDisclosure,
+  useTheme,
 } from '@chakra-ui/react';
 import Image from 'next/image';
 
@@ -18,6 +19,7 @@ import { MarkerHelpIcon } from '../../../../public/icons';
 
 export default function MarkerInfoModal() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const theme = useTheme();
 
   return (
     <>
@@ -27,6 +29,7 @@ export default function MarkerInfoModal() {
         size='sm'
         bgColor='white'
         rounded='full'
+        shadow={theme.shadows.onMap}
         onClick={onOpen}
       />
 

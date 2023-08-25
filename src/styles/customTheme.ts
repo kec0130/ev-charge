@@ -15,6 +15,9 @@ const customTheme = extendTheme({
     nav: 200,
     select: 10,
   },
+  shadows: {
+    onMap: 'rgba(0, 0, 0, 0.25) 0px 2px 4px 0px',
+  },
 });
 
 export default customTheme;
