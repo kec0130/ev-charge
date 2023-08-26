@@ -18,7 +18,10 @@ const useChargers = () => {
     districtCode ? ['/api/chargers', districtCode] : null,
     ([url, districtCode]) => fetcher(url, districtCode),
     {
-      dedupingInterval: 1000 * 10,
+      revalidateOnFocus: false,
+      dedupingInterval: 10000,
+      errorRetryInterval: 3000,
+      errorRetryCount: 3,
       onSuccess: (data) => setFilteredData(data),
     }
   );

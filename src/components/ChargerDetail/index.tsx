@@ -15,48 +15,53 @@ const ChargerDetail = ({ isLoadingLocation }: { isLoadingLocation: boolean }) =>
   const station = data?.stations.find((station) => station.statId === currentStation);
   const theme = useTheme();
 
-  return (
-    <Box w='full' maxW='container.xl'>
-      {isLoadingLocation && (
-        <Status
-          icon={<Spinner color={theme.colors.primary} size='xl' thickness='3px' />}
-          text='현 위치를 찾는 중입니다.'
-        />
-      )}
+  if (isLoadingLocation) {
+    return (
+      <Status
+        icon={<Spinner color={theme.colors.primary} size='xl' thickness='3px' />}
+        text='현 위치를 찾는 중입니다.'
+      />
+    );
+  }
 
-      {isLoadingData && (
-        <Status
-          icon={<Spinner color={theme.colors.primary} size='xl' thickness='3px' />}
-          text='충전소 정보를 불러오는 중입니다.'
-        />
-      )}
+  if (isLoadingData) {
+    return (
+      <Status
+        icon={<Spinner color={theme.colors.primary} size='xl' thickness='3px' />}
+        text='충전소 정보를 불러오는 중입니다.'
+      />
+    );
+  }
 
-      {(!isLoadingData && error) ||
-        (!isLoadingData && data && data.chargerCount === 0 && (
-          <Status
-            icon={<MarkerErrorIcon />}
-            text={`충전소 정보를 불러올 수 없습니다.\n다시 시도해주세요.`}
-          />
-        ))}
+  if (error || data?.chargerCount === 0) {
+    return (
+      <Status
+        icon={<MarkerErrorIcon />}
+        text={`충전소 정보를 불러올 수 없습니다.\n다시 시도해주세요.`}
+      />
+    );
+  }
 
-      {!isLoadingData && data && data.chargerCount > 0 && !station && (
-        <Status icon={<CarLogoIcon />} text='충전소를 선택해주세요.' />
-      )}
+  if (data && data.chargerCount > 0 && !station) {
+    return <Status icon={<CarLogoIcon />} text='충전소를 선택해주세요.' />;
+  }
 
-      {data && station && (
-        <Box pt={2}>
-          <StationHeader station={station} />
-          <Divider h={2} mt={1} mb={1} bg='gray.200' />
-          <ChargerTable chargers={station.chargers} availableCount={station.availableCount} />
-          <Divider h={2} mt={1} mb={1} bg='gray.200' />
-          <StationTable station={station} />
-          <Text color='gray.400' fontSize='xs' textAlign='center' mt={2} mb={6}>
-            데이터 출처: 한국환경공단
-          </Text>
-        </Box>
-      )}
-    </Box>
-  );
+  if (data && station) {
+    return (
+      <Box w='full' maxW='container.xl' pt={2}>
+        <StationHeader station={station} />
+        <Divider h={2} mt={1} mb={1} bg='gray.200' />
+        <ChargerTable chargers={station.chargers} availableCount={station.availableCount} />
+        <Divider h={2} mt={1} mb={1} bg='gray.200' />
+        <StationTable station={station} />
+        <Text color='gray.400' fontSize='xs' textAlign='center' mt={2} mb={6}>
+          데이터 출처: 한국환경공단
+        </Text>
+      </Box>
+    );
+  }
+
+  return <></>;
 };
 
 export default ChargerDetail;
