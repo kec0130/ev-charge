@@ -35,6 +35,13 @@ const Blog = () => {
           imgSrc='/images/blog/electric-car-subsidy/01.jpg'
           imgAlt='전기차 보조금'
         />
+        <PostListItem
+          title='2023 자동차(전기차,수소차,하이브리드) 취득세 핵심 정보'
+          description='자동차를 구매하게 되면, 취등록세가 발생하게 됩니다. 전기차도 동일하게 취득세가 부과되는데요. 오늘은 전기차를 중심으로 내연기관 차량들과 비교하여 취득세(취등록세) 정보를 전달해드리겠습니다.'
+          slug='green-car-acquisition-tax'
+          imgSrc='/images/blog/green-car-acquisition-tax/01.jpg'
+          imgAlt='전기차 취득세'
+        />
       </List>
     </>
   );
