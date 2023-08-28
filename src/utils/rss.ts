@@ -2,8 +2,7 @@ import fs from 'fs';
 import RSS from 'rss';
 
 export default async function generateRssFeed() {
-  const siteURL =
-    process.env.NODE_ENV === 'production' ? 'https://ev-charge.kr' : 'http://localhost:3000';
+  const siteURL = 'https://ev-charge.kr';
 
   const feedOptions = {
     title: '전기차G 블로그 | RSS 피드',
@@ -24,9 +23,16 @@ export default async function generateRssFeed() {
 
   feed.item({
     title: '2023 전기차 보조금, 신청방법 핵심정보 요약',
-    description: '2023년 전기차 보조금과 관련한 정보와 지자체별 금액 등에 대해서 살펴보겠습니다.',
+    description: '2023년 전기차 보조금 정보 및 차종별, 지자체별 금액',
     url: `${siteURL}/blog/electric-car-subsidy`,
     date: new Date('2023-08-15'),
+  });
+
+  feed.item({
+    title: '2023 자동차(전기차,수소차,하이브리드) 취득세 핵심 정보',
+    description: '2023 친환경 자동차 취득세, 취등록세 핵심 정보',
+    url: `${siteURL}/blog/green-car-acquisition-tax`,
+    date: new Date('2023-08-28'),
   });
 
   fs.writeFileSync('./public/rss.xml', feed.xml({ indent: true }));
