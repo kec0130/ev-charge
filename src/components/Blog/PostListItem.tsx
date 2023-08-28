@@ -14,12 +14,12 @@ const PostListItem = ({ title, description, slug, imgSrc, imgAlt }: Props) => {
     <>
       <ListItem>
         <Link href={`/blog/${slug}`}>
-          <Flex w='full' flexDir={['column', 'row']}>
+          <Flex w='full' minH={160} flexDir={['column', 'row']}>
             <Box
               mr={[0, 8]}
               mb={[4, 0]}
-              w='full'
-              maxW={['full', 300]}
+              w={['full', 300]}
+              minW={['full', 300]}
               borderRadius='md'
               overflow='hidden'
             >
@@ -27,7 +27,7 @@ const PostListItem = ({ title, description, slug, imgSrc, imgAlt }: Props) => {
                 src={imgSrc}
                 alt={imgAlt}
                 width={300}
-                height={158}
+                height={160}
                 style={{
                   objectFit: 'cover',
                   width: '100%',
@@ -36,10 +36,10 @@ const PostListItem = ({ title, description, slug, imgSrc, imgAlt }: Props) => {
               />
             </Box>
             <Box>
-              <Heading as='h3' size='lg' mb={[2, 4]} noOfLines={[2, 1]}>
+              <Heading as='h3' size='lg' mb={[2, 4]} noOfLines={2}>
                 {title}
               </Heading>
-              <Text noOfLines={[3, 4]}>{description}</Text>
+              <Text noOfLines={3}>{description}</Text>
             </Box>
           </Flex>
         </Link>
