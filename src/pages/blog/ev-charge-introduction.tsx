@@ -8,7 +8,7 @@ const Post = () => {
       description={`전기차충전소 찾기 서비스 '전기차G' 소개 및 이용방법`}
       keywords='전기차G, 전기차지, 전기차 충전소, 전기차 충전소 찾기'
       slug='ev-charge-introduction'
-      content={<Introduction />}
+      content={<Introduction slug='ev-charge-introduction' />}
     />
   );
 };

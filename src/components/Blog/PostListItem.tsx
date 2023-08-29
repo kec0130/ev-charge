@@ -4,7 +4,7 @@ import { Box, Divider, Flex, Heading, ListItem, Text } from '@chakra-ui/react';
 
 interface Props {
   title: string;
-  description: string;
+  description?: string;
   slug: string;
   imgSrc: string;
   imgAlt: string;
@@ -39,7 +39,7 @@ const PostListItem = ({ title, description, slug, imgSrc, imgAlt }: Props) => {
               <Heading as='h3' size='lg' mb={[2, 4]} noOfLines={2}>
                 {title}
               </Heading>
-              <Text noOfLines={3}>{description}</Text>
+              {description && <Text noOfLines={3}>{description}</Text>}
             </Box>
           </Flex>
         </Link>

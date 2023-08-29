@@ -8,7 +8,7 @@ const Post = () => {
       description='2023 친환경 자동차 취득세, 취등록세 핵심 정보'
       keywords='자동차 취득세, 전기차 취득세, 수소차 취득세, 하이브리드 취득세, 자동차 취등록세, 전기차 취등록세, 전기차 취득세 감면'
       slug='green-car-acquisition-tax'
-      content={<AcquisitionTax />}
+      content={<AcquisitionTax slug='green-car-acquisition-tax' />}
     />
   );
 };

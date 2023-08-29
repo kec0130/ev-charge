@@ -10,23 +10,26 @@ import {
   Thead,
   TableContainer,
   useTheme,
+  Divider,
+  List,
 } from '@chakra-ui/react';
 
 import { convertToSlug } from '@/utils/blog';
 import TableOfContents from '../TableOfContents';
+import PostListItem from '../PostListItem';
 
-const Subsidy = () => {
+const Subsidy = ({ slug }: { slug: string }) => {
   const theme = useTheme();
+  const imgDir = `/images/blog/${slug}`;
+  const titles = [
+    '지자체별 전기차 보조금',
+    '차량별 국고 보조금 지원 금액',
+    '전기차 보조금 신청 절차 및 기간',
+  ];
 
   return (
     <>
-      <TableOfContents
-        titles={[
-          '지자체별 전기차 보조금',
-          '차량별 국고 보조금 지원 금액',
-          '전기차 보조금 신청 절차 및 기간',
-        ]}
-      />
+      <TableOfContents titles={titles} />
 
       <Text my={5}>
         최근 전기차 수요가 급증하고 있습니다. 각 브랜드에서도 뛰어난 기술력으로 전기차를 출시하고
@@ -35,7 +38,7 @@ const Subsidy = () => {
         정보와 지자체별 금액 등에 대해서 살펴보겠습니다.
       </Text>
       <Image
-        src='/images/blog/electric-car-subsidy/01.jpg'
+        src={`${imgDir}/01.jpg`}
         alt='전기차 보조금'
         width={1200}
         height={630}
@@ -45,14 +48,8 @@ const Subsidy = () => {
         }}
       />
 
-      <Heading
-        id={convertToSlug('지자체별 전기차 보조금')}
-        as='h3'
-        size='lg'
-        pt={theme.sizes.navHeight}
-        mb={5}
-      >
-        지자체별 전기차 보조금
+      <Heading id={convertToSlug(titles[0])} as='h3' size='lg' pt={theme.sizes.navHeight} mb={5}>
+        {titles[0]}
       </Heading>
       <Text mb={5}>
         우선 지자체별 보조금에 대해서 살펴보겠습니다. 지자체마다 보조금이 상이하기 때문에 2023년
@@ -134,14 +131,8 @@ const Subsidy = () => {
         </Table>
       </TableContainer>
 
-      <Heading
-        id={convertToSlug('차량별 국고 보조금 지원 금액')}
-        as='h3'
-        size='lg'
-        pt={theme.sizes.navHeight}
-        mb={5}
-      >
-        차량별 국고 보조금 지원 금액
+      <Heading id={convertToSlug(titles[1])} as='h3' size='lg' pt={theme.sizes.navHeight} mb={5}>
+        {titles[1]}
       </Heading>
       <Text mb={5}>
         다음은 차량별 국고 지원 금액에 대한 내용입니다. 아래 표는 각 지자체별 지원금액이 들어간
@@ -483,7 +474,7 @@ const Subsidy = () => {
       <br />
 
       <Image
-        src='/images/blog/electric-car-subsidy/02.jpg'
+        src={`${imgDir}/02.jpg`}
         alt='전기차 보조금 신청 기간'
         width={1200}
         height={630}
@@ -493,14 +484,8 @@ const Subsidy = () => {
         }}
       />
 
-      <Heading
-        id={convertToSlug('전기차 보조금 신청 절차 및 기간')}
-        as='h3'
-        size='lg'
-        pt={theme.sizes.navHeight}
-        mb={5}
-      >
-        전기차 보조금 신청 절차 및 기간
+      <Heading id={convertToSlug(titles[2])} as='h3' size='lg' pt={theme.sizes.navHeight} mb={5}>
+        {titles[2]}
       </Heading>
       <Text mb={5}>
         구매자는 차량구매대금과 보조금의 차액을 자동차 제조‧수입사에 납부하고, 자동차 제조‧수입사는
@@ -574,6 +559,25 @@ const Subsidy = () => {
           </Tbody>
         </Table>
       </TableContainer>
+
+      <Divider my={6} />
+      <Text mb={5} fontSize='xl' fontWeight='bold'>
+        관련 글 더 보기
+      </Text>
+      <List>
+        <PostListItem
+          title='2023 자동차(전기차,수소차,하이브리드) 취득세 핵심 정보'
+          slug='green-car-acquisition-tax'
+          imgSrc='/images/blog/green-car-acquisition-tax/01.jpg'
+          imgAlt='전기차 취득세'
+        />
+        <PostListItem
+          title={`전기차 충전소 찾기, 실시간 조회 서비스 '전기차G'`}
+          slug='ev-charge-introduction'
+          imgSrc='/og.png'
+          imgAlt='전기차G'
+        />
+      </List>
     </>
   );
 };

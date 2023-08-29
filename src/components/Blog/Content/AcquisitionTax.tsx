@@ -1,20 +1,22 @@
 import Image from 'next/image';
-import { Heading, Text, useTheme } from '@chakra-ui/react';
+import { Divider, Heading, List, Text, useTheme } from '@chakra-ui/react';
+
 import { convertToSlug } from '@/utils/blog';
 import TableOfContents from '../TableOfContents';
+import PostListItem from '../PostListItem';
 
-const AcquisitionTax = () => {
+const AcquisitionTax = ({ slug }: { slug: string }) => {
   const theme = useTheme();
+  const imgDir = `/images/blog/${slug}`;
+  const titles = ['자동차 취등록세 정의', '2023 전기차 취득세', '하이브리드, 수소 자동차 취득세'];
 
   return (
     <>
-      <TableOfContents
-        titles={['자동차 취등록세 정의', '2023 전기차 취득세', '하이브리드, 수소 자동차 취득세']}
-      />
+      <TableOfContents titles={titles} />
 
       <br />
       <Image
-        src='/images/blog/green-car-acquisition-tax/01.jpg'
+        src={`${imgDir}/01.jpg`}
         alt='전기차 취득세'
         width={1200}
         height={630}
@@ -30,14 +32,8 @@ const AcquisitionTax = () => {
         전달해드리겠습니다.
       </Text>
 
-      <Heading
-        id={convertToSlug('자동차 취등록세 정의')}
-        as='h3'
-        size='lg'
-        pt={theme.sizes.navHeight}
-        mb={5}
-      >
-        자동차 취등록세 정의
+      <Heading id={convertToSlug(titles[0])} as='h3' size='lg' pt={theme.sizes.navHeight} mb={5}>
+        {titles[0]}
       </Heading>
       <Text my={5}>
         자동차 취등록세의 정의를 우선 살펴보겠습니다. 재산권의 매매나 변경 또는 소멸에 따른 재산권
@@ -48,14 +44,8 @@ const AcquisitionTax = () => {
         이를 기한내에 신고하지 않으면 2%의 가산세가 추가로 붙게 되는점 주의하시기 바랍니다.
       </Text>
 
-      <Heading
-        id={convertToSlug('2023 전기차 취득세')}
-        as='h3'
-        size='lg'
-        pt={theme.sizes.navHeight}
-        mb={5}
-      >
-        2023 전기차 취득세
+      <Heading id={convertToSlug(titles[1])} as='h3' size='lg' pt={theme.sizes.navHeight} mb={5}>
+        {titles[1]}
       </Heading>
       <Text my={5}>
         오늘의 핵심내용인 전기차 취득세에 대해서 알아보겠습니다. 내연기관차량과 다른점은 세금 감면
@@ -72,7 +62,7 @@ const AcquisitionTax = () => {
       </Text>
 
       <Image
-        src='/images/blog/green-car-acquisition-tax/02.jpg'
+        src={`${imgDir}/02.jpg`}
         alt='친환경 자동차 취득세'
         width={1200}
         height={630}
@@ -82,14 +72,8 @@ const AcquisitionTax = () => {
         }}
       />
 
-      <Heading
-        id={convertToSlug('하이브리드, 수소 자동차 취득세')}
-        as='h3'
-        size='lg'
-        pt={theme.sizes.navHeight}
-        mb={5}
-      >
-        하이브리드, 수소 자동차 취득세
+      <Heading id={convertToSlug(titles[2])} as='h3' size='lg' pt={theme.sizes.navHeight} mb={5}>
+        {titles[2]}
       </Heading>
       <Text my={5}>
         하이브리드 자동차의 경우에도 세금 감면 혜택이 있습니다. 전기차보단 적은 금액이지만,
@@ -102,6 +86,25 @@ const AcquisitionTax = () => {
         <br />
         이상으로 전기차 취득세 핵심정보를 간략하게 살펴보았습니다.
       </Text>
+
+      <Divider my={6} />
+      <Text mb={5} fontSize='xl' fontWeight='bold'>
+        관련 글 더 보기
+      </Text>
+      <List>
+        <PostListItem
+          title='2023 전기차 보조금, 신청방법 핵심정보 요약'
+          slug='electric-car-subsidy'
+          imgSrc='/images/blog/electric-car-subsidy/01.jpg'
+          imgAlt='전기차 보조금'
+        />
+        <PostListItem
+          title={`전기차 충전소 찾기, 실시간 조회 서비스 '전기차G'`}
+          slug='ev-charge-introduction'
+          imgSrc='/og.png'
+          imgAlt='전기차G'
+        />
+      </List>
     </>
   );
 };
