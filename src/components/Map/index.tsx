@@ -19,8 +19,8 @@ export default function Map({ isLoadingLocation, currentLocation }: Props) {
 
   return (
     <>
-      <OptionControl currentLocation={currentLocation} />
-      <NaverMap isLoadingLocation={isLoadingLocation} currentLocation={currentLocation}>
+      <OptionControl />
+      <NaverMap>
         {!isLoadingLocation && <Marker map={map} coord={currentLocation} isCurrentLocation />}
         {data &&
           data.stations.map(({ lat, lng, statId, markerType }) => (

@@ -2,23 +2,22 @@ import { MouseEventHandler, useEffect, useState } from 'react';
 import { IconButton, MenuItem, useTheme } from '@chakra-ui/react';
 
 import { CITY_CODE, DISTRICT_CODE } from '@/constants/chargerCode';
-import { Coord } from '@/types/map';
-import useMap from '@/hooks/useMap';
 import useGeocode from '@/hooks/useGeocode';
 import useCurrentDistrict from '@/hooks/useCurrentDistrict';
 import useCurrentStation from '@/hooks/useCurrentStation';
+import useCurrentLocation from '@/hooks/useCurrentLocation';
 
 import Selector from './Selector';
 import { LocationIcon } from '../../../../public/icons';
 
-const AddressSelector = ({ currentLocation }: { currentLocation: Coord }) => {
+const AddressSelector = () => {
   const [cityCode, setCityCode] = useState('');
   const [districtName, setDistrictName] = useState('');
 
   const { currentDistrict, setCurrentDistrict } = useCurrentDistrict();
   const { clearCurrentStation } = useCurrentStation();
-  const { moveMap } = useMap();
-  const { geocode, reverseGeocode } = useGeocode();
+  const { getCurrentLocation } = useCurrentLocation();
+  const { geocode } = useGeocode();
   const theme = useTheme();
 
   const handleCityChange: MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -32,11 +31,6 @@ const AddressSelector = ({ currentLocation }: { currentLocation: Coord }) => {
     setDistrictName(newDistrictName);
     geocode(cityCode, newDistrictCode);
     clearCurrentStation();
-  };
-
-  const handleCurrentLocationClick = () => {
-    moveMap(currentLocation);
-    reverseGeocode(currentLocation);
   };
 
   useEffect(() => {
@@ -72,7 +66,7 @@ const AddressSelector = ({ currentLocation }: { currentLocation: Coord }) => {
         bgColor='white'
         rounded='full'
         shadow={theme.shadows.onMap}
-        onClick={handleCurrentLocationClick}
+        onClick={getCurrentLocation}
       />
     </>
   );

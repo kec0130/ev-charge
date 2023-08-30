@@ -12,8 +12,8 @@ const customTheme = extendTheme({
     mapHeight: '40vh',
   },
   zIndex: {
-    nav: 200,
-    select: 10,
+    nav: 300,
+    select: 200,
   },
   shadows: {
     onMap: 'rgba(0, 0, 0, 0.25) 0px 2px 4px 0px',

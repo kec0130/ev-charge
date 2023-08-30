@@ -1,14 +1,21 @@
 import { useEffect, useState } from 'react';
+
 import { Coord } from '@/types/map';
 import { INITIAL_CENTER } from '@/constants/map';
+import useMap from './useMap';
+import useGeocode from './useGeocode';
 
 const useCurrentLocation = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentLocation, setCurrentLocation] = useState<Coord>(INITIAL_CENTER);
 
+  const { map, moveMap } = useMap();
+  const { reverseGeocode } = useGeocode();
+
   const onSuccess = (position: GeolocationPosition) => {
     const { latitude, longitude } = position.coords;
-    setCurrentLocation([latitude, longitude]);
+    const location: Coord = [latitude, longitude];
+    setCurrentLocation(location);
     setIsLoading(false);
   };
 
@@ -17,13 +24,22 @@ const useCurrentLocation = () => {
     setIsLoading(false);
   };
 
-  useEffect(() => {
+  const getCurrentLocation = () => {
+    setIsLoading(true);
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
-  }, []);
+  };
+
+  useEffect(() => {
+    if (isLoading || !map) return;
+    moveMap(currentLocation);
+    reverseGeocode(currentLocation);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentLocation, isLoading, map]);
 
   return {
-    isLoading,
+    isLoadingLocation: isLoading,
     currentLocation,
+    getCurrentLocation,
   };
 };
 
