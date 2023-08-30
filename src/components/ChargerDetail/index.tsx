@@ -1,7 +1,7 @@
 import { useAtomValue } from 'jotai';
 import { Box, Divider, Spinner, Text, useTheme } from '@chakra-ui/react';
 
-import { currentStationAtom } from '@/states/map';
+import { currentStationAtom, isLoadingLocationAtom } from '@/states/map';
 import useChargers from '@/hooks/useChargers';
 
 import StationHeader from './StationHeader';
@@ -10,8 +10,10 @@ import StationTable from './StationTable';
 import Status from './Status';
 import { CarLogoIcon, MarkerErrorIcon } from '../../../public/icons';
 
-const ChargerDetail = ({ isLoadingLocation }: { isLoadingLocation: boolean }) => {
+const ChargerDetail = () => {
   const currentStation = useAtomValue(currentStationAtom);
+  const isLoadingLocation = useAtomValue(isLoadingLocationAtom);
+
   const { data, isLoading: isLoadingData, error } = useChargers();
   const station = data?.stations.find((station) => station.statId === currentStation);
   const theme = useTheme();

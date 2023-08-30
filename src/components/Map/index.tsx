@@ -1,7 +1,6 @@
 import { useAtomValue } from 'jotai';
 
-import { Coord } from '@/types/map';
-import { currentStationAtom } from '@/states/map';
+import { currentLocationAtom, currentStationAtom, isLoadingLocationAtom } from '@/states/map';
 import useMap from '@/hooks/useMap';
 import useChargers from '@/hooks/useChargers';
 
@@ -9,13 +8,11 @@ import NaverMap from './NaverMap';
 import Marker from './NaverMap/Marker';
 import OptionControl from './OptionControl';
 
-interface Props {
-  isLoadingLocation: boolean;
-  currentLocation: Coord;
-}
-
-export default function Map({ isLoadingLocation, currentLocation }: Props) {
+export default function Map() {
   const currentStation = useAtomValue(currentStationAtom);
+  const currentLocation = useAtomValue(currentLocationAtom);
+  const isLoadingLocation = useAtomValue(isLoadingLocationAtom);
+
   const { map } = useMap();
   const { data } = useChargers();
 

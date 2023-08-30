@@ -6,7 +6,7 @@ import ChargerDetail from '@/components/ChargerDetail';
 import Metadata from '@/components/Metadata';
 
 export default function Home() {
-  const { isLoadingLocation, currentLocation, getCurrentLocation } = useCurrentLocation();
+  const { getCurrentLocation } = useCurrentLocation();
 
   useEffect(() => {
     getCurrentLocation();
@@ -16,8 +16,8 @@ export default function Home() {
   return (
     <>
       <Metadata url='/' />
-      <Map isLoadingLocation={isLoadingLocation} currentLocation={currentLocation} />
-      <ChargerDetail isLoadingLocation={isLoadingLocation} />
+      <Map />
+      <ChargerDetail />
     </>
   );
 }
