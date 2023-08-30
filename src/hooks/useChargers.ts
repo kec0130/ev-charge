@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
+import { useAtomValue } from 'jotai';
 import useSWR from 'swr';
 import axios from 'axios';
 
 import { ChargerInfoRes } from '@/types/charger';
-import useCurrentDistrict from './useCurrentDistrict';
+import { currentDistrictAtom } from '@/states/map';
 import useFilters from './useFilters';
 
 const fetcher = (url: string, districtCode: string) =>
   axios.get<ChargerInfoRes>(url, { params: { districtCode } }).then((res) => res.data);
 
 const useChargers = () => {
-  const { filterOption } = useFilters();
-  const { currentDistrict: districtCode } = useCurrentDistrict();
   const [filteredData, setFilteredData] = useState<ChargerInfoRes>();
+  const districtCode = useAtomValue(currentDistrictAtom);
+  const { filterOption } = useFilters();
 
   const { data, isLoading, error } = useSWR(
     districtCode ? ['/api/chargers', districtCode] : null,

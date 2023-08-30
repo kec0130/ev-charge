@@ -1,18 +1,18 @@
 import { useEffect } from 'react';
 import { Box, useTheme } from '@chakra-ui/react';
+import { useResetAtom } from 'jotai/utils';
 
 import { INITIAL_CENTER, INITIAL_ZOOM, MAP_ID } from '@/constants/map';
-import { Coord } from '@/types/map';
+import { currentDistrictAtom, currentStationAtom } from '@/states/map';
 import useMap from '@/hooks/useMap';
 import useGeocode from '@/hooks/useGeocode';
-import useCurrentStation from '@/hooks/useCurrentStation';
-import useCurrentDistrict from '@/hooks/useCurrentDistrict';
 
 const NaverMap = ({ children }: { children: React.ReactNode }) => {
+  const resetCurrentStation = useResetAtom(currentStationAtom);
+  const resetCurrentDistrict = useResetAtom(currentDistrictAtom);
+
   const { setMap } = useMap();
   const { reverseGeocode } = useGeocode();
-  const { clearCurrentStation } = useCurrentStation();
-  const { clearCurrentDistrict } = useCurrentDistrict();
   const theme = useTheme();
 
   useEffect(() => {
@@ -38,14 +38,14 @@ const NaverMap = ({ children }: { children: React.ReactNode }) => {
     });
 
     const clickListener = naver.maps.Event.addListener(map, 'click', () => {
-      clearCurrentStation();
+      resetCurrentStation();
     });
 
     return () => {
       map.destroy();
       naver.maps.Event.removeListener([dragListener, clickListener]);
-      clearCurrentStation();
-      clearCurrentDistrict();
+      resetCurrentStation();
+      resetCurrentDistrict();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

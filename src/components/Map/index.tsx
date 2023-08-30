@@ -1,6 +1,8 @@
+import { useAtomValue } from 'jotai';
+
 import { Coord } from '@/types/map';
+import { currentStationAtom } from '@/states/map';
 import useMap from '@/hooks/useMap';
-import useCurrentStation from '@/hooks/useCurrentStation';
 import useChargers from '@/hooks/useChargers';
 
 import NaverMap from './NaverMap';
@@ -13,8 +15,8 @@ interface Props {
 }
 
 export default function Map({ isLoadingLocation, currentLocation }: Props) {
+  const currentStation = useAtomValue(currentStationAtom);
   const { map } = useMap();
-  const { currentStation } = useCurrentStation();
   const { data } = useChargers();
 
   return (

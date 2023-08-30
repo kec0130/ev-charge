@@ -1,18 +1,20 @@
+import { useAtom } from 'jotai';
+import { useResetAtom } from 'jotai/utils';
+
 import { Coord } from '@/types/map';
+import { currentDistrictAtom, currentStationAtom } from '@/states/map';
 import { CITY_CODE, DISTRICT_CODE } from '@/constants/chargerCode';
 import useMap from './useMap';
-import useCurrentStation from './useCurrentStation';
-import useCurrentDistrict from './useCurrentDistrict';
 
 const useGeocode = () => {
+  const [currentDistrict, setCurrentDistrict] = useAtom(currentDistrictAtom);
+  const resetCurrentStation = useResetAtom(currentStationAtom);
   const { moveMap } = useMap();
-  const { clearCurrentStation } = useCurrentStation();
-  const { currentDistrict, setCurrentDistrict } = useCurrentDistrict();
 
   const updateDistrict = (newDistrictCode: string) => {
     if (currentDistrict === newDistrictCode) return;
     setCurrentDistrict(newDistrictCode);
-    clearCurrentStation();
+    resetCurrentStation();
   };
 
   const reverseGeocode = (coord: Coord) =>

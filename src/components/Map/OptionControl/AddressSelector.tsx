@@ -1,10 +1,11 @@
+import { useAtom } from 'jotai';
+import { useResetAtom } from 'jotai/utils';
 import { MouseEventHandler, useEffect, useState } from 'react';
 import { IconButton, MenuItem, useTheme } from '@chakra-ui/react';
 
+import { currentDistrictAtom, currentStationAtom } from '@/states/map';
 import { CITY_CODE, DISTRICT_CODE } from '@/constants/chargerCode';
 import useGeocode from '@/hooks/useGeocode';
-import useCurrentDistrict from '@/hooks/useCurrentDistrict';
-import useCurrentStation from '@/hooks/useCurrentStation';
 import useCurrentLocation from '@/hooks/useCurrentLocation';
 
 import Selector from './Selector';
@@ -13,9 +14,9 @@ import { LocationIcon } from '../../../../public/icons';
 const AddressSelector = () => {
   const [cityCode, setCityCode] = useState('');
   const [districtName, setDistrictName] = useState('');
+  const [currentDistrict, setCurrentDistrict] = useAtom(currentDistrictAtom);
+  const resetCurrentStation = useResetAtom(currentStationAtom);
 
-  const { currentDistrict, setCurrentDistrict } = useCurrentDistrict();
-  const { clearCurrentStation } = useCurrentStation();
   const { getCurrentLocation } = useCurrentLocation();
   const { geocode } = useGeocode();
   const theme = useTheme();
@@ -30,7 +31,7 @@ const AddressSelector = () => {
     setCurrentDistrict(newDistrictCode);
     setDistrictName(newDistrictName);
     geocode(cityCode, newDistrictCode);
-    clearCurrentStation();
+    resetCurrentStation();
   };
 
   useEffect(() => {
