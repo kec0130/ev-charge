@@ -4,8 +4,7 @@ import useSWR from 'swr';
 import axios from 'axios';
 
 import { ChargerInfoRes } from '@/types/charger';
-import { currentDistrictAtom } from '@/states/map';
-import useFilters from './useFilters';
+import { currentDistrictAtom, filterOptionAtom } from '@/states/map';
 
 const fetcher = (url: string, districtCode: string) =>
   axios.get<ChargerInfoRes>(url, { params: { districtCode } }).then((res) => res.data);
@@ -13,7 +12,7 @@ const fetcher = (url: string, districtCode: string) =>
 const useChargers = () => {
   const [filteredData, setFilteredData] = useState<ChargerInfoRes>();
   const districtCode = useAtomValue(currentDistrictAtom);
-  const { filterOption } = useFilters();
+  const filterOption = useAtomValue(filterOptionAtom);
 
   const { data, isLoading, error } = useSWR(
     districtCode ? ['/api/chargers', districtCode] : null,

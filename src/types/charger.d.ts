@@ -92,6 +92,3 @@ export interface ChargerSimpleDTO {
   nowTsdt: string;
   output: string;
 }
-
-export type FilterType = 'onlyAvailable' | 'onlyFastCharger';
-export type FilterOption = Record<FilterType, boolean>;
