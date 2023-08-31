@@ -64,7 +64,9 @@ const ChargerDetail = () => {
     );
   }
 
-  return <></>;
+  return (
+    <Status icon={<Spinner color={theme.colors.primary} size='xl' thickness='3px' />} text=' ' />
+  );
 };
 
 export default ChargerDetail;
