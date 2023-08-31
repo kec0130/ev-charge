@@ -66,6 +66,7 @@ export interface StationDTO {
   statId: string;
   lat: string;
   lng: string;
+  distance: number;
   statNm: string;
   addr: string;
   location: string;

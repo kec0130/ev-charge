@@ -4,19 +4,29 @@ import useSWR from 'swr';
 import axios from 'axios';
 
 import { ChargerInfoRes } from '@/types/charger';
-import { currentDistrictAtom, filterOptionAtom } from '@/states/map';
+import { currentDistrictAtom, currentLocationAtom, filterOptionAtom } from '@/states/map';
+import { Coord } from '@/types/map';
 
-const fetcher = (url: string, districtCode: string) =>
-  axios.get<ChargerInfoRes>(url, { params: { districtCode } }).then((res) => res.data);
+const fetcher = (url: string, districtCode: string, currentLocation: Coord) =>
+  axios
+    .get<ChargerInfoRes>(url, {
+      params: {
+        districtCode,
+        lat: currentLocation[0],
+        lng: currentLocation[1],
+      },
+    })
+    .then((res) => res.data);
 
 const useChargers = () => {
   const [filteredData, setFilteredData] = useState<ChargerInfoRes>();
+  const currentLocation = useAtomValue(currentLocationAtom);
   const districtCode = useAtomValue(currentDistrictAtom);
   const filterOption = useAtomValue(filterOptionAtom);
 
   const { data, isLoading, error } = useSWR(
-    districtCode ? ['/api/chargers', districtCode] : null,
-    ([url, districtCode]) => fetcher(url, districtCode),
+    districtCode ? ['/api/chargers', districtCode, currentLocation] : null,
+    ([url, districtCode, currentLocation]) => fetcher(url, districtCode, currentLocation),
     {
       revalidateOnFocus: false,
       dedupingInterval: 10000,

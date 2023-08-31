@@ -1,6 +1,7 @@
 import { useAtomValue } from 'jotai';
 
 import { currentLocationAtom, currentStationAtom, isLoadingLocationAtom } from '@/states/map';
+import { convertToCoord } from '@/utils/charger';
 import useMap from '@/hooks/useMap';
 import useChargers from '@/hooks/useChargers';
 
@@ -25,7 +26,7 @@ export default function Map() {
           data.stations.map(({ lat, lng, statId, markerType }) => (
             <Marker
               map={map}
-              coord={[parseFloat(lat), parseFloat(lng)]}
+              coord={convertToCoord(lat, lng)}
               type={markerType}
               isSelected={statId === currentStation}
               id={statId}

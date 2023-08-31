@@ -4,6 +4,7 @@ import { useResetAtom } from 'jotai/utils';
 import { Coord } from '@/types/map';
 import { currentDistrictAtom, currentStationAtom } from '@/states/map';
 import { CITY_CODE, DISTRICT_CODE } from '@/constants/chargerCode';
+import { convertToCoord } from '@/utils/charger';
 import useMap from './useMap';
 
 const useGeocode = () => {
@@ -63,7 +64,7 @@ const useGeocode = () => {
 
       try {
         const { x, y } = response.v2.addresses[0];
-        moveMap([parseFloat(y), parseFloat(x)]);
+        moveMap(convertToCoord(y, x));
         updateDistrict(districtCode);
       } catch (e) {
         console.log(response.v2.errorMessage);
