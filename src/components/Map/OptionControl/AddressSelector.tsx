@@ -1,9 +1,8 @@
-import { useAtom } from 'jotai';
-import { useResetAtom } from 'jotai/utils';
+import { useAtomValue } from 'jotai';
 import { MouseEventHandler, useEffect, useState } from 'react';
 import { IconButton, MenuItem, useTheme } from '@chakra-ui/react';
 
-import { currentDistrictAtom, currentStationAtom } from '@/states/map';
+import { currentDistrictAtom } from '@/states/map';
 import { CITY_CODE, DISTRICT_CODE } from '@/constants/chargerCode';
 import useGeocode from '@/hooks/useGeocode';
 import useCurrentLocation from '@/hooks/useCurrentLocation';
@@ -14,8 +13,7 @@ import { LocationIcon } from '../../../../public/icons';
 const AddressSelector = () => {
   const [cityCode, setCityCode] = useState('');
   const [districtName, setDistrictName] = useState('');
-  const [currentDistrict, setCurrentDistrict] = useAtom(currentDistrictAtom);
-  const resetCurrentStation = useResetAtom(currentStationAtom);
+  const currentDistrict = useAtomValue(currentDistrictAtom);
 
   const { getCurrentLocation } = useCurrentLocation();
   const { geocode } = useGeocode();
@@ -27,11 +25,8 @@ const AddressSelector = () => {
   };
 
   const handleDistrictChange: MouseEventHandler<HTMLButtonElement> = (e) => {
-    const { value: newDistrictCode, innerText: newDistrictName } = e.currentTarget;
-    setCurrentDistrict(newDistrictCode);
-    setDistrictName(newDistrictName);
-    geocode(cityCode, newDistrictCode);
-    resetCurrentStation();
+    geocode(cityCode, e.currentTarget.value);
+    setDistrictName(e.currentTarget.innerText);
   };
 
   useEffect(() => {

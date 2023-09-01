@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useAtom } from 'jotai';
 import { useResetAtom } from 'jotai/utils';
 
@@ -12,11 +13,10 @@ const useGeocode = () => {
   const resetCurrentStation = useResetAtom(currentStationAtom);
   const { moveMap } = useMap();
 
-  const updateDistrict = (newDistrictCode: string) => {
-    if (currentDistrict === newDistrictCode) return;
-    setCurrentDistrict(newDistrictCode);
+  useEffect(() => {
     resetCurrentStation();
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentDistrict]);
 
   const reverseGeocode = (coord: Coord) =>
     naver.maps.Service.reverseGeocode(
@@ -28,7 +28,7 @@ const useGeocode = () => {
           const city = response.v2.results[0].region.area1.name;
 
           if (city === '세종특별자치시') {
-            updateDistrict('36110');
+            setCurrentDistrict('36110');
             return;
           }
 
@@ -42,11 +42,11 @@ const useGeocode = () => {
             const matchedDistrict = matchedDistricts.find((district) =>
               district.startsWith(matchedCity!)
             );
-            updateDistrict(matchedDistrict || '');
+            setCurrentDistrict(matchedDistrict!);
             return;
           }
 
-          updateDistrict(matchedDistricts[0]);
+          setCurrentDistrict(matchedDistricts[0]);
         } catch (e) {
           console.log(response.v2.status.message);
         }
@@ -65,7 +65,7 @@ const useGeocode = () => {
       try {
         const { x, y } = response.v2.addresses[0];
         moveMap(convertToCoord(y, x));
-        updateDistrict(districtCode);
+        setCurrentDistrict(districtCode);
       } catch (e) {
         console.log(response.v2.errorMessage);
       }
