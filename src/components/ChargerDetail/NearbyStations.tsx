@@ -21,8 +21,8 @@ const NearbyStations = ({ stations }: { stations: StationDTO[] }) => {
   };
 
   return (
-    <Box w='full' maxW='container.xl' p={4}>
-      <Heading as='h3' size='md' py={2}>
+    <Box w='full' maxW='container.xl' pt={1} pb={6}>
+      <Heading as='h3' size='md' p={4}>
         내 주변 충전소
       </Heading>
 
@@ -30,28 +30,28 @@ const NearbyStations = ({ stations }: { stations: StationDTO[] }) => {
         const { statId, statNm, distance, addr, lat, lng, markerType } = station;
         return (
           <Fragment key={statId}>
-            <Divider my={2} bg='gray.200' />
+            <Divider />
             <button
               style={{ width: '100%' }}
               onClick={() => handleStationClick(statId, convertToCoord(lat, lng))}
             >
-              <Flex py={2} gap={4}>
-                <Flex alignItems='center'>
+              <Flex p={4} gap={3}>
+                <Flex alignItems='center' flexShrink={0}>
                   <Image
                     src={MARKER_IMAGES[markerType]}
                     alt='충전소 아이콘'
-                    width={24}
-                    height={32}
+                    width={28}
+                    height={37}
                   />
                 </Flex>
                 <Box textAlign='left'>
                   <Text mb={1} fontSize='lg' fontWeight='bold' noOfLines={1}>
                     {statNm}
                   </Text>
-                  <Flex gap={1.5} alignItems='center'>
+                  <Flex alignItems='center'>
                     <Text fontWeight='semibold'>{convertDistance(distance)}</Text>
-                    <Divider orientation='vertical' h={4} />
-                    <Text color='gray.500' noOfLines={1}>
+                    <Divider orientation='vertical' h={4} mx={1.5} borderColor='gray.300' />
+                    <Text color='gray.600' noOfLines={1}>
                       {addr}
                     </Text>
                   </Flex>

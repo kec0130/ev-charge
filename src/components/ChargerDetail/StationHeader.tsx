@@ -16,10 +16,10 @@ const StationHeader = ({ station }: { station: StationDTO }) => {
       <Heading as='h2' size='md' mb={2}>
         {statNm}
       </Heading>
-      <Flex gap={1.5} alignItems='center'>
+      <Flex alignItems='center'>
         <Text fontWeight='semibold'>{convertDistance(distance)}</Text>
-        <Divider orientation='vertical' h={4} />
-        <Text color='gray.500'>
+        <Divider orientation='vertical' h={4} mx={1.5} borderColor='gray.300' />
+        <Text color='gray.600'>
           {addr}
           <IconButton
             icon={<CopyIcon style={{ fill: 'var(--chakra-colors-gray-400)' }} />}
