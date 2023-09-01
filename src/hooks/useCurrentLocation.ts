@@ -33,7 +33,7 @@ const useCurrentLocation = () => {
   useEffect(() => {
     if (isLoadingLocation || !map) return;
     moveMap(currentLocation);
-    reverseGeocode(currentLocation);
+    reverseGeocode(currentLocation, true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentLocation, isLoadingLocation, map]);
 

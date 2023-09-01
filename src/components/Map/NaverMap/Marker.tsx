@@ -30,6 +30,7 @@ export default function Marker({ map, coord, type, id, isSelected, isCurrentLoca
 
     map?.getZoom()! < INITIAL_ZOOM - 1 && moveMap(coord);
     setCurrentStation(id);
+    window.scrollTo({ top: 0 });
   };
 
   useEffect(() => {

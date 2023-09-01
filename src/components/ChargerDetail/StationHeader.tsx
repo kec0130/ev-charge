@@ -17,15 +17,16 @@ const StationHeader = ({ station }: { station: StationDTO }) => {
         {statNm}
       </Heading>
       <Flex gap={1.5} alignItems='center'>
-        <Text>{convertDistance(distance)}</Text>
+        <Text fontWeight='semibold'>{convertDistance(distance)}</Text>
         <Divider orientation='vertical' h={4} />
-        <Text display='flex' alignItems='center'>
+        <Text color='gray.500'>
           {addr}
           <IconButton
             icon={<CopyIcon style={{ fill: 'var(--chakra-colors-gray-400)' }} />}
             aria-label='복사하기'
             size='xs'
             variant='ghost'
+            verticalAlign='sub'
             value={addr}
             onClick={handleCopy}
           />

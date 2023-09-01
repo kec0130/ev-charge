@@ -1,18 +1,20 @@
 import { useAtomValue } from 'jotai';
 import { Box, Divider, Spinner, Text, useTheme } from '@chakra-ui/react';
 
-import { currentStationAtom, isLoadingLocationAtom } from '@/states/map';
+import { currentStationAtom, isLoadingLocationAtom, showNearbyStationsAtom } from '@/states/map';
 import useChargers from '@/hooks/useChargers';
 
+import Status from './Status';
 import StationHeader from './StationHeader';
 import ChargerTable from './ChargerTable';
 import StationTable from './StationTable';
-import Status from './Status';
+import NearbyStations from './NearbyStations';
 import { CarLogoIcon, MarkerErrorIcon } from '../../../public/icons';
 
 const ChargerDetail = () => {
   const currentStation = useAtomValue(currentStationAtom);
   const isLoadingLocation = useAtomValue(isLoadingLocationAtom);
+  const showNearbyStations = useAtomValue(showNearbyStationsAtom);
 
   const { data, isLoading: isLoadingData, error } = useChargers();
   const station = data?.stations.find((station) => station.statId === currentStation);
@@ -46,18 +48,22 @@ const ChargerDetail = () => {
   }
 
   if (data && data.chargerCount > 0 && !station) {
+    if (showNearbyStations) {
+      const stations = data.stations.slice(0, 10);
+      return <NearbyStations stations={stations} />;
+    }
     return <Status icon={<CarLogoIcon />} text='충전소를 선택해주세요.' />;
   }
 
   if (data && station) {
     return (
-      <Box w='full' maxW='container.xl' pt={2}>
+      <Box w='full' maxW='container.xl' py={2}>
         <StationHeader station={station} />
-        <Divider h={2} mt={1} mb={1} bg='gray.200' />
+        <Divider h={2} my={1} bg='gray.200' />
         <ChargerTable chargers={station.chargers} availableCount={station.availableCount} />
-        <Divider h={2} mt={1} mb={1} bg='gray.200' />
+        <Divider h={2} my={1} bg='gray.200' />
         <StationTable station={station} />
-        <Text color='gray.400' fontSize='xs' textAlign='center' mt={2} mb={6}>
+        <Text color='gray.400' fontSize='xs' textAlign='right' mb={4} mr={4}>
           데이터 출처: 한국환경공단
         </Text>
       </Box>

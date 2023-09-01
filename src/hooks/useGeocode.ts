@@ -1,15 +1,22 @@
 import { useEffect } from 'react';
-import { useAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { useResetAtom } from 'jotai/utils';
 
 import { Coord } from '@/types/map';
-import { currentDistrictAtom, currentStationAtom } from '@/states/map';
+import { currentDistrictAtom, currentLocationDistrictAtom, currentStationAtom } from '@/states/map';
 import { CITY_CODE, DISTRICT_CODE } from '@/constants/chargerCode';
 import { convertToCoord } from '@/utils/charger';
 import useMap from './useMap';
 
+const SEJONG = {
+  name: '세종특별자치시',
+  cityCode: '36',
+  districtCode: '36110',
+};
+
 const useGeocode = () => {
   const [currentDistrict, setCurrentDistrict] = useAtom(currentDistrictAtom);
+  const setCurrentLocationDistrict = useSetAtom(currentLocationDistrictAtom);
   const resetCurrentStation = useResetAtom(currentStationAtom);
   const { moveMap } = useMap();
 
@@ -18,7 +25,12 @@ const useGeocode = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentDistrict]);
 
-  const reverseGeocode = (coord: Coord) =>
+  const updateCurrentDistrict = (districtCode: string, isCurrentLocation?: boolean) => {
+    setCurrentDistrict(districtCode);
+    isCurrentLocation && setCurrentLocationDistrict(districtCode);
+  };
+
+  const reverseGeocode = (coord: Coord, isCurrentLocation?: boolean) =>
     naver.maps.Service.reverseGeocode(
       { coords: new naver.maps.LatLng(...coord) },
       (status, response) => {
@@ -27,8 +39,8 @@ const useGeocode = () => {
         try {
           const city = response.v2.results[0].region.area1.name;
 
-          if (city === '세종특별자치시') {
-            setCurrentDistrict('36110');
+          if (city === SEJONG.name) {
+            updateCurrentDistrict(SEJONG.districtCode, isCurrentLocation);
             return;
           }
 
@@ -42,11 +54,11 @@ const useGeocode = () => {
             const matchedDistrict = matchedDistricts.find((district) =>
               district.startsWith(matchedCity!)
             );
-            setCurrentDistrict(matchedDistrict!);
+            updateCurrentDistrict(matchedDistrict!, isCurrentLocation);
             return;
           }
 
-          setCurrentDistrict(matchedDistricts[0]);
+          updateCurrentDistrict(matchedDistricts[0], isCurrentLocation);
         } catch (e) {
           console.log(response.v2.status.message);
         }
@@ -55,7 +67,7 @@ const useGeocode = () => {
 
   const geocode = (cityCode: string, districtCode: string) => {
     const query =
-      cityCode === '36'
+      cityCode === SEJONG.cityCode
         ? CITY_CODE[cityCode]
         : `${CITY_CODE[cityCode]} ${DISTRICT_CODE[districtCode]}`;
 
