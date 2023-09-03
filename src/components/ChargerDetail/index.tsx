@@ -9,6 +9,7 @@ import StationHeader from './StationHeader';
 import ChargerTable from './ChargerTable';
 import StationTable from './StationTable';
 import NearbyStations from './NearbyStations';
+import Review from './Review';
 import { CarLogoIcon, MarkerErrorIcon } from '../../../public/icons';
 
 const ChargerDetail = () => {
@@ -63,9 +64,8 @@ const ChargerDetail = () => {
         <ChargerTable chargers={station.chargers} availableCount={station.availableCount} />
         <Divider h={2} my={1} bg='gray.200' />
         <StationTable station={station} />
-        <Text color='gray.400' fontSize='xs' textAlign='right' mb={4} mr={4}>
-          데이터 출처: 한국환경공단
-        </Text>
+        <Divider h={2} my={1} bg='gray.200' />
+        <Review />
       </Box>
     );
   }

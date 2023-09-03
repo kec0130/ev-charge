@@ -26,6 +26,10 @@ const Introduction = ({ slug }: { slug: string }) => {
         <ListItem>
           충전소 이외 전기차 관련 부가서비스 정보제공을 지속 업데이트 할 예정입니다.
         </ListItem>
+        <ListItem>
+          본 서비스에 활용된 충전소 정보는 <strong>한국환경공단</strong>에서 제공하는 정보를
+          기반으로 합니다.
+        </ListItem>
       </UnorderedList>
 
       <Heading id={convertToSlug(titles[1])} as='h3' size='lg' pt={theme.sizes.navHeight} mb={5}>
