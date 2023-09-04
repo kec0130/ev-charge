@@ -33,9 +33,12 @@ const Review = () => {
           h={40}
           justifyContent='center'
           alignItems='center'
+          textAlign='center'
+          fontSize='sm'
           color={'var(--chakra-colors-gray-500)'}
         >
           리뷰가 없습니다.
+          <br />첫 리뷰를 작성해보세요!
         </Flex>
       )}
 

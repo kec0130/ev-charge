@@ -3,11 +3,11 @@ import { StarIcon } from '../../../../public/icons';
 
 interface Props {
   rating: number;
-  setRating: React.Dispatch<React.SetStateAction<number>>;
-  isInReview?: boolean;
+  setRating?: React.Dispatch<React.SetStateAction<number>>;
+  readOnly?: boolean;
 }
 
-const StarRating = ({ rating, setRating, isInReview }: Props) => {
+const StarRating = ({ rating, setRating, readOnly }: Props) => {
   const theme = useTheme();
 
   return (
@@ -15,18 +15,22 @@ const StarRating = ({ rating, setRating, isInReview }: Props) => {
       <input type='hidden' name='rating' value={rating} />
       <Flex>
         {[1, 2, 3, 4, 5].map((i) => (
-          <Box key={i} onClick={() => setRating(i)}>
+          <Box
+            key={i}
+            onClick={() => setRating && setRating(i)}
+            cursor={readOnly ? 'default' : 'pointer'}
+          >
             <StarIcon
               style={{
                 fill: i <= rating ? theme.colors.accent : theme.colors.gray['200'],
-                width: isInReview && 16,
-                height: isInReview && 16,
+                width: readOnly && 16,
+                height: readOnly && 16,
               }}
             />
           </Box>
         ))}
       </Flex>
-      {!isInReview && (
+      {!readOnly && (
         <Text ml={2} fontWeight='semibold'>
           {rating}
         </Text>

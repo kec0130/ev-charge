@@ -20,6 +20,7 @@ import { currentStationAtom } from '@/states/map';
 import { Review } from '@/types/database';
 import useReview from '@/hooks/useReview';
 import StarRating from './StarRating';
+import { EditIcon } from '../../../../public/icons';
 
 interface Props {
   setReviews: React.Dispatch<React.SetStateAction<Review[] | null>>;
@@ -61,14 +62,15 @@ const ReviewModal = ({ setReviews }: Props) => {
   return (
     <>
       <Button
-        size='xs'
+        size='sm'
         fontSize='xs'
         rounded='md'
         colorScheme='green'
         variant='outline'
         onClick={onOpen}
+        leftIcon={<EditIcon style={{ fill: theme.colors.green[500], width: 16, height: 16 }} />}
       >
-        작성하기
+        작성
       </Button>
 
       <Modal onClose={handleClose} isOpen={isOpen} isCentered>
