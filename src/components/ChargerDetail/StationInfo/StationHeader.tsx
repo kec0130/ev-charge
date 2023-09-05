@@ -1,7 +1,7 @@
 import { Box, Divider, Flex, Heading, IconButton, Text } from '@chakra-ui/react';
 import { StationDTO } from '@/types/charger';
 import { convertDistance } from '@/utils/charger';
-import { CopyIcon } from '../../../public/icons';
+import { CopyIcon } from '../../../../public/icons';
 
 const StationHeader = ({ station }: { station: StationDTO }) => {
   const { statNm, distance, addr } = station;

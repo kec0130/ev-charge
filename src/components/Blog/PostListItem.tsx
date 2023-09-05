@@ -20,6 +20,7 @@ const PostListItem = ({ title, description, slug, imgSrc, imgAlt }: Props) => {
               mb={[4, 0]}
               w={['full', 300]}
               minW={['full', 300]}
+              h={[180, 160]}
               borderRadius='md'
               overflow='hidden'
             >
@@ -39,7 +40,7 @@ const PostListItem = ({ title, description, slug, imgSrc, imgAlt }: Props) => {
               <Heading as='h3' size='lg' mb={[2, 4]} noOfLines={2}>
                 {title}
               </Heading>
-              {description && <Text noOfLines={3}>{description}</Text>}
+              {description && <Text noOfLines={[2, 3]}>{description}</Text>}
             </Box>
           </Flex>
         </Link>

@@ -9,7 +9,7 @@
             <link>https://ev-charge.kr</link>
         </image>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Tue, 29 Aug 2023 05:39:36 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 05 Sep 2023 08:11:02 GMT</lastBuildDate>
         <atom:link href="https://ev-charge.kr/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[전기차충전소 찾기, 실시간 조회 서비스 '전기차G']]></title>
@@ -31,6 +31,13 @@
             <link>https://ev-charge.kr/blog/green-car-acquisition-tax</link>
             <guid isPermaLink="true">https://ev-charge.kr/blog/green-car-acquisition-tax</guid>
             <pubDate>Mon, 28 Aug 2023 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[람보르기니 최초 전기차 '란자도르 EV' 가격, 출시일]]></title>
+            <description><![CDATA[람보르기니 최초 전기차 '란자도르 EV' 가격, 출시일]]></description>
+            <link>https://ev-charge.kr/blog/lamborghini-lanzador</link>
+            <guid isPermaLink="true">https://ev-charge.kr/blog/lamborghini-lanzador</guid>
+            <pubDate>Tue, 05 Sep 00:00:00 GMT</pubDate>
         </item>
     </channel>
 </rss>
