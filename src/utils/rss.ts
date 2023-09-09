@@ -35,5 +35,19 @@ export default async function generateRssFeed() {
     date: new Date('2023-08-28'),
   });
 
+  feed.item({
+    title: `람보르기니 최초 전기차 '란자도르 EV' 가격, 출시일`,
+    description: `람보르기니 최초 전기차 '란자도르 EV' 가격, 출시일`,
+    url: `${siteURL}/blog/lamborghini-lanzador`,
+    date: new Date('2023-09-05'),
+  });
+
+  feed.item({
+    title: '2023 벤츠 지바겐 전기차 EQG 가격, 출시일 정보',
+    description: '2023 벤츠 지바겐 전기차 EQG 가격, 출시일 정보',
+    url: `${siteURL}/blog/benz-g-wagen-eqg`,
+    date: new Date('2023-09-09'),
+  });
+
   fs.writeFileSync('./public/rss.xml', feed.xml({ indent: true }));
 }

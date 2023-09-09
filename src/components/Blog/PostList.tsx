@@ -41,6 +41,15 @@ const PostList = () => {
         imgSrc='/images/blog/lamborghini-lanzador/01.jpg'
         imgAlt='란자도르'
       />
+      <PostListItem
+        title='2023 벤츠 지바겐 전기차 EQG 가격, 출시일 정보'
+        description='벤츠 지바겐 전기차가 출시를 앞두고 있습니다. 이전부터 뜨거운 관심을 모았던 모델인만큼 벤츠 
+                  마니아층을 비롯하여 많은 분들의 주목을 받고 있습니다. 오늘은 지바겐 전기차인 EQG 가격과 출시일 
+                  정보를 전달해드리겠습니다.'
+        slug='benz-g-wagen-eqg'
+        imgSrc='/images/blog/benz-g-wagen-eqg/01.jpg'
+        imgAlt='지바겐 EQG'
+      />
     </List>
   );
 };
