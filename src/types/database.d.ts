@@ -3,7 +3,7 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export interface Database {
   public: {
     Tables: {
-      'charge-station-reviews': {
+      station_review: {
         Row: {
           content: string;
           created_at: string;
@@ -45,4 +45,4 @@ export interface Database {
 
 type Tables<T extends keyof Database['public']['Tables']> = Database['public']['Tables'][T]['Row'];
 
-export type Review = Tables<'charge-station-reviews'>;
+export type Review = Tables<'station_review'>;

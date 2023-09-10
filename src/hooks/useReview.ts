@@ -15,7 +15,7 @@ const supabase = createClient<Database>(
 const useReview = () => {
   const getReviews = async (stationId: string) => {
     const { data, error } = await supabase
-      .from('charge-station-reviews')
+      .from('station_review')
       .select()
       .eq('station_id', stationId)
       .order('id', { ascending: false });
@@ -25,7 +25,7 @@ const useReview = () => {
 
   const postReview = async ({ stationId, rating, content }: ReviewParams) => {
     const { error } = await supabase
-      .from('charge-station-reviews')
+      .from('station_review')
       .insert({ station_id: stationId, rating, content });
 
     return error;
