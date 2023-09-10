@@ -62,15 +62,16 @@ const ReviewModal = ({ setReviews }: Props) => {
   return (
     <>
       <Button
-        size='sm'
-        fontSize='xs'
+        size='xs'
+        fontSize='sm'
         rounded='md'
         colorScheme='green'
-        variant='outline'
+        color={theme.colors.green[500]}
+        variant='ghost'
         onClick={onOpen}
-        leftIcon={<EditIcon style={{ fill: theme.colors.green[500], width: 16, height: 16 }} />}
+        leftIcon={<EditIcon style={{ fill: theme.colors.green[500], width: 14, height: 14 }} />}
       >
-        작성
+        리뷰 작성
       </Button>
 
       <Modal onClose={handleClose} isOpen={isOpen} isCentered>
