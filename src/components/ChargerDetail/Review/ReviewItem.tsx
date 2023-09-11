@@ -1,5 +1,5 @@
 import { Box, Divider, Flex, Text } from '@chakra-ui/react';
-import { Review } from '@/types/database';
+import { Review } from '@/types/supabase';
 import StarRating from './StarRating';
 
 const ReviewItem = ({ review }: { review: Review }) => {
