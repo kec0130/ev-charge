@@ -1,13 +1,11 @@
 import Image from 'next/image';
-import { Divider, Heading, List, Text, useTheme } from '@chakra-ui/react';
+import { Heading, Text, useTheme } from '@chakra-ui/react';
 
-import { convertToSlug } from '@/utils/blog';
+import { convertToSlug, getImgDir } from '@/utils/blog';
 import TableOfContents from '../TableOfContents';
-import PostListItem from '../PostListItem';
 
 const AcquisitionTax = ({ slug }: { slug: string }) => {
   const theme = useTheme();
-  const imgDir = `/images/blog/${slug}`;
   const titles = ['자동차 취등록세 정의', '2023 전기차 취득세', '하이브리드, 수소 자동차 취득세'];
 
   return (
@@ -16,7 +14,7 @@ const AcquisitionTax = ({ slug }: { slug: string }) => {
 
       <br />
       <Image
-        src={`${imgDir}/01.jpg`}
+        src={`${getImgDir(slug)}/01.jpg`}
         alt='전기차 취득세'
         width={1200}
         height={630}
@@ -62,7 +60,7 @@ const AcquisitionTax = ({ slug }: { slug: string }) => {
       </Text>
 
       <Image
-        src={`${imgDir}/02.jpg`}
+        src={`${getImgDir(slug)}/02.jpg`}
         alt='친환경 자동차 취득세'
         width={1200}
         height={630}
@@ -84,25 +82,6 @@ const AcquisitionTax = ({ slug }: { slug: string }) => {
         구매시에도 동일한 감면혜택을 받게됩니다.
       </Text>
       <Text my={5}>이상으로 전기차 취득세 핵심정보를 간략하게 살펴보았습니다.</Text>
-
-      <Divider my={6} />
-      <Text mb={5} fontSize='xl' fontWeight='bold'>
-        관련 글 더 보기
-      </Text>
-      <List>
-        <PostListItem
-          title='2023 전기차 보조금, 신청방법 핵심정보 요약'
-          slug='electric-car-subsidy'
-          imgSrc='/images/blog/electric-car-subsidy/01.jpg'
-          imgAlt='전기차 보조금'
-        />
-        <PostListItem
-          title={`전기차 충전소 찾기, 실시간 조회 서비스 '전기차G'`}
-          slug='ev-charge-introduction'
-          imgSrc='/og.png'
-          imgAlt='전기차G'
-        />
-      </List>
     </>
   );
 };

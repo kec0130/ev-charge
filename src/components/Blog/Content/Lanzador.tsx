@@ -1,13 +1,12 @@
 import Image from 'next/image';
 import { Divider, Heading, List, Text, useTheme } from '@chakra-ui/react';
 
-import { convertToSlug } from '@/utils/blog';
+import { convertToSlug, getImgDir } from '@/utils/blog';
 import TableOfContents from '../TableOfContents';
 import PostListItem from '../PostListItem';
 
 const Lanzador = ({ slug }: { slug: string }) => {
   const theme = useTheme();
-  const imgDir = `/images/blog/${slug}`;
   const titles = [
     '람보르기니 란자도르 EV',
     '람보르기니 란자도르 성능',
@@ -28,7 +27,7 @@ const Lanzador = ({ slug }: { slug: string }) => {
         {titles[0]}
       </Heading>
       <Image
-        src={`${imgDir}/01.jpg`}
+        src={`${getImgDir(slug)}/01.jpg`}
         alt='란자도르'
         width={1200}
         height={630}
@@ -42,7 +41,7 @@ const Lanzador = ({ slug }: { slug: string }) => {
         따라서 람보르기니의 전통적인 이미지를 고수하면서 미래 지향적인 컨셉도 추구하고 있습니다.
       </Text>
       <Image
-        src={`${imgDir}/02.jpg`}
+        src={`${getImgDir(slug)}/02.jpg`}
         alt='란자도르'
         width={1200}
         height={630}
@@ -65,7 +64,7 @@ const Lanzador = ({ slug }: { slug: string }) => {
         선보일 것으로 보입니다.
       </Text>
       <Image
-        src={`${imgDir}/03.jpg`}
+        src={`${getImgDir(slug)}/03.jpg`}
         alt='란자도르'
         width={1200}
         height={630}
@@ -81,7 +80,7 @@ const Lanzador = ({ slug }: { slug: string }) => {
         성능을 선보일 것으로 기대되고 있습니다.
       </Text>
       <Image
-        src={`${imgDir}/04.jpg`}
+        src={`${getImgDir(slug)}/04.jpg`}
         alt='란자도르'
         width={1200}
         height={630}
@@ -95,7 +94,7 @@ const Lanzador = ({ slug }: { slug: string }) => {
         람보르기니 특유의 황소 이미지를 연상시키는데요.
       </Text>
       <Image
-        src={`${imgDir}/06.jpg`}
+        src={`${getImgDir(slug)}/06.jpg`}
         alt='란자도르'
         width={1200}
         height={630}
@@ -109,7 +108,7 @@ const Lanzador = ({ slug }: { slug: string }) => {
         페라리 로마(?)와 같은 느낌을 주네요.
       </Text>
       <Image
-        src={`${imgDir}/07.jpg`}
+        src={`${getImgDir(slug)}/07.jpg`}
         alt='란자도르'
         width={1200}
         height={630}
@@ -120,7 +119,7 @@ const Lanzador = ({ slug }: { slug: string }) => {
       />
       <br />
       <Image
-        src={`${imgDir}/08.jpg`}
+        src={`${getImgDir(slug)}/08.jpg`}
         alt='란자도르'
         width={1200}
         height={630}
@@ -143,7 +142,7 @@ const Lanzador = ({ slug }: { slug: string }) => {
         편리하게 조작할 수 있는 시스템을 구축할 것으로 보입니다.
       </Text>
       <Image
-        src={`${imgDir}/10.jpg`}
+        src={`${getImgDir(slug)}/10.jpg`}
         alt='란자도르'
         width={1200}
         height={630}
@@ -154,7 +153,7 @@ const Lanzador = ({ slug }: { slug: string }) => {
       />
       <br />
       <Image
-        src={`${imgDir}/11.jpg`}
+        src={`${getImgDir(slug)}/11.jpg`}
         alt='란자도르'
         width={1200}
         height={630}
@@ -176,31 +175,6 @@ const Lanzador = ({ slug }: { slug: string }) => {
         람보르기니 첫 전기차인 란자도르 ev는 아직 가격은 오픈되어있지 않지만 대략적으로 4억원
         이상부터 출고가 시작이지 않을까 예상이 됩니다.
       </Text>
-
-      <Divider my={6} />
-      <Text mb={5} fontSize='xl' fontWeight='bold'>
-        관련 글 더 보기
-      </Text>
-      <List>
-        <PostListItem
-          title='2023 자동차(전기차,수소차,하이브리드) 취득세 핵심 정보'
-          slug='green-car-acquisition-tax'
-          imgSrc='/images/blog/green-car-acquisition-tax/01.jpg'
-          imgAlt='전기차 취득세'
-        />
-        <PostListItem
-          title='2023 전기차 보조금, 신청방법 핵심정보 요약'
-          slug='electric-car-subsidy'
-          imgSrc='/images/blog/electric-car-subsidy/01.jpg'
-          imgAlt='전기차 보조금'
-        />
-        <PostListItem
-          title={`전기차 충전소 찾기, 실시간 조회 서비스 '전기차G'`}
-          slug='ev-charge-introduction'
-          imgSrc='/og.png'
-          imgAlt='전기차G'
-        />
-      </List>
     </>
   );
 };

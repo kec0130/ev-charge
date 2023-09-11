@@ -17,13 +17,13 @@ import {
 } from '@chakra-ui/react';
 
 import { currentStationAtom } from '@/states/map';
-import { Review } from '@/types/database';
-import useReview from '@/hooks/useReview';
+import { Review } from '@/types/supabase';
+import { postReview } from '@/services/reviews';
 import StarRating from './StarRating';
 import { EditIcon } from '../../../../public/icons';
 
 interface Props {
-  setReviews: React.Dispatch<React.SetStateAction<Review[] | null>>;
+  setReviews: React.Dispatch<React.SetStateAction<Review[]>>;
 }
 
 const ReviewModal = ({ setReviews }: Props) => {
@@ -31,7 +31,6 @@ const ReviewModal = ({ setReviews }: Props) => {
   const [content, setContent] = useState('');
   const currentStation = useAtomValue(currentStationAtom);
 
-  const { getReviews, postReview } = useReview();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const theme = useTheme();
 
@@ -39,15 +38,15 @@ const ReviewModal = ({ setReviews }: Props) => {
     e.preventDefault();
     if (!content.trim()) return alert('리뷰 내용을 작성해주세요.');
 
-    const review = {
+    const newReview = {
       stationId: currentStation,
       rating,
       content,
     };
 
-    postReview(review).then((err) => {
-      if (err) return alert('리뷰 작성에 실패했습니다.');
-      getReviews(currentStation).then((res) => setReviews(res.data));
+    postReview(newReview).then((res) => {
+      if (res.error) return alert('리뷰를 등록할 수 없습니다.');
+      setReviews(res.data);
     });
 
     handleClose();

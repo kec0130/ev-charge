@@ -2,48 +2,49 @@
     <channel>
         <title><![CDATA[전기차G 블로그 | RSS 피드]]></title>
         <description><![CDATA[전기차와 관련된 유용한 정보를 알려드립니다.]]></description>
-        <link>https://ev-charge.kr</link>
+        <link>http://localhost:3000</link>
         <image>
-            <url>https://ev-charge.kr/logo.png</url>
+            <url>http://localhost:3000/logo.png</url>
             <title>전기차G 블로그 | RSS 피드</title>
-            <link>https://ev-charge.kr</link>
+            <link>http://localhost:3000</link>
         </image>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Sun, 10 Sep 2023 12:27:05 GMT</lastBuildDate>
-        <atom:link href="https://ev-charge.kr/rss.xml" rel="self" type="application/rss+xml"/>
+        <lastBuildDate>Mon, 11 Sep 2023 08:32:42 GMT</lastBuildDate>
+        <atom:link href="http://localhost:3000/rss.xml" rel="self" type="application/rss+xml"/>
+        <pubDate>Mon, 11 Sep 2023 08:32:42 GMT</pubDate>
         <item>
-            <title><![CDATA[전기차충전소 찾기, 실시간 조회 서비스 '전기차G']]></title>
-            <description><![CDATA[전기차충전소 찾기 서비스 '전기차G' 소개 및 이용방법]]></description>
-            <link>https://ev-charge.kr/blog/ev-charge-introduction</link>
-            <guid isPermaLink="true">https://ev-charge.kr/blog/ev-charge-introduction</guid>
+            <title><![CDATA[전기차 충전소 찾기, 실시간 조회 서비스 '전기차G']]></title>
+            <description><![CDATA[전기차충전소 찾기 서비스 전기차G를 소개합니다. 전국 전기차충전소를 쉽고 빠르게 조회하실 수 있습니다. 충전소 위치, 영업시간, 가능여부 등을 실시간으로 정보를 전달해드립니다. 위치 파악을 통해 검색 없이도 빠르게 주변 충전소를 찾아보실 수 있는 서비스입니다.]]></description>
+            <link>http://localhost:3000/blog/ev-charge-introduction</link>
+            <guid isPermaLink="true">http://localhost:3000/blog/ev-charge-introduction</guid>
             <pubDate>Tue, 15 Aug 2023 00:00:00 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[2023 전기차 보조금, 신청방법 핵심정보 요약]]></title>
-            <description><![CDATA[2023년 전기차 보조금 정보 및 차종별, 지자체별 금액]]></description>
-            <link>https://ev-charge.kr/blog/electric-car-subsidy</link>
-            <guid isPermaLink="true">https://ev-charge.kr/blog/electric-car-subsidy</guid>
+            <description><![CDATA[최근 전기차 수요가 급증하고 있습니다. 각 브랜드에서도 뛰어난 기술력으로 전기차를 출시하고 있는데요. 또 하나의 특장점은 바로 보조금입니다. 그러나 전기차 보조금은 1년 단위로 수량이 정해져 있기 때문에 선착순으로 혜택을 받으실 수 있는데요.]]></description>
+            <link>http://localhost:3000/blog/electric-car-subsidy</link>
+            <guid isPermaLink="true">http://localhost:3000/blog/electric-car-subsidy</guid>
             <pubDate>Tue, 15 Aug 2023 00:00:00 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[2023 자동차(전기차,수소차,하이브리드) 취득세 핵심 정보]]></title>
-            <description><![CDATA[2023 친환경 자동차 취득세, 취등록세 핵심 정보]]></description>
-            <link>https://ev-charge.kr/blog/green-car-acquisition-tax</link>
-            <guid isPermaLink="true">https://ev-charge.kr/blog/green-car-acquisition-tax</guid>
+            <description><![CDATA[자동차를 구매하게 되면, 취등록세가 발생하게 됩니다. 전기차도 동일하게 취득세가 부과되는데요. 오늘은 전기차를 중심으로 내연기관 차량들과 비교하여 취득세(취등록세) 정보를 전달해드리겠습니다.]]></description>
+            <link>http://localhost:3000/blog/green-car-acquisition-tax</link>
+            <guid isPermaLink="true">http://localhost:3000/blog/green-car-acquisition-tax</guid>
             <pubDate>Mon, 28 Aug 2023 00:00:00 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[람보르기니 최초 전기차 '란자도르 EV' 가격, 출시일]]></title>
-            <description><![CDATA[람보르기니 최초 전기차 '란자도르 EV' 가격, 출시일]]></description>
-            <link>https://ev-charge.kr/blog/lamborghini-lanzador</link>
-            <guid isPermaLink="true">https://ev-charge.kr/blog/lamborghini-lanzador</guid>
+            <description><![CDATA[슈퍼카의 대명사 람보르기니가 최초의 전기차 출시를 앞두고 있어서 자동차 매니아들의 관심을 모으고  있습니다. 이름은 '란자도르' EV 입니다. 4인승 스포츠 SUV 구조를 지닌 란자도르는 우루스와 닮은 외관 디자인을 선보이고 있습니다. 따라서 람보르기니의 전통적인 이미지를 고수하면서 미래 지향적인 컨셉도 추구하고 있습니다.]]></description>
+            <link>http://localhost:3000/blog/lamborghini-lanzador</link>
+            <guid isPermaLink="true">http://localhost:3000/blog/lamborghini-lanzador</guid>
             <pubDate>Tue, 05 Sep 2023 00:00:00 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[2023 벤츠 지바겐 전기차 EQG 가격, 출시일 정보]]></title>
-            <description><![CDATA[2023 벤츠 지바겐 전기차 EQG 가격, 출시일 정보]]></description>
-            <link>https://ev-charge.kr/blog/benz-g-wagen-eqg</link>
-            <guid isPermaLink="true">https://ev-charge.kr/blog/benz-g-wagen-eqg</guid>
+            <description><![CDATA[벤츠 지바겐 전기차가 출시를 앞두고 있습니다. 이전부터 뜨거운 관심을 모았던 모델인만큼 벤츠 마니아층을 비롯하여 많은 분들의 주목을 받고 있습니다. 오늘은 지바겐 전기차인 EQG 가격과 출시일 정보를 전달해드리겠습니다.]]></description>
+            <link>http://localhost:3000/blog/benz-g-wagen-eqg</link>
+            <guid isPermaLink="true">http://localhost:3000/blog/benz-g-wagen-eqg</guid>
             <pubDate>Sat, 09 Sep 2023 00:00:00 GMT</pubDate>
         </item>
     </channel>

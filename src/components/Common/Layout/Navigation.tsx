@@ -3,16 +3,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Flex, List, ListItem, Spacer, useTheme } from '@chakra-ui/react';
 
-const MENU_LIST = [
-  {
-    name: '홈',
-    href: '/',
-  },
-  {
-    name: '블로그',
-    href: '/blog',
-  },
-];
+import { MENU_LIST } from '@/constants/navigation';
 
 const Navigation = () => {
   const theme = useTheme();
@@ -43,7 +34,7 @@ const Navigation = () => {
             {MENU_LIST.map((menu) => (
               <ListItem
                 key={menu.name}
-                color={currentPath === menu.href ? theme.colors.primary : 'chakra-body-text._dark'}
+                color={currentPath === menu.href ? theme.colors.primary : 'inherit'}
                 fontSize='lg'
                 fontWeight='semibold'
               >

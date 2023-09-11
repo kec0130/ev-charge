@@ -2,16 +2,15 @@ import { useAtomValue } from 'jotai';
 import { useEffect, useState } from 'react';
 import { Box, Flex, Heading, Spacer } from '@chakra-ui/react';
 
-import { Review } from '@/types/database';
+import { Review } from '@/types/supabase';
 import { currentStationAtom } from '@/states/map';
-import useReview from '@/hooks/useReview';
+import { getReviews } from '@/services/reviews';
 import ReviewItem from './ReviewItem';
 import ReviewModal from './ReviewModal';
 
 const Review = () => {
-  const [reviews, setReviews] = useState<Review[] | null>(null);
+  const [reviews, setReviews] = useState<Review[]>([]);
   const currentStation = useAtomValue(currentStationAtom);
-  const { getReviews } = useReview();
 
   useEffect(() => {
     getReviews(currentStation).then((res) => setReviews(res.data));

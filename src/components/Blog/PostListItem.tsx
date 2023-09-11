@@ -7,9 +7,8 @@ interface Props {
   description?: string;
   slug: string;
   imgSrc: string;
-  imgAlt: string;
 }
-const PostListItem = ({ title, description, slug, imgSrc, imgAlt }: Props) => {
+const PostListItem = ({ title, description, slug, imgSrc }: Props) => {
   return (
     <>
       <ListItem>
@@ -26,7 +25,7 @@ const PostListItem = ({ title, description, slug, imgSrc, imgAlt }: Props) => {
             >
               <Image
                 src={imgSrc}
-                alt={imgAlt}
+                alt={slug}
                 width={300}
                 height={160}
                 style={{

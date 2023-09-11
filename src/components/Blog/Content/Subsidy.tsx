@@ -10,17 +10,13 @@ import {
   Thead,
   TableContainer,
   useTheme,
-  Divider,
-  List,
 } from '@chakra-ui/react';
 
-import { convertToSlug } from '@/utils/blog';
+import { convertToSlug, getImgDir } from '@/utils/blog';
 import TableOfContents from '../TableOfContents';
-import PostListItem from '../PostListItem';
 
 const Subsidy = ({ slug }: { slug: string }) => {
   const theme = useTheme();
-  const imgDir = `/images/blog/${slug}`;
   const titles = [
     '지자체별 전기차 보조금',
     '차량별 국고 보조금 지원 금액',
@@ -38,7 +34,7 @@ const Subsidy = ({ slug }: { slug: string }) => {
         정보와 지자체별 금액 등에 대해서 살펴보겠습니다.
       </Text>
       <Image
-        src={`${imgDir}/01.jpg`}
+        src={`${getImgDir(slug)}/01.jpg`}
         alt='전기차 보조금'
         width={1200}
         height={630}
@@ -474,7 +470,7 @@ const Subsidy = ({ slug }: { slug: string }) => {
       <br />
 
       <Image
-        src={`${imgDir}/02.jpg`}
+        src={`${getImgDir(slug)}/02.jpg`}
         alt='전기차 보조금 신청 기간'
         width={1200}
         height={630}
@@ -559,25 +555,6 @@ const Subsidy = ({ slug }: { slug: string }) => {
           </Tbody>
         </Table>
       </TableContainer>
-
-      <Divider my={6} />
-      <Text mb={5} fontSize='xl' fontWeight='bold'>
-        관련 글 더 보기
-      </Text>
-      <List>
-        <PostListItem
-          title='2023 자동차(전기차,수소차,하이브리드) 취득세 핵심 정보'
-          slug='green-car-acquisition-tax'
-          imgSrc='/images/blog/green-car-acquisition-tax/01.jpg'
-          imgAlt='전기차 취득세'
-        />
-        <PostListItem
-          title={`전기차 충전소 찾기, 실시간 조회 서비스 '전기차G'`}
-          slug='ev-charge-introduction'
-          imgSrc='/og.png'
-          imgAlt='전기차G'
-        />
-      </List>
     </>
   );
 };

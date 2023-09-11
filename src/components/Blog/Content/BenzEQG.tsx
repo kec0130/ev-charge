@@ -1,13 +1,11 @@
 import Image from 'next/image';
-import { Divider, Heading, List, Text, useTheme } from '@chakra-ui/react';
+import { Heading, Text, useTheme } from '@chakra-ui/react';
 
-import { convertToSlug } from '@/utils/blog';
+import { convertToSlug, getImgDir } from '@/utils/blog';
 import TableOfContents from '../TableOfContents';
-import PostListItem from '../PostListItem';
 
 const BenzEQG = ({ slug }: { slug: string }) => {
   const theme = useTheme();
-  const imgDir = `/images/blog/${slug}`;
   const titles = [
     '2023 벤츠 지바겐 전기차 EQG',
     '지바겐 전기차 EQG 성능',
@@ -38,7 +36,7 @@ const BenzEQG = ({ slug }: { slug: string }) => {
         것으로 알려졌습니다.
       </Text>
       <Image
-        src={`${imgDir}/01.jpg`}
+        src={`${getImgDir(slug)}/01.jpg`}
         alt='지바겐'
         width={1200}
         height={630}
@@ -57,7 +55,7 @@ const BenzEQG = ({ slug }: { slug: string }) => {
         변속기도 장착하여 남다른 퍼포먼스를 계획중이라고 합니다.
       </Text>
       <Image
-        src={`${imgDir}/02.jpg`}
+        src={`${getImgDir(slug)}/02.jpg`}
         alt='지바겐'
         width={1200}
         height={630}
@@ -71,7 +69,7 @@ const BenzEQG = ({ slug }: { slug: string }) => {
         주행 성능을 갖추게 됩니다.
       </Text>
       <Image
-        src={`${imgDir}/03.jpg`}
+        src={`${getImgDir(slug)}/03.jpg`}
         alt='지바겐'
         width={1200}
         height={630}
@@ -94,7 +92,7 @@ const BenzEQG = ({ slug }: { slug: string }) => {
         있습니다.
       </Text>
       <Image
-        src={`${imgDir}/04.jpg`}
+        src={`${getImgDir(slug)}/04.jpg`}
         alt='지바겐'
         width={1200}
         height={630}
@@ -113,31 +111,6 @@ const BenzEQG = ({ slug }: { slug: string }) => {
         최상의 편의시설을 선보일 것으로 기대를 모으고 있습니다.
       </Text>
       <Text my={5}>이상 벤츠 지바겐 전기차 가격과 출시 정보에 대해서 간략하게 살펴보았습니다.</Text>
-
-      <Divider my={6} />
-      <Text mb={5} fontSize='xl' fontWeight='bold'>
-        관련 글 더 보기
-      </Text>
-      <List>
-        <PostListItem
-          title={`람보르기니 최초 전기차 '란자도르 EV' 가격, 출시일`}
-          slug='lamborghini-lanzador'
-          imgSrc='/images/blog/lamborghini-lanzador/01.jpg'
-          imgAlt='란자도르'
-        />
-        <PostListItem
-          title='2023 자동차(전기차,수소차,하이브리드) 취득세 핵심 정보'
-          slug='green-car-acquisition-tax'
-          imgSrc='/images/blog/green-car-acquisition-tax/01.jpg'
-          imgAlt='전기차 취득세'
-        />
-        <PostListItem
-          title='2023 전기차 보조금, 신청방법 핵심정보 요약'
-          slug='electric-car-subsidy'
-          imgSrc='/images/blog/electric-car-subsidy/01.jpg'
-          imgAlt='전기차 보조금'
-        />
-      </List>
     </>
   );
 };
