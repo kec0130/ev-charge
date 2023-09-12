@@ -1,12 +1,14 @@
-import { Button, Menu, MenuButton, MenuList, useTheme } from '@chakra-ui/react';
+import { Button, Menu, MenuButton, MenuItem, MenuList, useTheme } from '@chakra-ui/react';
 import { ChevronDownIcon } from '../../../../public/icons';
 
 interface Props {
   buttonText: string;
-  children: React.ReactNode;
+  menuList: string[];
+  menuObject: { [key: string]: string };
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const Selector = ({ buttonText, children }: Props) => {
+const Selector = ({ buttonText, menuList, menuObject, onClick }: Props) => {
   const theme = useTheme();
 
   return (
@@ -20,8 +22,9 @@ const Selector = ({ buttonText, children }: Props) => {
       >
         {buttonText}
       </MenuButton>
+
       <MenuList
-        maxH='30vh'
+        maxH='35dvh'
         overflowY='scroll'
         fontSize='sm'
         sx={{
@@ -30,7 +33,17 @@ const Selector = ({ buttonText, children }: Props) => {
           },
         }}
       >
-        {children}
+        {menuList.map((key) => (
+          <MenuItem
+            key={key}
+            value={key}
+            onClick={onClick}
+            _focus={{ bg: 'transparent' }}
+            _hover={{ bg: theme.colors.gray[100] }}
+          >
+            {menuObject[key]}
+          </MenuItem>
+        ))}
       </MenuList>
     </Menu>
   );

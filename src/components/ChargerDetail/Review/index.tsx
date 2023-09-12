@@ -29,7 +29,7 @@ const Review = () => {
 
       {reviews?.length === 0 && (
         <Flex
-          h={40}
+          h={20}
           justifyContent='center'
           alignItems='center'
           textAlign='center'
@@ -37,7 +37,7 @@ const Review = () => {
           color={'var(--chakra-colors-gray-500)'}
         >
           리뷰가 없습니다.
-          <br />첫 리뷰를 작성해보세요!
+          <br />첫 리뷰를 작성해보세요.
         </Flex>
       )}
 

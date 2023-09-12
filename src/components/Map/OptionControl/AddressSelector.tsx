@@ -37,23 +37,19 @@ const AddressSelector = () => {
 
   return (
     <>
-      <Selector buttonText={cityCode ? CITY_CODE[cityCode] : '시/도 선택'}>
-        {Object.keys(CITY_CODE).map((key) => (
-          <MenuItem key={key} value={key} onClick={handleCityChange}>
-            {CITY_CODE[key]}
-          </MenuItem>
-        ))}
-      </Selector>
+      <Selector
+        buttonText={cityCode ? CITY_CODE[cityCode] : '시/도 선택'}
+        menuList={Object.keys(CITY_CODE)}
+        menuObject={CITY_CODE}
+        onClick={handleCityChange}
+      />
 
-      <Selector buttonText={districtName || '시/군/구 선택'}>
-        {Object.keys(DISTRICT_CODE)
-          .filter((key) => key.startsWith(cityCode))
-          .map((key) => (
-            <MenuItem key={key} value={key} onClick={handleDistrictChange}>
-              {DISTRICT_CODE[key]}
-            </MenuItem>
-          ))}
-      </Selector>
+      <Selector
+        buttonText={districtName || '시/군/구 선택'}
+        menuList={Object.keys(DISTRICT_CODE).filter((key) => key.startsWith(cityCode))}
+        menuObject={DISTRICT_CODE}
+        onClick={handleDistrictChange}
+      />
 
       <IconButton
         icon={<LocationIcon style={{ fill: theme.colors.warning }} />}

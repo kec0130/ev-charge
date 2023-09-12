@@ -8,7 +8,7 @@ import Review from '../Review';
 
 const StationInfo = ({ station }: { station: StationDTO }) => {
   return (
-    <Box w='full' maxW='container.xl' py={2}>
+    <Box pb={2}>
       <StationHeader station={station} />
       <Divider h={2} my={1} bg='gray.200' />
       <ChargerTable chargers={station.chargers} availableCount={station.availableCount} />

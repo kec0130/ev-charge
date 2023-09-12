@@ -12,7 +12,7 @@ const StationHeader = ({ station }: { station: StationDTO }) => {
   };
 
   return (
-    <Box p={4}>
+    <Box p={4} pt={1}>
       <Heading as='h2' size='md' mb={2}>
         {statNm}
       </Heading>

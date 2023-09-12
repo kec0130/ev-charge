@@ -28,9 +28,10 @@ export default function Marker({ map, coord, type, id, isSelected, isCurrentLoca
       return;
     }
 
-    map?.getZoom()! < INITIAL_ZOOM - 1 && moveMap(coord);
+    if (map?.getZoom()! < INITIAL_ZOOM) {
+      moveMap(coord);
+    }
     setCurrentStation(id);
-    window.scrollTo({ top: 0 });
   };
 
   useEffect(() => {

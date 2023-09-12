@@ -15,17 +15,15 @@ const NearbyStations = ({ stations }: { stations: StationDTO[] }) => {
   const { moveMap } = useMap();
 
   const handleStationClick = (id: string, coord: Coord) => {
-    window.scrollTo({ top: 0 });
     setCurrentStation(id);
     moveMap(coord);
   };
 
   return (
-    <Box w='full' maxW='container.xl' pt={1} pb={6}>
-      <Heading as='h3' size='md' p={4}>
+    <Box pb={4}>
+      <Heading as='h3' size='md' p={4} pt={1}>
         내 주변 충전소
       </Heading>
-
       {stations.map((station) => {
         const { statId, statNm, distance, addr, lat, lng, markerType } = station;
         return (

@@ -21,12 +21,10 @@ const NaverMap = ({ children }: { children: React.ReactNode }) => {
       zoom: INITIAL_ZOOM,
       minZoom: 12,
       maxZoom: 18,
-      scaleControl: true,
       mapDataControl: false,
-      zoomControl: true,
-      zoomControlOptions: {
-        position: naver.maps.Position.TOP_RIGHT,
-      },
+      zoomControl: false,
+      scaleControl: true,
+      logoControl: true,
     };
 
     const map = new naver.maps.Map(MAP_ID, mapOptions);
@@ -51,7 +49,12 @@ const NaverMap = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <Box id={MAP_ID} sx={{ w: '100%', h: theme.sizes.mapHeight }}>
+    <Box
+      id={MAP_ID}
+      w='full'
+      h={theme.sizes.mapHeight}
+      sx={{ '& > div:last-child': { bottom: '10px !important' } }}
+    >
       {children}
     </Box>
   );
