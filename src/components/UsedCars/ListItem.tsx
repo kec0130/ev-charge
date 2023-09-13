@@ -14,14 +14,17 @@ const UsedCarListItem = ({ usedCar, index }: Props) => {
     <>
       {index !== 0 && <Divider my={6} />}
       <ListItem display='flex' w='full'>
-        <Box flex={1} pos='relative' h={['80px', '120px']} borderRadius='md' overflow='hidden'>
+        <Box flex={1} h={['80px', '120px']} borderRadius='md' overflow='hidden'>
           <Image
             src={image || '/og.png'}
             alt={name}
-            fill
-            objectFit='cover'
-            objectPosition='center'
-            sizes='(max-width: 479px) 105px, 240px'
+            width={238}
+            height={120}
+            style={{
+              objectFit: 'cover',
+              width: '100%',
+              height: '100%',
+            }}
           />
         </Box>
         <Flex flexDir='column' justifyContent='center' flex={3} ml={[4, 6]}>
