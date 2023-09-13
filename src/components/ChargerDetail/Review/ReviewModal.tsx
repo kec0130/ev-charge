@@ -65,10 +65,10 @@ const ReviewModal = ({ setReviews }: Props) => {
         fontSize='sm'
         rounded='md'
         colorScheme='green'
-        color={theme.colors.green[500]}
+        color='green.400'
         variant='ghost'
         onClick={onOpen}
-        leftIcon={<EditIcon style={{ fill: theme.colors.green[500], width: 14, height: 14 }} />}
+        leftIcon={<EditIcon style={{ fill: theme.colors.green[400], width: 14, height: 14 }} />}
       >
         리뷰 작성
       </Button>

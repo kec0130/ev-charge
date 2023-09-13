@@ -11,13 +11,3 @@ export const getPost = async (slug: string) => {
 
   return { post: data };
 };
-
-export const getRelatedPosts = async (slug: string) => {
-  const { data } = await supabase
-    .from('post')
-    .select()
-    .neq('slug', slug)
-    .order('id', { ascending: false });
-
-  return { relatedPosts: data || [] };
-};

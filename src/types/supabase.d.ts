@@ -59,25 +59,28 @@ export interface Database {
       };
       used_car: {
         Row: {
-          created_at: string | null;
+          created_at: string;
           id: number;
-          max_price: number | null;
-          min_price: number | null;
-          name: string | null;
+          image: string | null;
+          max_price: number;
+          min_price: number;
+          name: string;
         };
         Insert: {
-          created_at?: string | null;
+          created_at?: string;
           id?: number;
-          max_price?: number | null;
-          min_price?: number | null;
-          name?: string | null;
+          image?: string | null;
+          max_price: number;
+          min_price: number;
+          name: string;
         };
         Update: {
-          created_at?: string | null;
+          created_at?: string;
           id?: number;
-          max_price?: number | null;
-          min_price?: number | null;
-          name?: string | null;
+          image?: string | null;
+          max_price?: number;
+          min_price?: number;
+          name?: string;
         };
         Relationships: [];
       };

@@ -22,7 +22,7 @@ const StarRating = ({ rating, setRating, readOnly }: Props) => {
           >
             <StarIcon
               style={{
-                fill: i <= rating ? theme.colors.accent : theme.colors.gray['200'],
+                fill: i <= rating ? theme.colors.accent : theme.colors.gray[200],
                 width: readOnly && 16,
                 height: readOnly && 16,
               }}

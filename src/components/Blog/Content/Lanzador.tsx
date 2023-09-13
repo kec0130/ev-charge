@@ -1,9 +1,8 @@
 import Image from 'next/image';
-import { Divider, Heading, List, Text, useTheme } from '@chakra-ui/react';
+import { Heading, Text, useTheme } from '@chakra-ui/react';
 
 import { convertToSlug, getImgDir } from '@/utils/blog';
 import TableOfContents from '../TableOfContents';
-import PostListItem from '../PostListItem';
 
 const Lanzador = ({ slug }: { slug: string }) => {
   const theme = useTheme();

@@ -13,7 +13,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <Container
         as='main'
         maxW='container.lg'
-        p={mapPage ? 0 : 6}
+        p={mapPage ? 0 : [4, 6]}
         mt={theme.sizes.navHeight}
         mb='env(safe-area-inset-bottom)'
       >

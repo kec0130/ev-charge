@@ -20,7 +20,7 @@ const Navigation = () => {
         h={theme.sizes.navHeight}
         w='full'
         maxW='container.lg'
-        px={4}
+        px={[4, 6]}
         bgColor='white'
       >
         <h1>
@@ -30,13 +30,13 @@ const Navigation = () => {
         </h1>
         <Spacer />
         <Flex as='nav'>
-          <List display='flex' justifyContent='center' alignItems='center' gap={[5, 7]}>
+          <List display='flex' justifyContent='center' alignItems='center' gap={[4, 6]}>
             {MENU_LIST.map((menu) => (
               <ListItem
                 key={menu.name}
-                color={currentPath === menu.href ? theme.colors.primary : 'inherit'}
+                color={currentPath === menu.href ? 'green.400' : 'inherit'}
                 fontSize='lg'
-                fontWeight='semibold'
+                fontWeight='bold'
               >
                 <Link href={menu.href}>{menu.name}</Link>
               </ListItem>

@@ -10,8 +10,8 @@ const RelatedPosts = ({ posts }: { posts: Post[] }) => {
         관련 글 더 보기
       </Text>
       <List>
-        {posts.map(({ id, title, slug, image_url }) => (
-          <PostListItem key={id} title={title} slug={slug} imgSrc={image_url} />
+        {posts.map(({ id, title, slug, image_url }, index) => (
+          <PostListItem key={id} title={title} slug={slug} imgSrc={image_url} index={index} />
         ))}
       </List>
     </>

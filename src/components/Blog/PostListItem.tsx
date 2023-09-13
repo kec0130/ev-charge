@@ -7,13 +7,15 @@ interface Props {
   description?: string;
   slug: string;
   imgSrc: string;
+  index: number;
 }
-const PostListItem = ({ title, description, slug, imgSrc }: Props) => {
+const PostListItem = ({ title, description, slug, imgSrc, index }: Props) => {
   return (
     <>
+      {index !== 0 && <Divider my={6} />}
       <ListItem>
         <Link href={`/blog/${slug}`}>
-          <Flex w='full' minH={160} flexDir={['column', 'row']}>
+          <Flex w='full' flexDir={['column', 'row']}>
             <Box
               mr={[0, 8]}
               mb={[4, 0]}
@@ -44,7 +46,6 @@ const PostListItem = ({ title, description, slug, imgSrc }: Props) => {
           </Flex>
         </Link>
       </ListItem>
-      <Divider my={6} />
     </>
   );
 };
