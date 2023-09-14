@@ -7,6 +7,7 @@ import MarkerHelpIcon from './marker_help.svg';
 import MarkerErrorIcon from './marker_error.svg';
 import StarIcon from './star.svg';
 import EditIcon from './edit.svg';
+import SearchIcon from './search.svg';
 
 export {
   LocationIcon,
@@ -18,4 +19,5 @@ export {
   MarkerErrorIcon,
   StarIcon,
   EditIcon,
+  SearchIcon,
 };

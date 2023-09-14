@@ -12,7 +12,7 @@ const UsedCarListItem = ({ usedCar, index }: Props) => {
 
   return (
     <>
-      {index !== 0 && <Divider my={6} />}
+      {index !== 0 && <Divider my={[3, 4]} />}
       <ListItem display='flex' w='full'>
         <Box flex={1} h={['80px', '120px']} borderRadius='md' overflow='hidden'>
           <Image
