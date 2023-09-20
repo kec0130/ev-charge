@@ -8,6 +8,7 @@ import Subsidy from './Content/Subsidy';
 import AcquisitionTax from './Content/AcquisitionTax';
 import Lanzador from './Content/Lanzador';
 import BenzEQG from './Content/BenzEQG';
+import AdSense from '../Common/AdSense';
 
 interface Props {
   title: string;
@@ -35,7 +36,9 @@ const PostDetail = ({ title, slug, createdAt, relatedPosts }: Props) => {
         {createdAt}
       </Text>
       <Divider my={6} />
-      <Box as='section' pb={6}>
+      <AdSense />
+
+      <Box as='section' py={6}>
         {getContent(slug)}
       </Box>
 
