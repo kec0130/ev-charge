@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import { Heading, Text, useTheme } from '@chakra-ui/react';
 
-import { convertToSlug, getImgDir } from '@/utils/blog';
+import { convertToSlug } from '@/utils/blog';
 import TableOfContents from '../TableOfContents';
 
-const AcquisitionTax = ({ slug }: { slug: string }) => {
+const AcquisitionTax = ({ imgDir }: { imgDir: string }) => {
   const theme = useTheme();
   const titles = ['자동차 취등록세 정의', '2023 전기차 취득세', '하이브리드, 수소 자동차 취득세'];
 
@@ -14,7 +14,7 @@ const AcquisitionTax = ({ slug }: { slug: string }) => {
 
       <br />
       <Image
-        src={`${getImgDir(slug)}/01.jpg`}
+        src={`${imgDir}/01.jpg`}
         alt='전기차 취득세'
         width={1200}
         height={630}
@@ -60,7 +60,7 @@ const AcquisitionTax = ({ slug }: { slug: string }) => {
       </Text>
 
       <Image
-        src={`${getImgDir(slug)}/02.jpg`}
+        src={`${imgDir}/02.jpg`}
         alt='친환경 자동차 취득세'
         width={1200}
         height={630}

@@ -2,13 +2,14 @@ import Link from 'next/link';
 import { Box, Button, Divider, Heading, Text } from '@chakra-ui/react';
 
 import { Post } from '@/types/supabase';
+import AdSense from '../Common/AdSense';
 import RelatedPosts from './RelatedPosts';
 import Introduction from './Content/Introduction';
 import Subsidy from './Content/Subsidy';
 import AcquisitionTax from './Content/AcquisitionTax';
 import Lanzador from './Content/Lanzador';
 import BenzEQG from './Content/BenzEQG';
-import AdSense from '../Common/AdSense';
+import GenesisGV70 from './Content/GenesisGV70';
 
 interface Props {
   title: string;
@@ -18,14 +19,16 @@ interface Props {
 }
 
 const PostDetail = ({ title, slug, createdAt, relatedPosts }: Props) => {
-  const getContent = (slug: string) =>
-    ({
-      'ev-charge-introduction': <Introduction slug={slug} />,
-      'electric-car-subsidy': <Subsidy slug={slug} />,
-      'green-car-acquisition-tax': <AcquisitionTax slug={slug} />,
-      'lamborghini-lanzador': <Lanzador slug={slug} />,
-      'benz-g-wagen-eqg': <BenzEQG slug={slug} />,
-    }[slug] || <></>);
+  const imgDir = `/images/blog/${slug}`;
+
+  const content = {
+    'ev-charge-introduction': <Introduction imgDir={imgDir} />,
+    'electric-car-subsidy': <Subsidy imgDir={imgDir} />,
+    'green-car-acquisition-tax': <AcquisitionTax imgDir={imgDir} />,
+    'lamborghini-lanzador': <Lanzador imgDir={imgDir} />,
+    'benz-g-wagen-eqg': <BenzEQG imgDir={imgDir} />,
+    'genesis-gv70': <GenesisGV70 imgDir={imgDir} />,
+  }[slug] || <></>;
 
   return (
     <>
@@ -39,7 +42,7 @@ const PostDetail = ({ title, slug, createdAt, relatedPosts }: Props) => {
       <AdSense />
 
       <Box as='section' py={6}>
-        {getContent(slug)}
+        {content}
       </Box>
 
       <RelatedPosts posts={relatedPosts} />

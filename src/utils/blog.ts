@@ -9,7 +9,3 @@ export function convertToSlug(text: string) {
     .replace(/-+/g, '-') // Replace consecutive hyphens with a single hyphen
     .trim(); // Trim any leading or trailing spaces or hyphens
 }
-
-export function getImgDir(slug: string) {
-  return `/images/blog/${slug}`;
-}

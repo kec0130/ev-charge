@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import { Heading, Text, useTheme } from '@chakra-ui/react';
 
-import { convertToSlug, getImgDir } from '@/utils/blog';
+import { convertToSlug } from '@/utils/blog';
 import TableOfContents from '../TableOfContents';
 
-const Lanzador = ({ slug }: { slug: string }) => {
+const Lanzador = ({ imgDir }: { imgDir: string }) => {
   const theme = useTheme();
   const titles = [
     '람보르기니 란자도르 EV',
@@ -26,7 +26,7 @@ const Lanzador = ({ slug }: { slug: string }) => {
         {titles[0]}
       </Heading>
       <Image
-        src={`${getImgDir(slug)}/01.jpg`}
+        src={`${imgDir}/01.jpg`}
         alt='란자도르'
         width={1200}
         height={630}
@@ -40,7 +40,7 @@ const Lanzador = ({ slug }: { slug: string }) => {
         따라서 람보르기니의 전통적인 이미지를 고수하면서 미래 지향적인 컨셉도 추구하고 있습니다.
       </Text>
       <Image
-        src={`${getImgDir(slug)}/02.jpg`}
+        src={`${imgDir}/02.jpg`}
         alt='란자도르'
         width={1200}
         height={630}
@@ -63,7 +63,7 @@ const Lanzador = ({ slug }: { slug: string }) => {
         선보일 것으로 보입니다.
       </Text>
       <Image
-        src={`${getImgDir(slug)}/03.jpg`}
+        src={`${imgDir}/03.jpg`}
         alt='란자도르'
         width={1200}
         height={630}
@@ -79,7 +79,7 @@ const Lanzador = ({ slug }: { slug: string }) => {
         성능을 선보일 것으로 기대되고 있습니다.
       </Text>
       <Image
-        src={`${getImgDir(slug)}/04.jpg`}
+        src={`${imgDir}/04.jpg`}
         alt='란자도르'
         width={1200}
         height={630}
@@ -93,7 +93,7 @@ const Lanzador = ({ slug }: { slug: string }) => {
         람보르기니 특유의 황소 이미지를 연상시키는데요.
       </Text>
       <Image
-        src={`${getImgDir(slug)}/06.jpg`}
+        src={`${imgDir}/06.jpg`}
         alt='란자도르'
         width={1200}
         height={630}
@@ -107,7 +107,7 @@ const Lanzador = ({ slug }: { slug: string }) => {
         페라리 로마(?)와 같은 느낌을 주네요.
       </Text>
       <Image
-        src={`${getImgDir(slug)}/07.jpg`}
+        src={`${imgDir}/07.jpg`}
         alt='란자도르'
         width={1200}
         height={630}
@@ -118,7 +118,7 @@ const Lanzador = ({ slug }: { slug: string }) => {
       />
       <br />
       <Image
-        src={`${getImgDir(slug)}/08.jpg`}
+        src={`${imgDir}/08.jpg`}
         alt='란자도르'
         width={1200}
         height={630}
@@ -141,7 +141,7 @@ const Lanzador = ({ slug }: { slug: string }) => {
         편리하게 조작할 수 있는 시스템을 구축할 것으로 보입니다.
       </Text>
       <Image
-        src={`${getImgDir(slug)}/10.jpg`}
+        src={`${imgDir}/10.jpg`}
         alt='란자도르'
         width={1200}
         height={630}
@@ -152,7 +152,7 @@ const Lanzador = ({ slug }: { slug: string }) => {
       />
       <br />
       <Image
-        src={`${getImgDir(slug)}/11.jpg`}
+        src={`${imgDir}/11.jpg`}
         alt='란자도르'
         width={1200}
         height={630}

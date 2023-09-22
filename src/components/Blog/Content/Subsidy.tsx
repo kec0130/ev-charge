@@ -12,10 +12,10 @@ import {
   useTheme,
 } from '@chakra-ui/react';
 
-import { convertToSlug, getImgDir } from '@/utils/blog';
+import { convertToSlug } from '@/utils/blog';
 import TableOfContents from '../TableOfContents';
 
-const Subsidy = ({ slug }: { slug: string }) => {
+const Subsidy = ({ imgDir }: { imgDir: string }) => {
   const theme = useTheme();
   const titles = [
     '지자체별 전기차 보조금',
@@ -34,7 +34,7 @@ const Subsidy = ({ slug }: { slug: string }) => {
         정보와 지자체별 금액 등에 대해서 살펴보겠습니다.
       </Text>
       <Image
-        src={`${getImgDir(slug)}/01.jpg`}
+        src={`${imgDir}/01.jpg`}
         alt='전기차 보조금'
         width={1200}
         height={630}
@@ -470,7 +470,7 @@ const Subsidy = ({ slug }: { slug: string }) => {
       <br />
 
       <Image
-        src={`${getImgDir(slug)}/02.jpg`}
+        src={`${imgDir}/02.jpg`}
         alt='전기차 보조금 신청 기간'
         width={1200}
         height={630}

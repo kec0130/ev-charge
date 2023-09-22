@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import { Heading, Text, useTheme } from '@chakra-ui/react';
 
-import { convertToSlug, getImgDir } from '@/utils/blog';
+import { convertToSlug } from '@/utils/blog';
 import TableOfContents from '../TableOfContents';
 
-const BenzEQG = ({ slug }: { slug: string }) => {
+const BenzEQG = ({ imgDir }: { imgDir: string }) => {
   const theme = useTheme();
   const titles = [
     '2023 벤츠 지바겐 전기차 EQG',
@@ -36,7 +36,7 @@ const BenzEQG = ({ slug }: { slug: string }) => {
         것으로 알려졌습니다.
       </Text>
       <Image
-        src={`${getImgDir(slug)}/01.jpg`}
+        src={`${imgDir}/01.jpg`}
         alt='지바겐'
         width={1200}
         height={630}
@@ -55,7 +55,7 @@ const BenzEQG = ({ slug }: { slug: string }) => {
         변속기도 장착하여 남다른 퍼포먼스를 계획중이라고 합니다.
       </Text>
       <Image
-        src={`${getImgDir(slug)}/02.jpg`}
+        src={`${imgDir}/02.jpg`}
         alt='지바겐'
         width={1200}
         height={630}
@@ -69,7 +69,7 @@ const BenzEQG = ({ slug }: { slug: string }) => {
         주행 성능을 갖추게 됩니다.
       </Text>
       <Image
-        src={`${getImgDir(slug)}/03.jpg`}
+        src={`${imgDir}/03.jpg`}
         alt='지바겐'
         width={1200}
         height={630}
@@ -92,7 +92,7 @@ const BenzEQG = ({ slug }: { slug: string }) => {
         있습니다.
       </Text>
       <Image
-        src={`${getImgDir(slug)}/04.jpg`}
+        src={`${imgDir}/04.jpg`}
         alt='지바겐'
         width={1200}
         height={630}
