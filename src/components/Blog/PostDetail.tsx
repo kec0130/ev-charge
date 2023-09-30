@@ -10,6 +10,7 @@ import AcquisitionTax from './Content/AcquisitionTax';
 import Lanzador from './Content/Lanzador';
 import BenzEQG from './Content/BenzEQG';
 import GenesisGV70 from './Content/GenesisGV70';
+import GenesisGV80Coupe from './Content/GenesisGV80Coupe';
 
 interface Props {
   title: string;
@@ -28,6 +29,7 @@ const PostDetail = ({ title, slug, createdAt, relatedPosts }: Props) => {
     'lamborghini-lanzador': <Lanzador imgDir={imgDir} />,
     'benz-g-wagen-eqg': <BenzEQG imgDir={imgDir} />,
     'genesis-gv70': <GenesisGV70 imgDir={imgDir} />,
+    'genesis-gv80-coupe': <GenesisGV80Coupe imgDir={imgDir} />,
   }[slug] || <></>;
 
   return (

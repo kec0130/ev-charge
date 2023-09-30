@@ -40,11 +40,13 @@ const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
 export const getStaticProps: GetStaticProps<{ posts: Post[] }> = async () => {
   const { posts } = await getAllPosts();
+  const sortedPosts = posts.slice(1, posts.length).sort((a, b) => (a.id > b.id ? -1 : 1));
+  const newPosts = [posts[0], ...sortedPosts];
   generateRssFeed(posts);
 
   return {
     props: {
-      posts,
+      posts: newPosts,
     },
   };
 };
