@@ -35,7 +35,7 @@ const Navigation = () => {
             {MENU_LIST.map((menu) => (
               <ListItem
                 key={menu.name}
-                color={menu.href.startsWith(currentPath) ? 'green.400' : 'inherit'}
+                color={currentPath === menu.href ? 'green.400' : 'inherit'}
                 fontSize='lg'
                 fontWeight='bold'
               >
