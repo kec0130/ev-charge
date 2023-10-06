@@ -1,3 +1,7 @@
+import { getMonthQuery } from '@/utils/usedCars';
+
+const month = getMonthQuery();
+
 export const MENU_LIST = [
   {
     name: '지도',
@@ -9,6 +13,6 @@ export const MENU_LIST = [
   },
   {
     name: '중고시세',
-    href: '/used-cars',
+    href: `/used-cars/${month}`,
   },
 ];

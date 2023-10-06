@@ -29,12 +29,13 @@ const Navigation = () => {
           </Link>
         </h1>
         <Spacer />
+
         <Flex as='nav'>
           <List display='flex' justifyContent='center' alignItems='center' gap={[4, 6]}>
             {MENU_LIST.map((menu) => (
               <ListItem
                 key={menu.name}
-                color={currentPath === menu.href ? 'green.400' : 'inherit'}
+                color={menu.href.startsWith(currentPath) ? 'green.400' : 'inherit'}
                 fontSize='lg'
                 fontWeight='bold'
               >
