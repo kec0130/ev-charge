@@ -24,7 +24,7 @@ const Options = ({ sortOption, handleSortOptionChange }: Props) => {
   const handleMonthChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
     const { value } = e.target;
     setMonth(value);
-    router.push(`/used-cars/${value}`);
+    router.push(`/used-cars/${value}`, undefined, { scroll: false });
   };
 
   const convertDateFormat = (date: string) => {
