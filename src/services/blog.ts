@@ -11,3 +11,9 @@ export const getPost = async (slug: string) => {
 
   return { post: data };
 };
+
+export const getSlugs = async () => {
+  const { data } = await supabase.from('post').select('slug');
+
+  return { slugs: data || [] };
+};

@@ -1,7 +1,7 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 
 import { Post } from '@/types/supabase';
-import { getAllPosts } from '@/services/blog';
+import { getAllPosts, getSlugs } from '@/services/blog';
 import PostDetail from '@/components/Blog/PostDetail';
 import Metadata from '@/components/Common/Metadata';
 import Status from '@/components/Common/Status';
@@ -28,6 +28,16 @@ const Post = ({ post, relatedPosts }: InferGetStaticPropsType<typeof getStaticPr
 
 export default Post;
 
+export const getStaticPaths: GetStaticPaths = async () => {
+  const { slugs } = await getSlugs();
+  const paths = slugs.map((slug) => ({ params: slug }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
 export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
   const { posts } = await getAllPosts();
 
@@ -43,15 +53,5 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
       post,
       relatedPosts,
     },
-  };
-};
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  const { posts } = await getAllPosts();
-  const paths = posts.map((post) => ({ params: { slug: post.slug } }));
-
-  return {
-    paths,
-    fallback: false,
   };
 };
