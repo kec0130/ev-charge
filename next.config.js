@@ -10,7 +10,15 @@ const nextConfig = {
       },
     ],
   },
-
+  async redirects() {
+    return [
+      {
+        source: '/used-cars',
+        destination: '/used-cars/2023-10',
+        permanent: true,
+      },
+    ];
+  },
   async rewrites() {
     return [
       {
@@ -19,7 +27,6 @@ const nextConfig = {
       },
     ];
   },
-
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/i,
