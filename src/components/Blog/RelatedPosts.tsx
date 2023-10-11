@@ -1,6 +1,6 @@
 import { Post } from '@/types/supabase';
-import { Divider, List, Text } from '@chakra-ui/react';
-import PostListItem from './PostListItem';
+import { Divider, Text } from '@chakra-ui/react';
+import PostList from './PostList';
 
 const RelatedPosts = ({ posts }: { posts: Post[] }) => {
   return (
@@ -9,11 +9,7 @@ const RelatedPosts = ({ posts }: { posts: Post[] }) => {
       <Text mb={5} fontSize='xl' fontWeight='bold'>
         관련 글 더 보기
       </Text>
-      <List>
-        {posts.map(({ id, title, slug, image_url }, index) => (
-          <PostListItem key={id} title={title} slug={slug} imgSrc={image_url} index={index} />
-        ))}
-      </List>
+      <PostList posts={posts} />
     </>
   );
 };

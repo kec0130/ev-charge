@@ -1,12 +1,11 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
-import { List } from '@chakra-ui/react';
 
 import { Post } from '@/types/supabase';
 import { getAllPosts } from '@/services/blog';
 import generateRssFeed from '@/utils/rss';
 import Metadata from '@/components/Common/Metadata';
-import PostListItem from '@/components/Blog/PostListItem';
 import Status from '@/components/Common/Status';
+import PostList from '@/components/Blog/PostList';
 
 const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
   if (posts.length === 0) {
@@ -21,19 +20,7 @@ const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
         keywords='전기차 블로그, 전기차 정보, 전기차 팁'
         url='/blog'
       />
-
-      <List>
-        {posts.map(({ id, title, description, slug, image_url }, index) => (
-          <PostListItem
-            key={id}
-            title={title}
-            description={description}
-            slug={slug}
-            imgSrc={image_url}
-            index={index}
-          />
-        ))}
-      </List>
+      <PostList posts={posts} />
     </>
   );
 };
