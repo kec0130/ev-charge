@@ -10,7 +10,8 @@ interface Props {
 
 const DEFAULT_META: Required<Props> = {
   title: '전기차 충전소 찾기',
-  description: '전기차 충전소의 위치와 상세 정보, 실시간 충전 현황을 지도에서 확인하세요.',
+  description:
+    '전기차 충전소 찾기. 전기차 충전소 조회. 실시간 전기차 충전소를 빠르고 쉽게 찾아드립니다. 사용자 위치 기반 시스템을 적용하여 전국 어디서든 편리하게 이용 가능합니다.',
   keywords: '전기차, 충전소, 전기차 충전소, 충전소 위치, 충전소 정보, 충전기 현황, 급속 충전',
   url: 'https://ev-charge.kr',
   image: '/og.png',
