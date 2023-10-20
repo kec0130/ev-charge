@@ -3,10 +3,12 @@ import { UnorderedList, ListItem } from '@chakra-ui/react';
 
 import { BlogHeading, BlogImage, BlogText } from '../Common';
 import TableOfContents from '../TableOfContents';
+import useImgDirectory from '@/hooks/useImgDirectory';
 
-const Introduction = ({ imgDir }: { imgDir: string }) => {
-  const titles = ['전기차충전소 찾기 - 전기차G 소개', '전기차G 이용방법'];
+const Introduction = () => {
+  const imgDir = useImgDirectory();
   const alt = '전기차G 사용 방법';
+  const titles = ['전기차충전소 찾기 - 전기차G 소개', '전기차G 이용방법'];
 
   return (
     <>

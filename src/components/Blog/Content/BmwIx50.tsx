@@ -1,10 +1,12 @@
 import { Tbody, Td, Th, Tr } from '@chakra-ui/react';
 import { BlogHeading, BlogImage, BlogLink, BlogTable, BlogText } from '../Common';
 import TableOfContents from '../TableOfContents';
+import useImgDirectory from '@/hooks/useImgDirectory';
 
-const BmwIx50 = ({ imgDir }: { imgDir: string }) => {
-  const titles = ['iX50 제원', 'BMW iX50 디자인', 'BMW iX50 가격'];
+const BmwIx50 = () => {
+  const imgDir = useImgDirectory();
   const alt = 'BMW iX50';
+  const titles = ['iX50 제원', 'BMW iX50 디자인', 'BMW iX50 가격'];
 
   return (
     <>

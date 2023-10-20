@@ -1,15 +1,17 @@
 import { Flex, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { BlogHeading, BlogImage, BlogTable, BlogText } from '../Common';
 import TableOfContents from '../TableOfContents';
+import useImgDirectory from '@/hooks/useImgDirectory';
 
-const GenesisGV80Coupe = ({ imgDir }: { imgDir: string }) => {
+const GenesisGV80Coupe = () => {
+  const imgDir = useImgDirectory();
+  const alt = '제네시스 GV80 쿠페';
   const titles = [
     '2024 제네시스 gv80 쿠페 가격 및 제원 정보',
     '제네시스 gv80 쿠페 제원',
     'gv80 쿠페 디자인',
     '제네시스 gv80 쿠페 가격',
   ];
-  const alt = '제네시스 GV80 쿠페';
 
   return (
     <>

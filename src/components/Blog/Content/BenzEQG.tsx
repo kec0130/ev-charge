@@ -1,14 +1,16 @@
 import { BlogHeading, BlogImage, BlogText } from '../Common';
 import TableOfContents from '../TableOfContents';
+import useImgDirectory from '@/hooks/useImgDirectory';
 
-const BenzEQG = ({ imgDir }: { imgDir: string }) => {
+const BenzEQG = () => {
+  const imgDir = useImgDirectory();
+  const alt = '지바겐 전기차';
   const titles = [
     '2023 벤츠 지바겐 전기차 EQG',
     '지바겐 전기차 EQG 성능',
     '지바겐 EQG 가격',
     '지바겐 전기차 출시일은?',
   ];
-  const alt = '지바겐 전기차';
 
   return (
     <>

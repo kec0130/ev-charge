@@ -1,14 +1,16 @@
 import { BlogHeading, BlogImage, BlogText } from '../Common';
 import TableOfContents from '../TableOfContents';
+import useImgDirectory from '@/hooks/useImgDirectory';
 
-const Lanzador = ({ imgDir }: { imgDir: string }) => {
+const Lanzador = () => {
+  const imgDir = useImgDirectory();
+  const alt = '람보르기니 란자도르';
   const titles = [
     '람보르기니 란자도르 EV',
     '람보르기니 란자도르 성능',
     '람보르기니 란자도르 디자인',
     '란자도르 가격, 출시일',
   ];
-  const alt = '람보르기니 란자도르';
 
   return (
     <>

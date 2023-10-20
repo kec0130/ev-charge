@@ -17,11 +17,13 @@ export const getReviews = async (stationId: string) => {
 };
 
 export const postReview = async ({ stationId, rating, content }: NewReview) => {
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from('station_review')
-    .insert({ station_id: stationId, rating, content });
+    .insert({ station_id: stationId, rating, content })
+    .select();
 
-  const { data } = await getReviews(stationId);
-
-  return { data, error };
+  return {
+    data: data || [],
+    error,
+  };
 };

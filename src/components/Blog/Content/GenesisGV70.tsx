@@ -1,15 +1,17 @@
-import { Highlight, ListItem, Tbody, Td, Th, Thead, Tr, UnorderedList } from '@chakra-ui/react';
-import { BlogHeading, BlogImage, BlogLink, BlogTable, BlogText } from '../Common';
+import { ListItem, Tbody, Td, Th, Thead, Tr, UnorderedList } from '@chakra-ui/react';
+import { BlogHeading, BlogHighlight, BlogImage, BlogLink, BlogTable, BlogText } from '../Common';
 import TableOfContents from '../TableOfContents';
+import useImgDirectory from '@/hooks/useImgDirectory';
 
-const GenesisGV70 = ({ imgDir }: { imgDir: string }) => {
+const GenesisGV70 = () => {
+  const imgDir = useImgDirectory();
+  const alt = '제네시스 GV70';
   const titles = [
     '제네시스 GV70 전기차 제원',
     'GV70 전기차 인테리어',
     '제네시스 GV70 전기차 가격은?',
     'GV70 전기차 중고 시세',
   ];
-  const alt = '제네시스 GV70';
 
   return (
     <>
@@ -107,12 +109,7 @@ const GenesisGV70 = ({ imgDir }: { imgDir: string }) => {
       <UnorderedList>
         <ListItem>세제혜택 전용전 가격: 77,230,000원</ListItem>
         <ListItem>
-          <Highlight
-            query='세제혜택 후 가격: 73,320,000원'
-            styles={{ bg: 'orange.100', fontWeight: 'bold' }}
-          >
-            세제혜택 후 가격: 73,320,000원
-          </Highlight>
+          <BlogHighlight text='세제혜택 후 가격: 73,320,000원' />
         </ListItem>
       </UnorderedList>
       <BlogText>
@@ -127,7 +124,7 @@ const GenesisGV70 = ({ imgDir }: { imgDir: string }) => {
         마지막으로 GV70 전기차 중고차 시세를 전해드리겠습니다. 시세 기준은 2023년 9월달로 평균값을
         전해드립니다.
       </BlogText>
-      <UnorderedList my={5}>
+      <UnorderedList>
         <ListItem>2020년식: 4100만원</ListItem>
         <ListItem>2021년식: 4380만원</ListItem>
         <ListItem>2022년식: 4670만원</ListItem>

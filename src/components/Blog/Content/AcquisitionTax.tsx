@@ -1,9 +1,11 @@
 import { BlogHeading, BlogImage, BlogText } from '../Common';
 import TableOfContents from '../TableOfContents';
+import useImgDirectory from '@/hooks/useImgDirectory';
 
-const AcquisitionTax = ({ imgDir }: { imgDir: string }) => {
-  const titles = ['자동차 취등록세 정의', '2023 전기차 취득세', '하이브리드, 수소 자동차 취득세'];
+const AcquisitionTax = () => {
+  const imgDir = useImgDirectory();
   const alt = '전기차 취득세';
+  const titles = ['자동차 취등록세 정의', '2023 전기차 취득세', '하이브리드, 수소 자동차 취득세'];
 
   return (
     <>

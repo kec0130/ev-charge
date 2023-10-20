@@ -1,6 +1,16 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Button, Heading, Table, TableContainer, Text, useTheme } from '@chakra-ui/react';
+import {
+  Button,
+  ChakraProps,
+  Heading,
+  Highlight,
+  Table,
+  TableContainer,
+  Text,
+  useTheme,
+} from '@chakra-ui/react';
+
 import { convertToSlug } from '@/utils/blog';
 
 export const BlogHeading = ({ title }: { title: string }) => {
@@ -12,8 +22,18 @@ export const BlogHeading = ({ title }: { title: string }) => {
   );
 };
 
-export const BlogText = ({ children }: { children: React.ReactNode }) => {
-  return <Text my={5}>{children}</Text>;
+export const BlogText = ({
+  children,
+  style,
+}: {
+  children: React.ReactNode;
+  style?: React.CSSProperties;
+}) => {
+  return (
+    <Text my={5} style={style}>
+      {children}
+    </Text>
+  );
 };
 
 type ImageOrientation = 'horizontal' | 'vertical' | 'square';
@@ -95,14 +115,31 @@ export const BlogLink = ({
   href,
   text,
   inline = false,
+  sx,
 }: {
   href: string;
   text: string;
   inline?: boolean;
+  sx?: ChakraProps['sx'];
 }) => {
   return (
-    <Button variant='link' colorScheme='green' color='green.400' mb={inline ? undefined : 5}>
+    <Button
+      variant='link'
+      colorScheme='green'
+      color='green.400'
+      my={inline ? undefined : 5}
+      display={inline ? 'inline' : 'block'}
+      sx={sx}
+    >
       <Link href={href}>{text}</Link>
     </Button>
+  );
+};
+
+export const BlogHighlight = ({ text }: { text: string }) => {
+  return (
+    <Highlight query={text} styles={{ bg: 'orange.100', fontWeight: 'bold' }}>
+      {text}
+    </Highlight>
   );
 };

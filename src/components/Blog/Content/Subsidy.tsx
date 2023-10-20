@@ -1,14 +1,16 @@
 import { Tr, Td, Th, Tbody, Thead } from '@chakra-ui/react';
 import { BlogHeading, BlogImage, BlogTable, BlogText } from '../Common';
 import TableOfContents from '../TableOfContents';
+import useImgDirectory from '@/hooks/useImgDirectory';
 
-const Subsidy = ({ imgDir }: { imgDir: string }) => {
+const Subsidy = () => {
+  const imgDir = useImgDirectory();
+  const alt = '전기차 보조금';
   const titles = [
     '지자체별 전기차 보조금',
     '차량별 국고 보조금 지원 금액',
     '전기차 보조금 신청 절차 및 기간',
   ];
-  const alt = '전기차 보조금';
 
   return (
     <>

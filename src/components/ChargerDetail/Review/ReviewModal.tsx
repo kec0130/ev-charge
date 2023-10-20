@@ -29,6 +29,7 @@ interface Props {
 const ReviewModal = ({ setReviews }: Props) => {
   const [rating, setRating] = useState(5);
   const [content, setContent] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const currentStation = useAtomValue(currentStationAtom);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -38,18 +39,23 @@ const ReviewModal = ({ setReviews }: Props) => {
     e.preventDefault();
     if (!content.trim()) return alert('리뷰 내용을 작성해주세요.');
 
+    setIsSubmitting(true);
+
     const newReview = {
       stationId: currentStation,
       rating,
       content,
     };
 
-    postReview(newReview).then((res) => {
-      if (res.error) return alert('리뷰를 등록할 수 없습니다.');
-      setReviews(res.data);
-    });
-
-    handleClose();
+    postReview(newReview)
+      .then((res) => {
+        if (res.error) return alert('리뷰를 등록할 수 없습니다.');
+        setReviews((prev) => [...res.data, ...prev]);
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+        handleClose();
+      });
   };
 
   const handleClose = () => {
@@ -95,7 +101,7 @@ const ReviewModal = ({ setReviews }: Props) => {
                   autoComplete='off'
                 />
                 <InputRightElement w='4rem'>
-                  <Button type='submit' h='1.75rem' size='sm'>
+                  <Button type='submit' h='1.75rem' size='sm' isLoading={isSubmitting}>
                     등록
                   </Button>
                 </InputRightElement>
