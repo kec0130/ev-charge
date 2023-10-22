@@ -15,6 +15,9 @@ const fetcher = (url: string, districtCode: string, currentLocation: Coord) =>
         lat: currentLocation[0],
         lng: currentLocation[1],
       },
+      headers: {
+        secret: process.env.NEXT_PUBLIC_CHARGER_API_SECRET,
+      },
     })
     .then((res) => res.data);
 
