@@ -15,6 +15,9 @@ const fetcher = (url: string, districtCode: string, currentLocation: Coord) =>
         lat: currentLocation[0],
         lng: currentLocation[1],
       },
+      headers: {
+        secret: process.env.NEXT_PUBLIC_CHARGER_API_SECRET,
+      },
     })
     .then((res) => res.data);
 
@@ -25,7 +28,7 @@ const useChargers = () => {
   const filterOption = useAtomValue(filterOptionAtom);
 
   const { data, isLoading, error } = useSWR(
-    districtCode ? ['/api/chargers', districtCode, currentLocation] : null,
+    districtCode ? [process.env.NEXT_PUBLIC_CHARGER_API_URL!, districtCode, currentLocation] : null,
     ([url, districtCode, currentLocation]) => fetcher(url, districtCode, currentLocation),
     {
       revalidateOnFocus: false,
@@ -33,7 +36,7 @@ const useChargers = () => {
       errorRetryInterval: 3000,
       errorRetryCount: 3,
       onSuccess: (data) => setFilteredData(data),
-    }
+    },
   );
 
   useEffect(() => {
