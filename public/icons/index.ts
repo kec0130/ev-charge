@@ -8,6 +8,7 @@ import MarkerErrorIcon from './marker_error.svg';
 import StarIcon from './star.svg';
 import EditIcon from './edit.svg';
 import SearchIcon from './search.svg';
+import CheckIcon from './check.svg';
 
 export {
   LocationIcon,
@@ -20,4 +21,5 @@ export {
   StarIcon,
   EditIcon,
   SearchIcon,
+  CheckIcon,
 };

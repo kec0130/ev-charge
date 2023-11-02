@@ -29,20 +29,22 @@ const ChargerDetail = () => {
 
     if (data && data.chargerCount > 0 && !currentStation) {
       if (showNearbyStations) {
-        const stations = data.stations.slice(0, 10);
-        return <NearbyStations stations={stations} />;
+        return <NearbyStations stations={data.stations.slice(0, 10)} />;
       }
       return <Status type='success' text='충전소를 선택해주세요.' />;
     }
 
     if (data && currentStation) {
-      const station = data.stations.find((station) => station.statId === currentStation);
-      if (!station) {
-        return (
-          <Status type='error' text={`충전소 정보를 불러올 수 없습니다.\n다시 시도해주세요.`} />
-        );
+      const selectedStation = data.stations.find((station) => station.statId === currentStation);
+
+      if (!selectedStation) {
+        if (showNearbyStations) {
+          return <NearbyStations stations={data.stations.slice(0, 10)} />;
+        }
+        return <Status type='success' text='충전소를 선택해주세요.' />;
       }
-      return <StationInfo station={station} />;
+
+      return <StationInfo station={selectedStation} />;
     }
   };
 

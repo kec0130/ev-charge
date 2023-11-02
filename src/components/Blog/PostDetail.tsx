@@ -52,7 +52,11 @@ const PostDetail = ({ title, slug, createdAt, relatedPosts }: Props) => {
       </Box>
 
       <RelatedPosts posts={relatedPosts} />
-      <BlogLink href='/blog' text='← 목록으로' sx={{ ml: 'auto' }} />
+      <BlogLink
+        href='/blog'
+        text='← 목록으로'
+        sx={{ display: 'flex', justifyContent: 'flex-end' }}
+      />
     </>
   );
 };

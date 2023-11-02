@@ -124,6 +124,8 @@ export const BlogLink = ({
 }) => {
   return (
     <Button
+      as={Link}
+      href={href}
       variant='link'
       colorScheme='green'
       color='green.400'
@@ -131,7 +133,7 @@ export const BlogLink = ({
       display={inline ? 'inline' : 'block'}
       sx={sx}
     >
-      <Link href={href}>{text}</Link>
+      {text}
     </Button>
   );
 };

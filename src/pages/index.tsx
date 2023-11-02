@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 
 import useCurrentLocation from '@/hooks/useCurrentLocation';
 import Map from '@/components/Map';
 import ChargerDetail from '@/components/ChargerDetail';
 import Metadata from '@/components/Common/Metadata';
+import ErrorPage from '@/components/Common/ErrorPage';
 
 export default function Home() {
   const { getCurrentLocation } = useCurrentLocation();
@@ -16,8 +18,10 @@ export default function Home() {
   return (
     <>
       <Metadata url='/' />
-      <Map />
-      <ChargerDetail />
+      <ErrorBoundary fallback={<ErrorPage />}>
+        <Map />
+        <ChargerDetail />
+      </ErrorBoundary>
     </>
   );
 }
