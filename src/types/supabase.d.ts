@@ -3,36 +3,6 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export interface Database {
   public: {
     Tables: {
-      post: {
-        Row: {
-          created_at: string;
-          description: string;
-          id: number;
-          image_url: string;
-          keywords: string;
-          slug: string;
-          title: string;
-        };
-        Insert: {
-          created_at: string;
-          description: string;
-          id?: number;
-          image_url: string;
-          keywords: string;
-          slug: string;
-          title: string;
-        };
-        Update: {
-          created_at?: string;
-          description?: string;
-          id?: number;
-          image_url?: string;
-          keywords?: string;
-          slug?: string;
-          title?: string;
-        };
-        Relationships: [];
-      };
       station_review: {
         Row: {
           content: string;
@@ -103,5 +73,4 @@ export interface Database {
 type Tables<T extends keyof Database['public']['Tables']> = Database['public']['Tables'][T]['Row'];
 
 export type Review = Tables<'station_review'>;
-export type Post = Tables<'post'>;
 export type UsedCar = Tables<'used_car'>;

@@ -1,10 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getAllPosts } from '@/services/blog';
+import { allPosts } from 'contentlayer/generated';
 import { MENU_LIST } from '@/constants/navigation';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { posts } = await getAllPosts();
-
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/xml');
   res.setHeader('Cache-control', 'stale-while-revalidate, s-maxage=3600');
@@ -16,15 +14,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         `<url>
         <loc>https://ev-charge.kr${menu.href}</loc>
         <lastmod>${new Date().toISOString().slice(0, 10)}</lastmod>
-      </url>`
+      </url>`,
     ).join('')}
-    ${posts
+    ${allPosts
       .map(
         (post) =>
           `<url>
         <loc>https://ev-charge.kr/blog/${post.slug}</loc>
         <lastmod>${post.created_at}</lastmod>
-      </url>`
+      </url>`,
       )
       .join('')}
     </urlset>`;

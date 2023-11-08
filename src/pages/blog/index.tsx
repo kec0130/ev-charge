@@ -1,15 +1,14 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
+import { allPosts, Post } from 'contentlayer/generated';
 
-import { Post } from '@/types/supabase';
-import { getAllPosts } from '@/services/blog';
 import generateRssFeed from '@/utils/rss';
 import Metadata from '@/components/Common/Metadata';
-import Status from '@/components/Common/Status';
 import PostList from '@/components/Blog/PostList';
+import ErrorPage from '@/components/Common/ErrorPage';
 
 const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
   if (posts.length === 0) {
-    return <Status type='error' text='게시글 목록을 불러올 수 없습니다.' fullHeight />;
+    return <ErrorPage text='게시글 목록을 불러올 수 없습니다.' />;
   }
 
   return (
@@ -26,14 +25,13 @@ const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 };
 
 export const getStaticProps: GetStaticProps<{ posts: Post[] }> = async () => {
-  const { posts } = await getAllPosts();
-  const sortedPosts = posts.slice(1, posts.length).sort((a, b) => (a.id > b.id ? -1 : 1));
-  const newPosts = [posts[0], ...sortedPosts];
-  generateRssFeed(posts);
+  const posts = allPosts.sort((a, b) => (b.created_at > a.created_at ? 1 : -1));
+  const orderedPosts = [posts[posts.length - 1], ...posts.slice(0, -1)];
+  generateRssFeed();
 
   return {
     props: {
-      posts: newPosts,
+      posts: orderedPosts,
     },
   };
 };

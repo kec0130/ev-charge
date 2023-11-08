@@ -1,5 +1,5 @@
 import { List } from '@chakra-ui/react';
-import { Post } from '@/types/supabase';
+import { Post } from 'contentlayer/generated';
 import PostListItem from './PostListItem';
 
 const PostList = ({ posts }: { posts: Post[] }) => {
@@ -7,7 +7,7 @@ const PostList = ({ posts }: { posts: Post[] }) => {
     <List>
       {posts.map((post, index) => (
         <PostListItem
-          key={post.id}
+          key={post.slug}
           title={post.title}
           description={post.description}
           slug={post.slug}

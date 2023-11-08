@@ -1,8 +1,8 @@
 import fs from 'fs';
 import RSS from 'rss';
-import { Post } from '@/types/supabase';
+import { allPosts } from 'contentlayer/generated';
 
-export default async function generateRssFeed(posts: Post[]) {
+export default async function generateRssFeed() {
   const siteURL =
     process.env.NODE_ENV === 'production' ? 'https://ev-charge.kr' : 'http://localhost:3000';
 
@@ -17,7 +17,7 @@ export default async function generateRssFeed(posts: Post[]) {
 
   const feed = new RSS(feedOptions);
 
-  posts.map((post) => {
+  allPosts.map((post) => {
     feed.item({
       title: post.title,
       description: post.description,

@@ -1,27 +1,20 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
+import { allPosts, Post } from 'contentlayer/generated';
 
-import { Post } from '@/types/supabase';
-import { getAllPosts, getSlugs } from '@/services/blog';
 import PostDetail from '@/components/Blog/PostDetail';
 import Metadata from '@/components/Common/Metadata';
-import Status from '@/components/Common/Status';
-
-interface Props {
-  post: Post | undefined;
-  relatedPosts: Post[];
-}
 
 const Post = ({ post, relatedPosts }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  if (!post) {
-    return <Status type='error' text='게시글을 불러올 수 없습니다.' fullHeight />;
-  }
-
-  const { title, description, keywords, slug, created_at: createdAt } = post;
-
   return (
     <>
-      <Metadata title={title} description={description} keywords={keywords} url={`/blog/${slug}`} />
-      <PostDetail title={title} slug={slug} createdAt={createdAt} relatedPosts={relatedPosts} />
+      <Metadata
+        title={post.title}
+        description={post.description}
+        keywords={post.keywords}
+        url={`/blog/${post.slug}`}
+        image={`/images/blog/${post.slug}/01.jpg`}
+      />
+      <PostDetail post={post} relatedPosts={relatedPosts} />
     </>
   );
 };
@@ -29,8 +22,7 @@ const Post = ({ post, relatedPosts }: InferGetStaticPropsType<typeof getStaticPr
 export default Post;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { slugs } = await getSlugs();
-  const paths = slugs.map((slug) => ({ params: slug }));
+  const paths = allPosts.map((post) => ({ params: { slug: post.slug } }));
 
   return {
     paths,
@@ -38,15 +30,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
-  const { posts } = await getAllPosts();
+export const getStaticProps: GetStaticProps<{ post: Post; relatedPosts: Post[] }> = async ({
+  params,
+}) => {
+  const post = allPosts.find((post) => post.slug === params?.slug);
 
-  const post = posts.find((post) => post.slug === params?.slug);
-
-  const relatedPosts = posts
+  const relatedPosts = allPosts
     .filter((post) => post.slug !== params?.slug)
     .sort(() => Math.random() - 0.5)
     .slice(0, 3);
+
+  if (!post) return { notFound: true };
 
   return {
     props: {
