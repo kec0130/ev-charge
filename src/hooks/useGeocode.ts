@@ -60,7 +60,7 @@ const useGeocode = () => {
 
           updateCurrentDistrict(matchedDistricts[0], isCurrentLocation);
         } catch (e) {
-          console.log(response.v2.status.message);
+          throw new Error(response.v2.status.message);
         }
       }
     );
@@ -79,7 +79,7 @@ const useGeocode = () => {
         moveMap(convertToCoord(y, x));
         setCurrentDistrict(districtCode);
       } catch (e) {
-        console.log(response.v2.errorMessage);
+        throw new Error(response.v2.errorMessage);
       }
     });
   };

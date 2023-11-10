@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Box, Divider, Flex, Heading, ListItem, Text } from '@chakra-ui/react';
+import { Box, Divider, Flex, Heading, ListItem, Text, useTheme } from '@chakra-ui/react';
 
 interface Props {
   title: string;
@@ -10,6 +10,8 @@ interface Props {
   index: number;
 }
 const PostListItem = ({ title, description, slug, imgSrc, index }: Props) => {
+  const theme = useTheme();
+
   return (
     <>
       {index !== 0 && <Divider my={6} />}
@@ -23,11 +25,12 @@ const PostListItem = ({ title, description, slug, imgSrc, index }: Props) => {
               minW={['full', 300]}
               h={[180, 160]}
               borderRadius='md'
+              border={`1px solid ${theme.colors.gray[200]}`}
               overflow='hidden'
             >
               <Image
                 src={imgSrc}
-                alt={slug}
+                alt={title}
                 width={300}
                 height={160}
                 style={{
@@ -41,7 +44,11 @@ const PostListItem = ({ title, description, slug, imgSrc, index }: Props) => {
               <Heading as='h3' size='lg' mb={[2, 4]} noOfLines={2}>
                 {title}
               </Heading>
-              {description && <Text noOfLines={[2, 3]}>{description}</Text>}
+              {description && (
+                <Text noOfLines={[2, 3]} color={theme.colors.gray[600]}>
+                  {description}
+                </Text>
+              )}
             </Box>
           </Flex>
         </Link>
