@@ -9,9 +9,16 @@
             <link>http://localhost:3000</link>
         </image>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Fri, 10 Nov 2023 11:49:38 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 13 Nov 2023 15:54:30 GMT</lastBuildDate>
         <atom:link href="http://localhost:3000/rss.xml" rel="self" type="application/rss+xml"/>
-        <pubDate>Fri, 10 Nov 2023 11:49:38 GMT</pubDate>
+        <pubDate>Mon, 13 Nov 2023 15:54:30 GMT</pubDate>
+        <item>
+            <title><![CDATA[교통약자 대상 '찾아가는 전기차 충전서비스' 도입]]></title>
+            <description><![CDATA[서울시가 13일부터 교통약자를 위한 '찾아가는 전기차 충전서비스' 실증사업을 새롭게 시작합니다. 전기차 수요가 점차 늘어나고 있는 현 상황에서, 장애인과 임산부 등 교통약자들이 충전 구역 이동과 사용에 많은 어려움을 겪고 있다고 합니다. 이러한 문제를 해결하기 위해 찾아가는 전기차 충전서비스가 기획되었다고 합니다.]]></description>
+            <link>http://localhost:3000/blog/ev-chargers-delivery</link>
+            <guid isPermaLink="true">http://localhost:3000/blog/ev-chargers-delivery</guid>
+            <pubDate>Tue, 14 Nov 2023 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[2023 롤스로이스 고스트 풀체인지 가격 정보]]></title>
             <description><![CDATA[안녕하세요 전기차지입니다. 오늘 준비한 소식은 2023 롤스로이스 고스트 신형 출시 정보입니다. 개인적인 생각으로는 자동차계의 천상계라고 불릴 수 있는 최고급 세단이라고 생각되는데요. 약 10년만에 새롭게 출시되는만큼 많은 자동차 매니아분들의 관심을 받고 있는 상황입니다.]]></description>
