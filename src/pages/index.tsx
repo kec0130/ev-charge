@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import useCurrentLocation from '@/hooks/useCurrentLocation';
@@ -19,7 +19,9 @@ export default function Home() {
     <>
       <Metadata url='/' />
       <ErrorBoundary fallback={<ErrorPage />}>
-        <Map />
+        <Suspense fallback={null}>
+          <Map />
+        </Suspense>
         <ChargerDetail />
       </ErrorBoundary>
     </>
