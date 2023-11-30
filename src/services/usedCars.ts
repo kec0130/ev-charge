@@ -21,7 +21,8 @@ export const getMonths = async () => {
 
   const months = data
     ?.map((item) => item.created_at.slice(0, 7))
-    .filter((v, i, a) => a.indexOf(v) === i);
+    .filter((v, i, a) => a.indexOf(v) === i)
+    .sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
 
   return { months: months || [] };
 };
