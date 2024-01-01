@@ -16,7 +16,7 @@ const nextConfig = {
     return [
       {
         source: '/used-cars',
-        destination: '/used-cars/2023-12',
+        destination: '/used-cars/2024-01',
         permanent: true,
       },
     ];
