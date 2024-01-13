@@ -9,7 +9,7 @@ const Footer = () => {
         fontSize='sm'
         lineHeight={6}
         px={[0, 2]}
-        py={6}
+        py={10}
         justifyContent='space-between'
         flexDir={['column', 'row']}
         gap={4}
