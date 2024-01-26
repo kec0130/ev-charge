@@ -18,6 +18,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <link rel='mask-icon' href='/safari-pinned-tab.svg' color='#55cc88' />
           <meta name='msapplication-TileColor' content='#2b5797' />
           <meta name='theme-color' content='#ffffff' />
+          {/* site verification */}
           <meta
             name='google-site-verification'
             content='_oTPY5_t-Fx2udy0qyRx5Qp9uvKfQgN8z-nZrKZKfxI'
