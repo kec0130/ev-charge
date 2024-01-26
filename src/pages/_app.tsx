@@ -20,7 +20,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <meta name='theme-color' content='#ffffff' />
           <meta
             name='google-site-verification'
-            content='fmrudxiCqgKD5AX7-vq-0d-L8i1UXCVq-So_My19IxM'
+            content='_oTPY5_t-Fx2udy0qyRx5Qp9uvKfQgN8z-nZrKZKfxI'
           />
           <meta name='naver-site-verification' content='b3044df87ae5838592940b7d467f77932ccd4063' />
         </Head>
