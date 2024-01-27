@@ -22,7 +22,7 @@ const PostDetail = ({ post, relatedPosts }: Props) => {
           {post.created_at.split('T')[0]}
         </Text>
         <Divider my={6} />
-        <AdSense />
+        {/* <AdSense /> */}
         <Mdx code={post.body.code} />
       </section>
       <section>
