@@ -1,17 +1,11 @@
-import { useEffect } from 'react';
 import { useAtom } from 'jotai';
-
 import { Coord } from '@/types/map';
-import { currentLocationAtom, isLoadingLocationAtom } from '@/states/map';
-import useMap from './useMap';
-import useGeocode from './useGeocode';
+import { currentLocationAtom, isLoadingLocationAtom, isLocationOffAtom } from '@/states/map';
 
 const useCurrentLocation = () => {
-  const [isLoadingLocation, setIsLoadingLocation] = useAtom(isLoadingLocationAtom);
-  const [currentLocation, setCurrentLocation] = useAtom(currentLocationAtom);
-
-  const { map, moveMap } = useMap();
-  const { reverseGeocode } = useGeocode();
+  const [, setIsLoadingLocation] = useAtom(isLoadingLocationAtom);
+  const [, setCurrentLocation] = useAtom(currentLocationAtom);
+  const [, setIsLocationOff] = useAtom(isLocationOffAtom);
 
   const onSuccess = (position: GeolocationPosition) => {
     const { latitude, longitude } = position.coords;
@@ -21,21 +15,15 @@ const useCurrentLocation = () => {
   };
 
   const onError = () => {
-    alert('현 위치 근처 충전소를 찾기 위해 위치 서비스 권한을 허용해주세요.');
     setIsLoadingLocation(false);
+    setIsLocationOff(true);
   };
 
   const getCurrentLocation = () => {
     setIsLoadingLocation(true);
+    setIsLocationOff(false);
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
   };
-
-  useEffect(() => {
-    if (isLoadingLocation || !map) return;
-    moveMap(currentLocation);
-    reverseGeocode(currentLocation, true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentLocation, isLoadingLocation, map]);
 
   return { getCurrentLocation };
 };

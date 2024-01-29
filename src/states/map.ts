@@ -12,6 +12,8 @@ export const currentLocationAtom = atom<Coord>(INITIAL_CENTER);
 
 export const isLoadingLocationAtom = atom(true);
 
+export const isLocationOffAtom = atom(false);
+
 export const currentLocationDistrictAtom = atom('');
 
 export const showNearbyStationsAtom = atom(
