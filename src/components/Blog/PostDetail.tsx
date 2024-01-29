@@ -2,9 +2,9 @@ import Link from 'next/link';
 import { Box, Button, Divider, Heading, Text } from '@chakra-ui/react';
 import { Post } from 'contentlayer/generated';
 
-import AdSense from '../Common/AdSense';
 import Mdx from './Mdx';
 import PostList from './PostList';
+import InArticleAds from '../Common/AdSense/InArticleAds';
 
 interface Props {
   post: Post;
@@ -22,7 +22,7 @@ const PostDetail = ({ post, relatedPosts }: Props) => {
           {post.created_at.split('T')[0]}
         </Text>
         <Divider my={6} />
-        {/* <AdSense /> */}
+        <InArticleAds />
         <Mdx code={post.body.code} />
       </section>
       <section>

@@ -8,7 +8,7 @@ import UsedCarListItem from './ListItem';
 import SearchBar from './SearchBar';
 import Options from './Options';
 import Status from '../Common/Status';
-import AdSense from '../Common/AdSense';
+import DisplaySquareAds from '../Common/AdSense/DisplaySquareAds';
 
 const UsedCars = ({ usedCars }: { usedCars: UsedCar[] }) => {
   const [inputValue, setInputValue] = useState('');
@@ -61,7 +61,7 @@ const UsedCars = ({ usedCars }: { usedCars: UsedCar[] }) => {
         월별 중고 전기차 시세를 확인해보세요. 이 데이터는 온라인으로 검색된 중고매물의 가격 분포를
         조사한 것으로 대략적인 시세 파악에 참고해주시기 바랍니다.
       </Text>
-      {/* <AdSense /> */}
+      <DisplaySquareAds />
 
       <Box my={[6, 8]}>
         <Options sortOption={sortOption} handleSortOptionChange={handleSortOptionChange} />
