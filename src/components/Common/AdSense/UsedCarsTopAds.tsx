@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-const DisplayHorizontalAds = () => {
+const UsedCarsTopAds = () => {
   useEffect(() => {
     if (process.env.NODE_ENV !== 'production') return;
     (window.adsbygoogle = window.adsbygoogle || []).push({});
@@ -11,11 +11,11 @@ const DisplayHorizontalAds = () => {
       className='adsbygoogle'
       style={{ display: 'block' }}
       data-ad-client={process.env.NEXT_PUBLIC_GOOGLE_ADS_CLIENT_ID}
-      data-ad-slot={process.env.NEXT_PUBLIC_GOOGLE_ADS_SLOT_ID_DISPLAY_HORIZONTAL}
+      data-ad-slot={process.env.NEXT_PUBLIC_GOOGLE_ADS_SLOT_ID_USED_CARS_TOP}
       data-ad-format='auto'
       data-full-width-responsive='true'
     ></ins>
   );
 };
 
-export default DisplayHorizontalAds;
+export default UsedCarsTopAds;

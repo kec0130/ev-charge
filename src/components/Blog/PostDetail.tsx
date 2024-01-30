@@ -4,7 +4,7 @@ import { Post } from 'contentlayer/generated';
 
 import Mdx from './Mdx';
 import PostList from './PostList';
-import InArticleAds from '../Common/AdSense/InArticleAds';
+import BlogInarticleAds from '../Common/AdSense/BlogInarticleAds';
 
 interface Props {
   post: Post;
@@ -22,7 +22,7 @@ const PostDetail = ({ post, relatedPosts }: Props) => {
           {post.created_at.split('T')[0]}
         </Text>
         <Divider my={6} />
-        <InArticleAds />
+        <BlogInarticleAds />
         <Mdx code={post.body.code} />
       </section>
       <section>
