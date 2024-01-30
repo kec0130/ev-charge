@@ -9,6 +9,7 @@ import { currentStationAtom } from '@/states/map';
 import { convertDistance, convertToCoord } from '@/utils/charger';
 import { MARKER_IMAGES } from '@/constants/map';
 import useMap from '@/hooks/useMap';
+import DisplayHorizontalAds from '@/components/Common/AdSense/DisplayHorizontalAds';
 
 const NearbyStations = ({ stations }: { stations: StationDTO[] }) => {
   const setCurrentStation = useSetAtom(currentStationAtom);
@@ -24,6 +25,8 @@ const NearbyStations = ({ stations }: { stations: StationDTO[] }) => {
       <Heading as='h3' size='md' p={4} pt={1}>
         내 주변 충전소
       </Heading>
+      <DisplayHorizontalAds />
+
       {stations.map((station) => {
         const { statId, statNm, distance, addr, lat, lng, markerType } = station;
         return (
@@ -59,6 +62,7 @@ const NearbyStations = ({ stations }: { stations: StationDTO[] }) => {
           </Fragment>
         );
       })}
+      <DisplayHorizontalAds />
     </Box>
   );
 };
