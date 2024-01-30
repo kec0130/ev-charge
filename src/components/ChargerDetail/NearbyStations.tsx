@@ -25,13 +25,14 @@ const NearbyStations = ({ stations }: { stations: StationDTO[] }) => {
       <Heading as='h3' size='md' p={4} pt={1}>
         내 주변 충전소
       </Heading>
+      <Divider />
       <MapFixedHeightAds />
 
-      {stations.map((station) => {
+      {stations.map((station, index) => {
         const { statId, statNm, distance, addr, lat, lng, markerType } = station;
         return (
           <Fragment key={statId}>
-            <Divider />
+            {index !== 0 && <Divider />}
             <button
               style={{ width: '100%' }}
               onClick={() => handleStationClick(statId, convertToCoord(lat, lng))}
