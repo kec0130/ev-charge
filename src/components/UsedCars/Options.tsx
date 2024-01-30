@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
-import { ChangeEventHandler, useEffect, useState } from 'react';
+import { ChangeEventHandler, useState } from 'react';
 import { Flex, Select } from '@chakra-ui/react';
 
 import { SortOption } from '@/types/usedCars';
-import { getMonths } from '@/services/usedCars';
+import { generateDateStrings } from '@/utils/usedCars';
 
 interface Props {
   sortOption: string;
@@ -18,8 +18,8 @@ const SORT_OPTIONS: { value: SortOption; label: string }[] = [
 
 const Options = ({ sortOption, handleSortOptionChange }: Props) => {
   const router = useRouter();
-  const [allMonths, setAllMonths] = useState<string[]>([]);
   const [month, setMonth] = useState(router.query.month as string);
+  const allMonths = generateDateStrings().reverse();
 
   const handleMonthChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
     const { value } = e.target;
@@ -31,10 +31,6 @@ const Options = ({ sortOption, handleSortOptionChange }: Props) => {
     const [year, month] = date.split('-');
     return `${year}년 ${parseInt(month)}월`;
   };
-
-  useEffect(() => {
-    getMonths().then((res) => setAllMonths(res.months));
-  }, []);
 
   return (
     <Flex gap={4} mb={4}>

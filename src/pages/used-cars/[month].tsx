@@ -1,7 +1,8 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 
 import { UsedCar } from '@/types/supabase';
-import { getMonths, getUsedCarsByMonth } from '@/services/usedCars';
+import { getUsedCarsByMonth } from '@/services/usedCars';
+import { generateDateStrings } from '@/utils/usedCars';
 import UsedCars from '@/components/UsedCars';
 import Metadata from '@/components/Common/Metadata';
 
@@ -22,7 +23,7 @@ const Page = ({ usedCars }: InferGetStaticPropsType<typeof getStaticProps>) => {
 export default Page;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { months } = await getMonths();
+  const months = generateDateStrings();
   const paths = months.map((month) => ({ params: { month } }));
 
   return {

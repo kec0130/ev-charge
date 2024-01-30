@@ -15,14 +15,3 @@ export const getUsedCarsByMonth = async (month: string) => {
 
   return { usedCars: filteredByMonth || [] };
 };
-
-export const getMonths = async () => {
-  const { data } = await supabase.from('used_car').select('created_at');
-
-  const months = data
-    ?.map((item) => item.created_at.slice(0, 7))
-    .filter((v, i, a) => a.indexOf(v) === i)
-    .sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
-
-  return { months: months || [] };
-};
