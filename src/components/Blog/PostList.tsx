@@ -1,7 +1,7 @@
 import { Divider, List } from '@chakra-ui/react';
 import { Post } from 'contentlayer/generated';
 import PostListItem from './PostListItem';
-import BlogInfeedDesktopAds from '../Common/AdSense/BlogInfeedDesktopAds';
+import BlogInfeedAds from '../Common/AdSense/BlogInfeedAds';
 
 const PostList = ({ posts }: { posts: Post[] }) => {
   return (
@@ -16,10 +16,10 @@ const PostList = ({ posts }: { posts: Post[] }) => {
             imgSrc={post.image_url}
             index={index}
           />
-          {index !== 0 && index !== posts.length - 1 && index % 4 === 0 && (
+          {index !== posts.length - 1 && index % 4 === 0 && (
             <>
               <Divider my={6} />
-              <BlogInfeedDesktopAds />
+              <BlogInfeedAds />
             </>
           )}
         </>
