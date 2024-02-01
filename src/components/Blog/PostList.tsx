@@ -8,6 +8,12 @@ const PostList = ({ posts }: { posts: Post[] }) => {
     <List>
       {posts.map((post, index) => (
         <>
+          {index % 3 === 0 && index !== 0 && index !== posts.length - 1 && (
+            <>
+              <Divider my={6} />
+              <BlogInfeedAds />
+            </>
+          )}
           <PostListItem
             key={post.slug}
             title={post.title}
@@ -16,12 +22,6 @@ const PostList = ({ posts }: { posts: Post[] }) => {
             imgSrc={post.image_url}
             index={index}
           />
-          {index !== posts.length - 1 && index % 4 === 0 && (
-            <>
-              <Divider my={6} />
-              <BlogInfeedAds />
-            </>
-          )}
         </>
       ))}
     </List>

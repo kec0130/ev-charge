@@ -5,6 +5,7 @@ import { Post } from 'contentlayer/generated';
 import Mdx from './Mdx';
 import PostList from './PostList';
 import BlogInarticleAds from '../Common/AdSense/BlogInarticleAds';
+import BlogInfeedAds from '../Common/AdSense/BlogInfeedAds';
 
 interface Props {
   post: Post;
@@ -31,7 +32,11 @@ const PostDetail = ({ post, relatedPosts }: Props) => {
           관련 글 더 보기
         </Text>
         <PostList posts={relatedPosts} />
-        <Box py={5} display='flex' justifyContent='flex-end'>
+        <Box>
+          <Divider my={6} />
+          <BlogInfeedAds />
+        </Box>
+        <Box py={6} display='flex' justifyContent='flex-end'>
           <Button as={Link} href='/blog' variant='link' colorScheme='green' color='green.400'>
             ← 목록으로
           </Button>
