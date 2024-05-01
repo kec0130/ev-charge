@@ -47,11 +47,11 @@ const NearbyStations = ({ stations }: { stations: StationDTO[] }) => {
                   />
                 </Flex>
                 <Box textAlign='left'>
-                  <Text mb={1} fontSize='lg' fontWeight='bold' noOfLines={1}>
+                  <Text mb={1} fontSize='lg' fontWeight='semibold' noOfLines={1}>
                     {statNm}
                   </Text>
                   <Flex alignItems='center'>
-                    <Text fontWeight='semibold'>{convertDistance(distance)}</Text>
+                    <Text fontWeight='medium'>{convertDistance(distance)}</Text>
                     <Divider orientation='vertical' h={4} mx={1.5} borderColor='gray.300' />
                     <Text color='gray.600' noOfLines={1}>
                       {addr}

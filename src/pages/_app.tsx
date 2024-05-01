@@ -1,9 +1,16 @@
 import Head from 'next/head';
 import type { AppProps } from 'next/app';
+import localFont from 'next/font/local';
 import { ChakraProvider } from '@chakra-ui/react';
 
 import theme from '@/styles/theme';
 import Layout from '@/components/Common/Layout';
+
+const pretendard = localFont({
+  src: './PretendardVariable.woff2',
+  display: 'swap',
+  weight: '45 920',
+});
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -24,7 +31,9 @@ export default function App({ Component, pageProps }: AppProps) {
           />
           <meta name='naver-site-verification' content='b3044df87ae5838592940b7d467f77932ccd4063' />
         </Head>
-        <Component {...pageProps} />
+        <div className={pretendard.className}>
+          <Component {...pageProps} />
+        </div>
       </Layout>
     </ChakraProvider>
   );
