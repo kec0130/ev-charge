@@ -39,79 +39,55 @@ export default async function handler(
 
     const stations = data
       .reduce<StationDTO[]>((acc, cur) => {
-        const {
-          statId,
-          lat,
-          lng,
-          statNm,
-          addr,
-          location,
-          useTime,
-          bnm,
-          busiCall,
-          kindDetail,
-          parkingFree,
-          note,
-          limitDetail,
-          delDetail,
-          chgerId,
-          chgerType,
-          stat,
-          statUpdDt,
-          lastTedt,
-          nowTsdt,
-          output,
-        } = cur;
-
-        const existingStation = acc.find((station) => station.statId === statId);
+        const existingStation = acc.find((station) => station.statId === cur.statId);
 
         if (!existingStation) {
           acc.push({
-            statId,
-            statNm,
-            addr,
-            lat,
-            lng,
+            statId: cur.statId,
+            statNm: cur.statNm,
+            addr: cur.addr,
+            lat: cur.lat,
+            lng: cur.lng,
             distance: haversineDistance(
               convertToCoord(currentLat, currentLng),
-              convertToCoord(lat, lng)
+              convertToCoord(cur.lat, cur.lng)
             ),
-            location: removeNullString(location),
-            useTime: convertUseTime(useTime),
-            bnm: removeNullString(bnm),
-            busiCall: removeNullString(busiCall),
-            kindDetail: removeNullString(kindDetail),
-            parkingFree: convertToBooleanOrNull(parkingFree),
-            note: removeNullString(note),
-            limitDetail: removeNullString(limitDetail),
-            delDetail: removeNullString(delDetail),
-            availableCount: isAvailable(stat) ? 1 : 0,
-            hasFastCharger: isFastCharge(chgerType),
+            location: removeNullString(cur.location),
+            useTime: convertUseTime(cur.useTime),
+            bnm: removeNullString(cur.bnm),
+            busiCall: removeNullString(cur.busiCall),
+            kindDetail: removeNullString(cur.kindDetail),
+            parkingFree: convertToBooleanOrNull(cur.parkingFree),
+            note: removeNullString(cur.note),
+            limitDetail: removeNullString(cur.limitDetail),
+            delDetail: removeNullString(cur.delDetail),
+            availableCount: isAvailable(cur.stat) ? 1 : 0,
+            hasFastCharger: isFastCharge(cur.chgerType),
             markerType: 0,
             chargers: [
               {
-                chgerId,
-                chgerType,
-                stat,
-                statUpdDt,
-                lastTedt,
-                nowTsdt,
-                output,
+                chgerType: cur.chgerType,
+                chgerId: cur.chgerId,
+                stat: cur.stat,
+                statUpdDt: cur.statUpdDt,
+                lastTedt: cur.lastTedt,
+                nowTsdt: cur.nowTsdt,
+                output: cur.output,
               },
             ],
           });
         } else {
-          existingStation.availableCount += isAvailable(stat) ? 1 : 0;
+          existingStation.availableCount += isAvailable(cur.stat) ? 1 : 0;
           existingStation.hasFastCharger =
-            existingStation.hasFastCharger || isFastCharge(chgerType);
+            existingStation.hasFastCharger || isFastCharge(cur.chgerType);
           existingStation.chargers.push({
-            chgerId,
-            chgerType,
-            stat,
-            statUpdDt,
-            lastTedt,
-            nowTsdt,
-            output,
+            chgerId: cur.chgerId,
+            chgerType: cur.chgerType,
+            stat: cur.stat,
+            statUpdDt: cur.statUpdDt,
+            lastTedt: cur.lastTedt,
+            nowTsdt: cur.nowTsdt,
+            output: cur.output,
           });
         }
 
