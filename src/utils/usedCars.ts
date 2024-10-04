@@ -1,8 +1,8 @@
 export const generateDateStrings = () => {
   const startYear = 2023;
   const startMonth = 9;
-  const currentYear = new Date().getFullYear();
-  const currentMonth = new Date().getMonth() + 1;
+  const currentYear = 2024; // new Date().getFullYear();
+  const currentMonth = 5; // new Date().getMonth() + 1;
 
   let dates = [];
   for (let year = startYear; year <= currentYear; year++) {
