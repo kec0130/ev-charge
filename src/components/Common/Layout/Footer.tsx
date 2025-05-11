@@ -17,7 +17,7 @@ const Footer = () => {
       >
         <Box>
           <Image src='/logo.png' alt='전기차 충전소 찾기' width={80} height={34} />
-          <Text>&copy; {new Date().getFullYear()} EV Charge. All Rights Reserved.</Text>
+          <Text>&copy; 2023. EV Charge. All rights reserved.</Text>
         </Box>
 
         <Flex
