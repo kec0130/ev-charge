@@ -4,6 +4,7 @@ const { withContentlayer } = require('next-contentlayer');
 const nextConfig = {
   reactStrictMode: true,
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
