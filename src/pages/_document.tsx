@@ -8,7 +8,7 @@ export default function Document() {
         <Script
           strategy='beforeInteractive'
           type='text/javascript'
-          src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NCP_CLIENT_ID}&submodules=geocoder`}
+          src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${process.env.NEXT_PUBLIC_NCP_CLIENT_ID}&submodules=geocoder`}
         />
         {/* google adsense */}
         <Script
