@@ -31,6 +31,7 @@ export default function Home() {
   useEffect(() => {
     if (isLoadingLocation || !map) return;
     moveMap(currentLocation);
+    // TODO: Add debounce
     reverseGeocode(currentLocation, true);
     isLocationOff && onOpen();
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -2,7 +2,7 @@
 
 ## 서비스 소개
 
-> <https://ev-charge.kr>
+> <https://ev-charge.chaechae.life>
 
 전기차 충전소의 위치와 상세 정보, 실시간 충전 현황을 지도에서 확인할 수 있는 서비스입니다.
 

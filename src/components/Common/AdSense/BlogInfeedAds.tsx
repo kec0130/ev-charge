@@ -14,13 +14,9 @@ const BlogInfeedAds = () => {
       className='adsbygoogle'
       style={{ display: 'block' }}
       data-ad-format='fluid'
-      data-ad-layout-key={isMobileView ? '-6o+dn+4m-5m-4' : '-eh-8e+af+h0-t6'}
+      data-ad-layout-key={isMobileView ? '-6k+dn+4m-5m-4' : '-ei-8c+ao+gy-tz'}
       data-ad-client={process.env.NEXT_PUBLIC_GOOGLE_ADS_CLIENT_ID}
-      data-ad-slot={
-        isMobileView
-          ? process.env.NEXT_PUBLIC_GOOGLE_ADS_SLOT_ID_BLOG_INFEED_MOBILE
-          : process.env.NEXT_PUBLIC_GOOGLE_ADS_SLOT_ID_BLOG_INFEED_DESKTOP
-      }
+      data-ad-slot={isMobileView ? '2075885374' : '3388967046'}
     ></ins>
   );
 };

@@ -18,6 +18,7 @@ const StationInfo = ({ station }: { station: StationDTO }) => {
       <StationTable station={station} />
       <Divider h={2} my={1} bg='gray.200' />
       <Review />
+      <MapFixedHeightAds />
     </Box>
   );
 };

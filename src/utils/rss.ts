@@ -4,7 +4,9 @@ import { allPosts } from 'contentlayer/generated';
 
 export default async function generateRssFeed() {
   const siteURL =
-    process.env.NODE_ENV === 'production' ? 'https://ev-charge.kr' : 'http://localhost:3000';
+    process.env.NODE_ENV === 'production'
+      ? process.env.NEXT_PUBLIC_BASE_URL!
+      : 'http://localhost:3000';
 
   const feedOptions = {
     title: '전기차G 블로그 | RSS 피드',

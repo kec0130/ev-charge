@@ -30,6 +30,7 @@ const NaverMap = ({ children }: { children: React.ReactNode }) => {
     const map = new naver.maps.Map(MAP_ID, mapOptions);
     setMap(map);
 
+    // TODO: Add debounce
     const dragListener = naver.maps.Event.addListener(map, 'dragend', () => {
       const { x, y } = map.getCenter();
       reverseGeocode([y, x]);
