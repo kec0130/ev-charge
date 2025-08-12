@@ -3,18 +3,15 @@ import RSS from 'rss';
 import { allPosts } from 'contentlayer/generated';
 
 export default async function generateRssFeed() {
-  const siteURL =
-    process.env.NODE_ENV === 'production'
-      ? process.env.NEXT_PUBLIC_BASE_URL!
-      : 'http://localhost:3000';
+  const baseURL = process.env.NEXT_PUBLIC_BASE_URL!;
 
   const feedOptions = {
     title: '전기차G 블로그 | RSS 피드',
     description: '전기차와 관련된 유용한 정보를 알려드립니다.',
-    site_url: siteURL,
-    feed_url: `${siteURL}/rss.xml`,
+    site_url: baseURL,
+    feed_url: `${baseURL}/rss.xml`,
     pubDate: new Date(),
-    image_url: `${siteURL}/logo.png`,
+    image_url: `${baseURL}/logo.png`,
   };
 
   const feed = new RSS(feedOptions);
@@ -23,7 +20,7 @@ export default async function generateRssFeed() {
     feed.item({
       title: post.title,
       description: post.description,
-      url: `${siteURL}/blog/${post.slug}`,
+      url: `${baseURL}/blog/${post.slug}`,
       date: new Date(post.created_at),
     });
   });

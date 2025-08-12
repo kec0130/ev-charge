@@ -2,3 +2,5 @@ User-agent: *
 Disallow:
 
 Sitemap: https://ev-charge.chaechae.life/sitemap.xml
+
+#DaumWebMasterTool:85f24b1db13168eb3dfc5526abe33edd1412efd9f298cb9497d46064fa237676:BH1f2kcu9tGoDqVxDM/RBQ==
