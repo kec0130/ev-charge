@@ -68,8 +68,8 @@ const ChargerTable = ({ chargers, availableCount }: Props) => {
                 <Td w={50}>{chgerId}</Td>
                 <Td w={100}>
                   <Flex alignItems='center' gap={1.5}>
-                    {STATUS[stat]}
                     <Circle size='7px' bg={getStatusColor(stat)} />
+                    {STATUS[stat]}
                   </Flex>
                 </Td>
                 <Td w={50}>
