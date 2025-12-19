@@ -107,7 +107,8 @@ export default async function handler(
       stationCount: stations.length,
       stations,
     });
-  } catch (e) {
-    res.status(500).json({ message: 'Internal Server Error' });
+  } catch (e: any) {
+    console.error(e.response.statusText);
+    res.status(e.response.status).json({ message: e.response.statusText });
   }
 }

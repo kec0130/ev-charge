@@ -30,7 +30,9 @@ const useGeocode = () => {
     isCurrentLocation && setCurrentLocationDistrict(districtCode);
   };
 
-  const reverseGeocode = (coord: Coord, isCurrentLocation?: boolean) =>
+  const reverseGeocode = (coord: Coord, isCurrentLocation?: boolean) => {
+    if (!naver.maps.Service) return;
+
     naver.maps.Service.reverseGeocode(
       { coords: new naver.maps.LatLng(...coord) },
       (status, response) => {
@@ -64,12 +66,15 @@ const useGeocode = () => {
         }
       }
     );
+  };
 
   const geocode = (cityCode: string, districtCode: string) => {
     const query =
       cityCode === SEJONG.cityCode
         ? CITY_CODE[cityCode]
         : `${CITY_CODE[cityCode]} ${DISTRICT_CODE[districtCode]}`;
+
+    if (!naver.maps.Service) return;
 
     naver.maps.Service.geocode({ query }, (status, response) => {
       if (status !== naver.maps.Service.Status.OK) return;
