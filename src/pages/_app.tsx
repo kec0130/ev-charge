@@ -30,6 +30,7 @@ export default function App({ Component, pageProps }: AppProps) {
             content='yAPCOjrjXkneaFLU21zJVUZT_mDKpTL3BM8QPsHgvN0'
           />
           <meta name='naver-site-verification' content='d72089b0ff71232d56d18948e035b0d7de37939a' />
+          <meta name='msvalidate.01' content='05F302DB29E852907B138745E9B5629D' />
         </Head>
         <div className={pretendard.className}>
           <Component {...pageProps} />
