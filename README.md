@@ -5,6 +5,7 @@
 - [프로젝트 분석과 90일 개선안](docs/revival-plan.md)
 - [헤르메스 콘텐츠 자동화 작업안](docs/hermes-content-workflow.md)
 - 검증: `npm test`, `npm run lint`, `npm run build`
+- 배포 빌드 명령은 `npm run build`를 사용합니다. MDX 데이터·타입을 먼저 생성한 뒤 Next.js 타입 검사와 빌드를 시작하므로, `.contentlayer`가 없는 새 체크아웃에서도 실행할 수 있습니다.
 - 배포 빌드 명령은 `npm run build`를 사용합니다. 이 명령은 MDX 데이터·타입을 먼저 생성한 뒤 Next.js 타입 검사와 빌드를 시작합니다. `.contentlayer`가 없는 새 체크아웃에서도 실행할 수 있습니다.
 - 로컬 실행: `npm ci` 후 `.env.example`을 참고해 `.env.local`을 설정하고 `npm run dev`
 - 충전소 API 인증키는 서버 전용 `EV_CHARGER_SERVICE_KEY`를 사용합니다. 기존 배포의 `NEXT_PUBLIC_API_SERVICE_KEY`도 호환됩니다.
