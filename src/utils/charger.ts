@@ -71,7 +71,7 @@ function toRadians(degrees: number) {
 export function convertDistance(distance: number) {
   // Convert to meters if distance < 1 km
   if (distance < 1) {
-    return `${distance * 1000}m`;
+    return `${Math.round(distance * 1000)}m`;
   }
   return `${parseFloat(distance.toFixed(1))}km`;
 }

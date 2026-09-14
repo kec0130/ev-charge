@@ -1,5 +1,6 @@
 import type { ChargerDTO, ChargerInfoRes, StationAccess, StationDTO } from '@/types/charger';
 import type { Coord, FilterOption } from '@/types/map';
+import { getStationAvailability } from './stationPresentation';
 import {
   convertToBooleanOrNull,
   convertUseTime,
@@ -27,20 +28,22 @@ function mergeAccess(a: StationAccess, b: StationAccess): StationAccess {
 }
 
 export function isValidCoord(lat: number, lng: number) {
-  return Number.isFinite(lat) && Number.isFinite(lng) &&
-    lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180;
+  return (
+    Number.isFinite(lat) &&
+    Number.isFinite(lng) &&
+    lat >= -90 &&
+    lat <= 90 &&
+    lng >= -180 &&
+    lng <= 180
+  );
 }
 
 function stationMarker(station: StationDTO, onlyFastCharger = false) {
-  const chargers = station.chargers.filter((charger) =>
-    !onlyFastCharger || isFastCharge(charger.chgerType)
+  const state = getStationAvailability(station, onlyFastCharger);
+  return getMarkerType(
+    state.available,
+    state.state === 'fast' || (state.state === 'unavailable' && state.fastTotal > 0),
   );
-  const available = chargers.filter((charger) => isAvailable(charger.stat));
-  // A busy fast charger must not turn a free slow charger into a free fast marker.
-  const hasFast = (available.length ? available : chargers).some((charger) =>
-    isFastCharge(charger.chgerType)
-  );
-  return getMarkerType(available.length, hasFast);
 }
 
 export function buildStations(data: ChargerDTO[], currentLocation: Coord): ChargerInfoRes {
@@ -51,9 +54,17 @@ export function buildStations(data: ChargerDTO[], currentLocation: Coord): Charg
     const lat = Number(charger.lat);
     const lng = Number(charger.lng);
     const key = `${charger.statId}:${charger.chgerId}`;
-    if (charger.delYn === 'Y' || !charger.statId || !charger.chgerId ||
-      !charger.lat?.trim() || !charger.lng?.trim() || !isValidCoord(lat, lng) ||
-      (lat === 0 && lng === 0) || seenChargers.has(key)) continue;
+    if (
+      charger.delYn === 'Y' ||
+      !charger.statId ||
+      !charger.chgerId ||
+      !charger.lat?.trim() ||
+      !charger.lng?.trim() ||
+      !isValidCoord(lat, lng) ||
+      (lat === 0 && lng === 0) ||
+      seenChargers.has(key)
+    )
+      continue;
     seenChargers.add(key);
 
     const access = getStationAccess(charger.limitYn, charger.limitDetail);
@@ -114,16 +125,19 @@ export function buildStations(data: ChargerDTO[], currentLocation: Coord): Charg
 }
 
 export function filterStations(data: ChargerInfoRes, options: FilterOption): ChargerInfoRes {
-  const stations = data.stations.filter((station) => {
-    if (options.onlyPublic && station.access !== 'public') return false;
-    return station.chargers.some((charger) =>
-      (!options.onlyAvailable || isAvailable(charger.stat)) &&
-      (!options.onlyFastCharger || isFastCharge(charger.chgerType))
-    );
-  }).map((station) => ({
-    ...station,
-    markerType: stationMarker(station, options.onlyFastCharger),
-  }));
+  const stations = data.stations
+    .filter((station) => {
+      if (options.onlyPublic && station.access !== 'public') return false;
+      return station.chargers.some(
+        (charger) =>
+          (!options.onlyAvailable || isAvailable(charger.stat)) &&
+          (!options.onlyFastCharger || isFastCharge(charger.chgerType)),
+      );
+    })
+    .map((station) => ({
+      ...station,
+      markerType: stationMarker(station, options.onlyFastCharger),
+    }));
 
   return {
     stations,

@@ -1,43 +1,19 @@
 import Image from 'next/image';
-import { Box, Divider, Flex, Heading, ListItem, Text } from '@chakra-ui/react';
-import { UsedCar } from '@/types/supabase';
-
-interface Props {
-  usedCar: UsedCar;
-  index: number;
-}
-
-const UsedCarListItem = ({ usedCar, index }: Props) => {
-  const { name, image, min_price: minPrice, max_price: maxPrice } = usedCar;
-
+import type { UsedCar } from '@/types/supabase';
+export default function UsedCarListItem({ usedCar }: { usedCar: UsedCar }) {
   return (
-    <>
-      {index !== 0 && <Divider my={[3, 4]} />}
-      <ListItem display='flex' w='full'>
-        <Box flex={1} h={['80px', '120px']} borderRadius='md' overflow='hidden'>
-          <Image
-            src={image || '/og.png'}
-            alt={name}
-            width={238}
-            height={120}
-            style={{
-              objectFit: 'cover',
-              width: '100%',
-              height: '100%',
-            }}
-          />
-        </Box>
-        <Flex flexDir='column' justifyContent='center' flex={3} ml={[4, 6]}>
-          <Heading as='h3' size={['md', 'lg']} mb={[2, 4]}>
-            {name}
-          </Heading>
-          <Text>
-            {minPrice.toLocaleString()}만 원 ~ {maxPrice.toLocaleString()}만 원
-          </Text>
-        </Flex>
-      </ListItem>
-    </>
+    <li className='car-card'>
+      <div className='car-image'>
+        <Image src={usedCar.image || '/og.png'} alt={usedCar.name} width={340} height={224} />
+      </div>
+      <div className='car-copy'>
+        <h3>{usedCar.name}</h3>
+        <p>조사 당시 매물 가격</p>
+        <strong className='car-price'>
+          {usedCar.min_price.toLocaleString('ko-KR')} ~ {usedCar.max_price.toLocaleString('ko-KR')}
+          만 원
+        </strong>
+      </div>
+    </li>
   );
-};
-
-export default UsedCarListItem;
+}

@@ -1,23 +1,16 @@
 import { useRouter } from 'next/router';
-import { Container, useTheme } from '@chakra-ui/react';
 import Navigation from './Navigation';
 import Footer from './Footer';
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
-  const theme = useTheme();
-  const router = useRouter();
-  const mapPage = router.pathname === '/';
-
+export default function Layout({ children }: { children: React.ReactNode }) {
+  const mapPage = useRouter().pathname === '/';
   return (
     <>
-      {/* <NoticeModal /> */}
       <Navigation />
-      <Container as='main' maxW='container.lg' p={mapPage ? 0 : [4, 6]} mt={theme.sizes.navHeight}>
+      <main id='main-content' className={mapPage ? 'main-map' : 'main-content'}>
         {children}
-      </Container>
+      </main>
       {!mapPage && <Footer />}
     </>
   );
-};
-
-export default Layout;
+}

@@ -1,51 +1,22 @@
-import Image from 'next/image';
-import { Box, Container, Divider, Flex, Link, Text } from '@chakra-ui/react';
-
-const Footer = () => {
+import Link from 'next/link';
+import Logo from '../Logo';
+export default function Footer() {
   return (
-    <Container as='footer' maxW='container.lg' pb='env(safe-area-inset-bottom)'>
-      <Divider />
-      <Flex
-        fontSize='sm'
-        lineHeight={6}
-        px={[0, 2]}
-        py={10}
-        justifyContent='space-between'
-        flexDir={['column', 'row']}
-        gap={4}
-        color='gray.600'
-      >
-        <Box>
-          <Image src='/logo.png' alt='전기차 충전소 찾기' width={80} height={34} />
-          <Text>&copy; 2023. EV Charge. All rights reserved.</Text>
-        </Box>
-
-        <Flex
-          flexDir={['column', 'column', 'row']}
-          gap={4}
-          justifyContent='space-between'
-          w={['full', '40%']}
-        >
-          <Flex flexDir='column'>
-            <Text fontWeight='bold' textTransform='uppercase'>
-              About Us
-            </Text>
-            <Link href='https://chaechae.life' target='_blank' rel='noreferrer noopener'>
-              개발자 소개
-            </Link>
-          </Flex>
-          <Flex flexDir='column'>
-            <Text fontWeight='bold' textTransform='uppercase'>
-              Family Site
-            </Text>
-            <Link href='https://messagebot.chaechae.life' target='_blank' rel='noreferrer noopener'>
-              메시지봇 - 인사말 생성 AI 챗봇
-            </Link>
-          </Flex>
-        </Flex>
-      </Flex>
-    </Container>
+    <footer className='site-footer'>
+      <div>
+        <Link href='/' aria-label='전기차G 홈'>
+          <Logo />
+        </Link>
+        <p>충전부터 구매까지, 전기차 생활을 더 편하게.</p>
+        <small>© {new Date().getFullYear()} EV Charge.</small>
+      </div>
+      <div className='footer-links'>
+        <Link href='/'>충전 지도</Link>
+        <Link href='/blog'>전기차 블로그</Link>
+        <a href='https://chaechae.life' target='_blank' rel='noreferrer noopener'>
+          개발자 소개
+        </a>
+      </div>
+    </footer>
   );
-};
-
-export default Footer;
+}

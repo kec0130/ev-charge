@@ -1,67 +1,52 @@
 import { useAtomValue } from 'jotai';
-import { MouseEventHandler, useEffect, useState } from 'react';
-import { IconButton, MenuItem, useTheme } from '@chakra-ui/react';
-
+import { useEffect, useState } from 'react';
 import { currentDistrictAtom } from '@/states/map';
 import { CITY_CODE, DISTRICT_CODE } from '@/constants/chargerCode';
 import useGeocode from '@/hooks/useGeocode';
 import useCurrentLocation from '@/hooks/useCurrentLocation';
+import Icon from '@/components/Common/Icon';
 
-import Selector from './Selector';
-import { LocationIcon } from '../../../../public/icons';
-
-const AddressSelector = () => {
-  const [cityCode, setCityCode] = useState('');
-  const [districtName, setDistrictName] = useState('');
-  const currentDistrict = useAtomValue(currentDistrictAtom);
-
-  const { getCurrentLocation } = useCurrentLocation();
+export default function AddressSelector() {
+  const district = useAtomValue(currentDistrictAtom);
+  const [city, setCity] = useState(district.slice(0, 2));
   const { geocode } = useGeocode();
-  const theme = useTheme();
-
-  const handleCityChange: MouseEventHandler<HTMLButtonElement> = (e) => {
-    setCityCode(e.currentTarget.value);
-    setDistrictName('');
-  };
-
-  const handleDistrictChange: MouseEventHandler<HTMLButtonElement> = (e) => {
-    geocode(cityCode, e.currentTarget.value);
-    setDistrictName(e.currentTarget.innerText);
-  };
-
+  const { getCurrentLocation } = useCurrentLocation();
   useEffect(() => {
-    if (!currentDistrict) return;
-    setCityCode(currentDistrict.slice(0, 2));
-    setDistrictName(DISTRICT_CODE[currentDistrict]);
-  }, [currentDistrict]);
-
+    if (district) setCity(district.slice(0, 2));
+  }, [district]);
   return (
-    <>
-      <Selector
-        buttonText={cityCode ? CITY_CODE[cityCode] : '시/도 선택'}
-        menuList={Object.keys(CITY_CODE)}
-        menuObject={CITY_CODE}
-        onClick={handleCityChange}
-      />
-
-      <Selector
-        buttonText={districtName || '시/군/구 선택'}
-        menuList={Object.keys(DISTRICT_CODE).filter((key) => key.startsWith(cityCode))}
-        menuObject={DISTRICT_CODE}
-        onClick={handleDistrictChange}
-      />
-
-      <IconButton
-        icon={<LocationIcon style={{ fill: theme.colors.warning }} />}
+    <div className='region-controls'>
+      <select aria-label='시·도 선택' value={city} onChange={(e) => setCity(e.target.value)}>
+        <option value=''>시·도 선택</option>
+        {Object.entries(CITY_CODE).map(([code, name]) => (
+          <option key={code} value={code}>
+            {name}
+          </option>
+        ))}
+      </select>
+      <select
+        aria-label='시·군·구 선택'
+        value={district.startsWith(city) ? district : ''}
+        disabled={!city}
+        onChange={(e) => geocode(city, e.target.value)}
+      >
+        <option value=''>시·군·구 선택</option>
+        {Object.entries(DISTRICT_CODE)
+          .filter(([code]) => city && code.startsWith(city))
+          .map(([code, name]) => (
+            <option key={code} value={code}>
+              {name}
+            </option>
+          ))}
+      </select>
+      <button
+        className='map-icon-button'
+        style={{ width: 32, height: 32, boxShadow: 'none' }}
         aria-label='현재 위치로 이동'
-        size='sm'
-        bgColor='white'
-        rounded='full'
-        shadow={theme.shadows.onMap}
         onClick={getCurrentLocation}
-      />
-    </>
+      >
+        <Icon name='locate' size={17} />
+      </button>
+    </div>
   );
-};
-
-export default AddressSelector;
+}

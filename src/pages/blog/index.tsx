@@ -4,7 +4,7 @@ import { PostSummary, toPostSummary } from '@/types/blog';
 
 import generateRssFeed from '@/utils/rss';
 import Metadata from '@/components/Common/Metadata';
-import PostList from '@/components/Blog/PostList';
+import BlogHome from '@/components/Blog/BlogHome';
 import ErrorPage from '@/components/Common/ErrorPage';
 
 const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
@@ -20,7 +20,7 @@ const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
         keywords='전기차 블로그, 전기차 정보, 전기차 팁'
         url='/blog'
       />
-      <PostList posts={posts} />
+      <BlogHome posts={posts} />
     </>
   );
 };

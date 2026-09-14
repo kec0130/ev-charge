@@ -1,60 +1,36 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Box, Divider, Flex, Heading, ListItem, Text, useTheme } from '@chakra-ui/react';
+import type { PostSummary } from '@/types/blog';
+import { formatPostDate, getPostCategory } from '@/utils/blog';
 
-interface Props {
-  title: string;
-  description?: string;
-  slug: string;
-  imgSrc: string;
-  index: number;
-}
-const PostListItem = ({ title, description, slug, imgSrc, index }: Props) => {
-  const theme = useTheme();
-
+export default function PostListItem({
+  post,
+  featured = false,
+}: {
+  post: PostSummary;
+  featured?: boolean;
+}) {
   return (
-    <>
-      {index !== 0 && <Divider my={6} />}
-      <ListItem>
-        <Link href={`/blog/${slug}`}>
-          <Flex w='full' flexDir={['column', 'row']}>
-            <Box
-              mr={[0, 8]}
-              mb={[4, 0]}
-              w={['full', 300]}
-              minW={['full', 300]}
-              h={[180, 160]}
-              borderRadius='md'
-              border={`1px solid ${theme.colors.gray[200]}`}
-              overflow='hidden'
-            >
-              <Image
-                src={imgSrc}
-                alt={title}
-                width={300}
-                height={160}
-                style={{
-                  objectFit: 'cover',
-                  width: '100%',
-                  height: '100%',
-                }}
-              />
-            </Box>
-            <Box>
-              <Heading as='h3' size='lg' mb={[2, 4]} noOfLines={2}>
-                {title}
-              </Heading>
-              {description && (
-                <Text noOfLines={[2, 3]} color={theme.colors.gray[600]}>
-                  {description}
-                </Text>
-              )}
-            </Box>
-          </Flex>
-        </Link>
-      </ListItem>
-    </>
+    <li className={featured ? 'post-card featured' : 'post-card'}>
+      <Link href={`/blog/${post.slug}`}>
+        <div className='post-thumbnail'>
+          <Image src={post.image_url} alt='' width={410} height={294} priority={featured} />
+        </div>
+        <div className='post-card-copy'>
+          <div className='post-tags'>
+            <span className='tag'>{getPostCategory(post)}</span>
+            {post.slug === 'ev-charge-introduction' && (
+              <span className='tag tag-solid'>서비스 안내</span>
+            )}
+          </div>
+          <h2>{post.title}</h2>
+          <p>{post.description}</p>
+          <div className='post-date'>
+            <time dateTime={post.created_at}>{formatPostDate(post.created_at)}</time> ·{' '}
+            {post.readingMinutes}분 읽기
+          </div>
+        </div>
+      </Link>
+    </li>
   );
-};
-
-export default PostListItem;
+}

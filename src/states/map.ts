@@ -2,9 +2,9 @@ import { atom } from 'jotai';
 import { atomWithReset } from 'jotai/utils';
 
 import { Coord, FilterOption } from '@/types/map';
-import { INITIAL_CENTER } from '@/constants/map';
+import { INITIAL_CENTER, INITIAL_DISTRICT_CODE } from '@/constants/map';
 
-export const currentDistrictAtom = atomWithReset('');
+export const currentDistrictAtom = atomWithReset(INITIAL_DISTRICT_CODE);
 
 export const currentStationAtom = atomWithReset('');
 
@@ -17,8 +17,7 @@ export const isLocationOffAtom = atom(false);
 export const currentLocationDistrictAtom = atom('');
 
 export const showNearbyStationsAtom = atom(
-  (get) => !get(isLocationOffAtom) &&
-    get(currentDistrictAtom) === get(currentLocationDistrictAtom)
+  (get) => !get(isLocationOffAtom) && get(currentDistrictAtom) === get(currentLocationDistrictAtom),
 );
 
 export const filterOptionAtom = atomWithReset<FilterOption>({

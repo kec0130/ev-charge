@@ -24,7 +24,7 @@ const useChargers = () => {
   const districtCode = useAtomValue(currentDistrictAtom);
   const filterOption = useAtomValue(filterOptionAtom);
 
-  const { data, isLoading, error } = useSWR(
+  const { data, isLoading, error, mutate } = useSWR(
     districtCode ? ['/api/chargers', districtCode, currentLocation] : null,
     ([url, districtCode, currentLocation]) => fetcher(url, districtCode, currentLocation),
     {
@@ -32,18 +32,19 @@ const useChargers = () => {
       dedupingInterval: 10000,
       errorRetryInterval: 3000,
       errorRetryCount: 3,
-    }
+    },
   );
 
   const filteredData = useMemo(
-    () => data ? filterStations(data, filterOption) : undefined,
-    [data, filterOption]
+    () => (data ? filterStations(data, filterOption) : undefined),
+    [data, filterOption],
   );
 
   return {
     data: filteredData,
     isLoading,
     error,
+    retry: mutate,
   };
 };
 

@@ -1,52 +1,44 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { Flex, List, ListItem, Spacer, useTheme } from '@chakra-ui/react';
-
 import { MENU_LIST } from '@/constants/navigation';
+import Logo from '../Logo';
+import Icon, { IconName } from '../Icon';
 
-const Navigation = () => {
-  const theme = useTheme();
-  const router = useRouter();
-  const currentPath = `/${router.asPath.split('/')[1]}`;
-
-  return (
-    <Flex as='header' justifyContent='center'>
-      <Flex
-        position='fixed'
-        top={0}
-        zIndex={theme.zIndex.nav}
-        alignItems='center'
-        h={theme.sizes.navHeight}
-        w='full'
-        maxW='container.lg'
-        px={[4, 6]}
-        bgColor='white'
+const icons: IconName[] = ['pin', 'book', 'chart'];
+export default function Navigation() {
+  const { pathname } = useRouter();
+  const active = (href: string) => (href === '/' ? pathname === '/' : pathname.startsWith(href));
+  const links = (mobile: boolean) =>
+    MENU_LIST.map((menu, index) => (
+      <Link
+        key={menu.href}
+        href={menu.href}
+        className={active(menu.href) ? 'active' : ''}
+        aria-current={active(menu.href) ? 'page' : undefined}
       >
-        <h1>
-          <Link href='/'>
-            <Image src='/logo.png' alt='전기차 충전소 찾기' width={90} height={38} />
+        {mobile && <Icon name={icons[index]} size={23} />}
+        <span>{menu.name}</span>
+      </Link>
+    ));
+  return (
+    <>
+      <a className='skip-link' href='#main-content'>
+        본문으로 건너뛰기
+      </a>
+      <header className='site-header'>
+        <div className='header-inner'>
+          <Link href='/' className='brand-link' aria-label='전기차G 홈'>
+            <Logo />
           </Link>
-        </h1>
-        <Spacer />
-
-        <Flex as='nav'>
-          <List display='flex' justifyContent='center' alignItems='center' gap={[4, 6]}>
-            {MENU_LIST.map((menu) => (
-              <ListItem
-                key={menu.name}
-                color={currentPath === menu.href ? 'green.400' : 'inherit'}
-                fontSize='lg'
-                fontWeight='bold'
-              >
-                <Link href={menu.href}>{menu.name}</Link>
-              </ListItem>
-            ))}
-          </List>
-        </Flex>
-      </Flex>
-    </Flex>
+          <nav className='desktop-navigation' aria-label='주 메뉴'>
+            {links(false)}
+          </nav>
+          <span className='mobile-brand-note'>전기차와 함께하는 일상</span>
+        </div>
+      </header>
+      <nav className='mobile-navigation' aria-label='모바일 주 메뉴'>
+        {links(true)}
+      </nav>
+    </>
   );
-};
-
-export default Navigation;
+}

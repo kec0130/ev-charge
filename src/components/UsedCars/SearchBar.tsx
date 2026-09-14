@@ -1,35 +1,29 @@
-import { ChangeEventHandler, MouseEventHandler } from 'react';
-import {
-  CloseButton,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  InputRightElement,
-  useTheme,
-} from '@chakra-ui/react';
-
-import { SearchIcon } from '../../../public/icons';
-
-interface Props {
+import type { ChangeEventHandler, MouseEventHandler } from 'react';
+import Icon from '../Common/Icon';
+export default function SearchBar({
+  inputValue,
+  handleInputChange,
+  handleClearButtonClick,
+}: {
   inputValue: string;
   handleInputChange: ChangeEventHandler<HTMLInputElement>;
   handleClearButtonClick: MouseEventHandler<HTMLButtonElement>;
-}
-
-const SearchBar = ({ inputValue, handleInputChange, handleClearButtonClick }: Props) => {
-  const theme = useTheme();
-
+}) {
   return (
-    <InputGroup>
-      <InputLeftElement pointerEvents='none'>
-        <SearchIcon style={{ fill: theme.colors.gray[500] }} />
-      </InputLeftElement>
-      <Input placeholder='모델명을 입력하세요.' value={inputValue} onChange={handleInputChange} />
-      <InputRightElement>
-        <CloseButton rounded='full' size='sm' color='gray.500' onClick={handleClearButtonClick} />
-      </InputRightElement>
-    </InputGroup>
+    <div className='search-field'>
+      <Icon name='search' />
+      <input
+        type='search'
+        aria-label='차종 검색'
+        placeholder='차종명을 검색하세요'
+        value={inputValue}
+        onChange={handleInputChange}
+      />
+      {inputValue && (
+        <button aria-label='검색어 지우기' onClick={handleClearButtonClick}>
+          <Icon name='close' size={16} />
+        </button>
+      )}
+    </div>
   );
-};
-
-export default SearchBar;
+}

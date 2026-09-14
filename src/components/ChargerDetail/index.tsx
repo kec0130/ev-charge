@@ -1,58 +1,82 @@
-import { useAtomValue } from 'jotai';
-
-import { currentStationAtom, isLoadingLocationAtom, showNearbyStationsAtom } from '@/states/map';
+import { useEffect, useState } from 'react';
+import { useAtom, useAtomValue } from 'jotai';
+import { currentDistrictAtom, currentStationAtom, isLocationOffAtom } from '@/states/map';
 import useChargers from '@/hooks/useChargers';
-import Status from '../Common/Status';
 import StationInfo from './StationInfo';
 import NearbyStations from './NearbyStations';
-import BottomSheet from './BottomSheet';
+import Icon from '../Common/Icon';
 
-const ChargerDetail = () => {
-  const currentStation = useAtomValue(currentStationAtom);
-  const isLoadingLocation = useAtomValue(isLoadingLocationAtom);
-  const showNearbyStations = useAtomValue(showNearbyStationsAtom);
-
-  const { data, isLoading: isLoadingData, error } = useChargers();
-
-  const getContent = () => {
-    if (isLoadingLocation) {
-      return <Status type='loading' text='현 위치를 찾는 중입니다.' />;
-    }
-
-    if (isLoadingData) {
-      return <Status type='loading' text='충전소 정보를 불러오는 중입니다.' />;
-    }
-
-    if (error) {
-      return <Status type='error' text={`충전소 정보를 불러올 수 없습니다.\n다시 시도해주세요.`} />;
-    }
-
-    if (data?.stationCount === 0) {
-      return <Status type='success' text={`조건에 맞는 충전소가 없습니다.\n필터를 변경하거나 다른 지역을 확인해주세요.`} />;
-    }
-
-    if (data && data.chargerCount > 0 && !currentStation) {
-      if (showNearbyStations) {
-        return <NearbyStations stations={data.stations.slice(0, 10)} />;
-      }
-      return <Status type='success' text='충전소를 선택해주세요.' />;
-    }
-
-    if (data && currentStation) {
-      const selectedStation = data.stations.find((station) => station.statId === currentStation);
-
-      if (!selectedStation) {
-        if (showNearbyStations) {
-          return <NearbyStations stations={data.stations.slice(0, 10)} />;
-        }
-        return <Status type='success' text='충전소를 선택해주세요.' />;
-      }
-
-      return <StationInfo station={selectedStation} />;
-    }
-  };
-
-  return <BottomSheet>{getContent()}</BottomSheet>;
-};
-
-export default ChargerDetail;
+export default function ChargerDetail() {
+  const [current, setCurrent] = useAtom(currentStationAtom);
+  const district = useAtomValue(currentDistrictAtom);
+  const locationOff = useAtomValue(isLocationOffAtom);
+  const { data, isLoading, error, retry } = useChargers();
+  const [expanded, setExpanded] = useState(false);
+  const [detailId, setDetailId] = useState('');
+  useEffect(() => {
+    setDetailId('');
+  }, [district]);
+  useEffect(() => {
+    if (detailId && current !== detailId) setDetailId('');
+    if (!detailId) setExpanded(false);
+  }, [current, detailId]);
+  const detail = data?.stations.find((station) => station.statId === detailId);
+  return (
+    <section
+      className={`station-panel${expanded ? ' expanded' : ''}`}
+      aria-label='충전소 목록과 상세 정보'
+    >
+      <button
+        className='sheet-toggle'
+        aria-label={expanded ? '충전소 목록 접기' : '충전소 목록 펼치기'}
+        aria-expanded={expanded}
+        onClick={() => setExpanded((value) => !value)}
+      >
+        <span />
+      </button>
+      {locationOff && (
+        <p className='location-notice'>
+          현재 위치를 확인할 수 없어요. 지역 검색을 이용하고, 거리 정보는 참고해주세요.
+        </p>
+      )}
+      {isLoading && !data ? (
+        <div className='empty-state' role='status'>
+          <Icon name='bolt' size={30} />
+          <h2>충전소를 찾고 있어요</h2>
+          <p>충전 가능 여부를 확인하고 있습니다.</p>
+        </div>
+      ) : error ? (
+        <div className='empty-state' role='alert'>
+          <Icon name='info' size={30} />
+          <h2>충전소 정보를 불러오지 못했어요</h2>
+          <p>잠시 후 다시 시도해주세요.</p>
+          <button className='outline-button' onClick={() => retry()}>
+            다시 시도
+          </button>
+        </div>
+      ) : detail ? (
+        <div className='station-detail'>
+          <button className='detail-back' onClick={() => setDetailId('')}>
+            <Icon name='back' size={16} />
+            충전소 목록으로
+          </button>
+          <StationInfo station={detail} />
+        </div>
+      ) : data ? (
+        <NearbyStations
+          stations={data.stations}
+          onDetails={(id) => {
+            setCurrent(id);
+            setDetailId(id);
+            if (window.matchMedia('(max-width: 767px)').matches) setExpanded(true);
+          }}
+        />
+      ) : (
+        <div className='empty-state'>
+          <h2>충전할 지역을 선택해주세요</h2>
+          <p>주소 검색이나 지역 선택으로 찾아보세요.</p>
+        </div>
+      )}
+    </section>
+  );
+}

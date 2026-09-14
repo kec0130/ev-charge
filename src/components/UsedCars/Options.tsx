@@ -1,55 +1,34 @@
 import { useRouter } from 'next/router';
-import { ChangeEventHandler } from 'react';
-import { Flex, Select } from '@chakra-ui/react';
-
-import { SortOption } from '@/types/usedCars';
+import type { ChangeEventHandler } from 'react';
 import { generateDateStrings } from '@/utils/usedCars';
-
-interface Props {
+export default function Options({
+  sortOption,
+  handleSortOptionChange,
+}: {
   sortOption: string;
   handleSortOptionChange: ChangeEventHandler<HTMLSelectElement>;
-}
-
-const SORT_OPTIONS: { value: SortOption; label: string }[] = [
-  { value: 'name', label: '가나다순' },
-  { value: 'minPrice', label: '최저가 낮은 순' },
-  { value: 'maxPrice', label: '최고가 높은 순' },
-];
-
-const Options = ({ sortOption, handleSortOptionChange }: Props) => {
+}) {
   const router = useRouter();
-  const month = router.query.month as string;
-  const allMonths = generateDateStrings().reverse();
-
-  const handleMonthChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
-    const { value } = e.target;
-    router.push(`/used-cars/${value}`, undefined, { scroll: false });
-  };
-
-  const convertDateFormat = (date: string) => {
-    const [year, month] = date.split('-');
-    return `${year}년 ${parseInt(month)}월`;
-  };
-
   return (
-    <Flex gap={4} mb={4}>
-      <Select value={month} onChange={handleMonthChange}>
-        {allMonths.map((month) => (
-          <option key={month} value={month}>
-            {convertDateFormat(month)}
-          </option>
-        ))}
-      </Select>
-
-      <Select value={sortOption} onChange={handleSortOptionChange}>
-        {SORT_OPTIONS.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </Select>
-    </Flex>
+    <div className='car-options'>
+      <select
+        aria-label='조사 연월'
+        value={router.query.month as string}
+        onChange={(e) => router.push(`/used-cars/${e.target.value}`, undefined, { scroll: false })}
+      >
+        {generateDateStrings()
+          .reverse()
+          .map((month) => (
+            <option key={month} value={month}>
+              {month.replace('-', '년 ')}월
+            </option>
+          ))}
+      </select>
+      <select aria-label='가격 정렬' value={sortOption} onChange={handleSortOptionChange}>
+        <option value='name'>가나다순</option>
+        <option value='minPrice'>최저가 낮은 순</option>
+        <option value='maxPrice'>최고가 높은 순</option>
+      </select>
+    </div>
   );
-};
-
-export default Options;
+}

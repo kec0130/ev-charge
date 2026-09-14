@@ -1,68 +1,73 @@
 import { useEffect } from 'react';
-import { useSetAtom } from 'jotai';
-import { useResetAtom } from 'jotai/utils';
+import { useAtomValue, useSetAtom } from 'jotai';
+import type { Coord, NaverMap } from '@/types/map';
+import type { StationDTO } from '@/types/charger';
+import { currentStationAtom, filterOptionAtom } from '@/states/map';
+import { stationMarkerContent } from '@/utils/stationPresentation';
 
-import { Coord, NaverMap } from '@/types/map';
-import { INITIAL_ZOOM, MARKER_IMAGES, MarkerType } from '@/constants/map';
-import { currentStationAtom } from '@/states/map';
-import useMap from '@/hooks/useMap';
-
-interface Props {
+export default function Marker({
+  map,
+  coord,
+  station,
+  isSelected = false,
+  isCurrentLocation = false,
+  showLabel = true,
+}: {
   map?: NaverMap;
   coord: Coord;
-  type?: MarkerType;
-  id?: string;
+  station?: StationDTO;
   isSelected?: boolean;
   isCurrentLocation?: boolean;
-}
-
-export default function Marker({ map, coord, type, id, isSelected, isCurrentLocation }: Props) {
+  showLabel?: boolean;
+}) {
   const setCurrentStation = useSetAtom(currentStationAtom);
-  const resetCurrentStation = useResetAtom(currentStationAtom);
-  const { moveMap } = useMap();
-
-  const handleMarkerClick = () => {
-    if (!id || isCurrentLocation) return;
-    if (isSelected) {
-      resetCurrentStation();
-      return;
-    }
-
-    if (map?.getZoom()! < INITIAL_ZOOM) {
-      moveMap(coord);
-    }
-    setCurrentStation(id);
-  };
-
+  const { onlyFastCharger } = useAtomValue(filterOptionAtom);
+  const [lat, lng] = coord;
   useEffect(() => {
     if (!map) return;
-    const markerIcon: naver.maps.ImageIcon = isCurrentLocation
-      ? {
-          url: MARKER_IMAGES[MARKER_IMAGES.length - 1],
-          scaledSize: new naver.maps.Size(24, 24),
-        }
-      : {
-          url: MARKER_IMAGES[type!],
-          scaledSize: new naver.maps.Size(isSelected ? [36, 44] : [24, 32]),
-        };
-
-    const markerOptions: naver.maps.MarkerOptions = {
+    const content = isCurrentLocation
+      ? '<div class="user-location" role="img" aria-label="내 위치"></div>'
+      : station
+        ? stationMarkerContent(station, isSelected, onlyFastCharger, showLabel)
+        : '';
+    if (!content) return;
+    const element = document.createElement('div');
+    element.innerHTML = content;
+    const marker = new naver.maps.Marker({
       map,
-      position: new naver.maps.LatLng(...coord),
-      icon: markerIcon,
-      zIndex: isSelected ? 1 : 0,
+      position: new naver.maps.LatLng(lat, lng),
+      icon: {
+        content: element,
+        anchor: new naver.maps.Point(isCurrentLocation ? 11 : 16, isCurrentLocation ? 11 : 40),
+      },
+      zIndex: isCurrentLocation ? 3 : isSelected ? 2 : 1,
+    });
+    const select = () => {
+      if (station) setCurrentStation(station.statId);
     };
-
-    const marker = new naver.maps.Marker(markerOptions);
-
-    const listener = naver.maps.Event.addListener(marker, 'click', handleMarkerClick);
-
+    const listener = naver.maps.Event.addListener(marker, 'click', select);
+    const keydown = (event: KeyboardEvent) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        select();
+      }
+    };
+    element?.addEventListener('keydown', keydown);
     return () => {
+      element?.removeEventListener('keydown', keydown);
       naver.maps.Event.removeListener(listener);
       marker.setMap(null);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [map, isSelected, coord[0], coord[1], type, id, isCurrentLocation]);
-
-  return <></>;
+  }, [
+    map,
+    lat,
+    lng,
+    station,
+    isSelected,
+    isCurrentLocation,
+    onlyFastCharger,
+    setCurrentStation,
+    showLabel,
+  ]);
+  return null;
 }

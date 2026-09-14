@@ -1,92 +1,84 @@
-import { useRouter } from 'next/router';
-import { ChangeEventHandler, MouseEventHandler, useEffect, useState } from 'react';
-import { Alert, AlertIcon, Box, Heading, List, Text } from '@chakra-ui/react';
-
-import { UsedCar } from '@/types/supabase';
-import { SortOption } from '@/types/usedCars';
+import { useMemo, useState } from 'react';
+import Link from 'next/link';
+import type { UsedCar } from '@/types/supabase';
+import type { SortOption } from '@/types/usedCars';
 import UsedCarListItem from './ListItem';
 import SearchBar from './SearchBar';
 import Options from './Options';
-import Status from '../Common/Status';
-import ResponsiveAds from '../Common/AdSense/ResponsiveAds';
+import Icon from '../Common/Icon';
+import { AdPanel } from '../Common/GuideSidebar';
 
-const UsedCars = ({ usedCars, month }: { usedCars: UsedCar[]; month: string }) => {
-  const [inputValue, setInputValue] = useState('');
-  const [sortOption, setSortOption] = useState<SortOption>('name');
-  const [searchResult, setSearchResult] = useState<UsedCar[]>(usedCars);
-  const router = useRouter();
-
-  useEffect(() => {
-    setInputValue('');
-    setSearchResult(sortCars(usedCars, sortOption));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.query.month]);
-
-  const searchCars = (arr: UsedCar[], query: string) => {
-    const cleanString = (str: string) => str.replaceAll(' ', '').toLowerCase();
-    return arr.filter((usedCar) => cleanString(usedCar.name).includes(cleanString(query)));
-  };
-
-  const sortCars = (arr: UsedCar[], option: SortOption) =>
-    [...arr].sort((a, b) => {
-      if (option === 'name') return a.name.localeCompare(b.name, 'ko');
-      if (option === 'minPrice') return a.min_price - b.min_price;
-      if (option === 'maxPrice') return b.max_price - a.max_price;
-      return 0;
-    });
-
-  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const { value } = e.target;
-    setInputValue(value);
-    setSearchResult(sortCars(searchCars(usedCars, value), sortOption));
-  };
-
-  const handleClearButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
-    setInputValue('');
-    setSearchResult(sortCars(usedCars, sortOption));
-  };
-
-  const handleSortOptionChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
-    const { value } = e.target;
-    setSortOption(value as SortOption);
-    setSearchResult((prev) => sortCars(prev, value as SortOption));
-  };
-
+export default function UsedCars({ usedCars, month }: { usedCars: UsedCar[]; month: string }) {
+  const [query, setQuery] = useState('');
+  const [sort, setSort] = useState<SortOption>('name');
+  const results = useMemo(() => {
+    const clean = (text: string) => text.toLowerCase().replace(/\s/g, '');
+    return usedCars
+      .filter((car) => clean(car.name).includes(clean(query)))
+      .sort((a, b) =>
+        sort === 'minPrice'
+          ? a.min_price - b.min_price
+          : sort === 'maxPrice'
+            ? b.max_price - a.max_price
+            : a.name.localeCompare(b.name, 'ko'),
+      );
+  }, [usedCars, query, sort]);
   return (
     <>
-      <Heading as='h2' size={['lg', 'xl']}>
-        중고 전기차 가격 기록
-      </Heading>
-      <Text color='gray.500' my={[2, 4]}>
-        {month.replace('-', '년 ')}월에 온라인 중고매물에서 조사한 차종별 가격 범위입니다.
-        연식·주행거리·트림·사고 이력을 통제한 통계나 실거래가는 아닙니다.
-      </Text>
-      <Alert status='info' alignItems='flex-start' borderRadius='md' mb={4}>
-        <AlertIcon />
-        <Text fontSize='sm'>
-          과거 자료입니다. 가격 자료는 2024년 5월까지 제공하며, 현재 시세는 중고차 전문 사이트의
-          최신 매물에서 확인해주세요.
-        </Text>
-      </Alert>
-      <ResponsiveAds />
-
-      <Box my={[6, 8]}>
-        <Options sortOption={sortOption} handleSortOptionChange={handleSortOptionChange} />
+      <h1 className='page-title'>중고 전기차 시세</h1>
+      <p className='page-description'>차종별 가격 범위를 한눈에 비교해보세요.</p>
+      <div className='price-notice'>
+        <Icon name='info' size={19} />
+        <p>{month.replace('-', '년 ')}월 조사 자료 · 현재 시세와 다를 수 있습니다</p>
+      </div>
+      <div className='car-controls'>
         <SearchBar
-          inputValue={inputValue}
-          handleInputChange={handleInputChange}
-          handleClearButtonClick={handleClearButtonClick}
+          inputValue={query}
+          handleInputChange={(e) => setQuery(e.target.value)}
+          handleClearButtonClick={() => setQuery('')}
         />
-      </Box>
-
-      <List>
-        {searchResult.length === 0 && <Status type='error' text='검색 결과가 없습니다.' />}
-        {searchResult.map((usedCar, index) => (
-          <UsedCarListItem key={usedCar.id} usedCar={usedCar} index={index} />
-        ))}
-      </List>
+        <Options
+          sortOption={sort}
+          handleSortOptionChange={(e) => setSort(e.target.value as SortOption)}
+        />
+      </div>
+      <h2 className='section-heading'>
+        차종별 가격 범위 <span className='result-count'>· {results.length}개 차종</span>
+      </h2>
+      {results.length ? (
+        <ul className='car-list'>
+          {results.map((car) => (
+            <UsedCarListItem key={car.id} usedCar={car} />
+          ))}
+        </ul>
+      ) : (
+        <div className='empty-state' role='status'>
+          <Icon name='search' size={30} />
+          <h2>검색 결과가 없습니다</h2>
+          <p>다른 차종명을 입력해보세요.</p>
+          <button className='outline-button' onClick={() => setQuery('')}>
+            전체 차종 보기
+          </button>
+        </div>
+      )}
+      <p className='car-footnote'>
+        조사 당시 온라인 매물의 최저·최고 가격입니다. 연식·주행거리·트림·사고 이력을 통제한 통계나
+        실거래가가 아닙니다. 가격 자료는 2024년 5월까지 제공하며, 최신 매물은 중고차 전문 사이트에서
+        확인해주세요.
+      </p>
+      <section className='purchase-guide'>
+        <div className='guide-icon'>
+          <Icon name='document' size={25} />
+        </div>
+        <div>
+          <h2>가격 비교 전에 확인하세요</h2>
+          <p>연식 · 주행거리 · 트림 · 사고 이력</p>
+        </div>
+        <Link href='/blog/genesis-gv70'>
+          전기차 구매 정보 읽기 <Icon name='arrow' size={18} />
+        </Link>
+      </section>
+      <AdPanel />
     </>
   );
-};
-
-export default UsedCars;
+}
