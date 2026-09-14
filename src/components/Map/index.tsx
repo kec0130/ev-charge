@@ -1,9 +1,11 @@
+import { useEffect } from 'react';
 import { useAtomValue } from 'jotai';
 import {
   currentLocationAtom,
   currentStationAtom,
   isLoadingLocationAtom,
   isLocationOffAtom,
+  stationSheetAtom,
 } from '@/states/map';
 import { convertToCoord } from '@/utils/charger';
 import useMap from '@/hooks/useMap';
@@ -18,15 +20,28 @@ import OptionControl from './OptionControl';
 
 export default function Map() {
   const currentStation = useAtomValue(currentStationAtom);
+  const sheet = useAtomValue(stationSheetAtom);
   const location = useAtomValue(currentLocationAtom);
   const loadingLocation = useAtomValue(isLoadingLocationAtom);
   const locationOff = useAtomValue(isLocationOffAtom);
-  const { map } = useMap();
+  const { map, moveMap } = useMap();
   const { data } = useChargers();
   const labels = useMarkerLabels(map, data?.stations, currentStation);
   const { getCurrentLocation } = useCurrentLocation();
+  const selected = data?.stations.find((station) => station.statId === currentStation);
+  const selectedLat = selected?.lat;
+  const selectedLng = selected?.lng;
+  useEffect(() => {
+    if (!map || !selectedLat || !selectedLng || !window.matchMedia('(max-width: 767px)').matches)
+      return;
+    // The map has its own grid row; center the pin after the sheet resizes that row.
+    const frame = requestAnimationFrame(() => {
+      moveMap(convertToCoord(selectedLat, selectedLng), map.getZoom());
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [map, moveMap, selectedLat, selectedLng, sheet]);
   return (
-    <div className='map-workspace'>
+    <div className='map-workspace' data-sheet={sheet}>
       <aside className='map-sidebar' aria-label='충전소 탐색'>
         <OptionControl />
         <ChargerDetail />

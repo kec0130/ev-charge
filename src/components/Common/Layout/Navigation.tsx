@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { MENU_LIST } from '@/constants/navigation';
 import Logo from '../Logo';
 import Icon, { IconName } from '../Icon';
+import AddressSelector from '@/components/Map/OptionControl/AddressSelector';
 
 const icons: IconName[] = ['pin', 'book', 'chart'];
 export default function Navigation() {
@@ -33,7 +34,11 @@ export default function Navigation() {
           <nav className='desktop-navigation' aria-label='주 메뉴'>
             {links(false)}
           </nav>
-          <span className='mobile-brand-note'>전기차와 함께하는 일상</span>
+          {pathname === '/' ? (
+            <AddressSelector compact />
+          ) : (
+            <span className='mobile-brand-note'>전기차와 함께하는 일상</span>
+          )}
         </div>
       </header>
       <nav className='mobile-navigation' aria-label='모바일 주 메뉴'>

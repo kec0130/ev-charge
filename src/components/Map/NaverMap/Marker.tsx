@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useAtomValue, useSetAtom } from 'jotai';
 import type { Coord, NaverMap } from '@/types/map';
 import type { StationDTO } from '@/types/charger';
-import { currentStationAtom, filterOptionAtom } from '@/states/map';
+import { currentStationAtom, filterOptionAtom, stationSheetAtom } from '@/states/map';
 import { stationMarkerContent } from '@/utils/stationPresentation';
 
 export default function Marker({
@@ -21,6 +21,7 @@ export default function Marker({
   showLabel?: boolean;
 }) {
   const setCurrentStation = useSetAtom(currentStationAtom);
+  const setSheet = useSetAtom(stationSheetAtom);
   const { onlyFastCharger } = useAtomValue(filterOptionAtom);
   const [lat, lng] = coord;
   useEffect(() => {
@@ -43,7 +44,9 @@ export default function Marker({
       zIndex: isCurrentLocation ? 3 : isSelected ? 2 : 1,
     });
     const select = () => {
-      if (station) setCurrentStation(station.statId);
+      if (!station) return;
+      setCurrentStation(station.statId);
+      if (window.matchMedia('(max-width: 767px)').matches) setSheet('preview');
     };
     const listener = naver.maps.Event.addListener(marker, 'click', select);
     const keydown = (event: KeyboardEvent) => {
@@ -67,6 +70,7 @@ export default function Marker({
     isCurrentLocation,
     onlyFastCharger,
     setCurrentStation,
+    setSheet,
     showLabel,
   ]);
   return null;

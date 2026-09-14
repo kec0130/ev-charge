@@ -17,6 +17,7 @@ export default function NaverMap({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     let instance: naver.maps.Map | undefined;
     let observer: ResizeObserver | undefined;
+    let resizeFrame = 0;
     const listeners: naver.maps.MapEventListener[] = [];
     const started = Date.now();
     setStatus('loading');
@@ -50,11 +51,24 @@ export default function NaverMap({ children }: { children: React.ReactNode }) {
           }),
         );
         const container = document.getElementById(MAP_ID);
+        // setSize writes a fixed pixel size onto the SDK container. Observe its
+        // layout parent instead, which keeps resizing when the sheet moves.
+        const viewport = container?.parentElement;
         observer = new ResizeObserver(() => {
-          if (instance && container)
-            instance.setSize(new naver.maps.Size(container.clientWidth, container.clientHeight));
+          // Resize the SDK in the next frame so its DOM writes do not retrigger
+          // ResizeObserver during the same delivery cycle (notably in WebKit).
+          cancelAnimationFrame(resizeFrame);
+          resizeFrame = requestAnimationFrame(() => {
+            if (!instance || !viewport) return;
+            const width = viewport.clientWidth;
+            const height = viewport.clientHeight;
+            if (!width || !height) return;
+            const size = instance.getSize();
+            if (size.width !== width || size.height !== height)
+              instance.setSize(new naver.maps.Size(width, height));
+          });
         });
-        if (container) observer.observe(container);
+        if (viewport) observer.observe(viewport);
       } catch {
         setStatus('error');
       }
@@ -64,6 +78,7 @@ export default function NaverMap({ children }: { children: React.ReactNode }) {
     return () => {
       clearInterval(timer);
       observer?.disconnect();
+      cancelAnimationFrame(resizeFrame);
       if (listeners.length) naver.maps.Event.removeListener(listeners);
       instance?.destroy();
       setMap(undefined);

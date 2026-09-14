@@ -5,12 +5,12 @@ import Footer from './Footer';
 export default function Layout({ children }: { children: React.ReactNode }) {
   const mapPage = useRouter().pathname === '/';
   return (
-    <>
+    <div className={mapPage ? 'site-layout map-layout' : 'site-layout'}>
       <Navigation />
       <main id='main-content' className={mapPage ? 'main-map' : 'main-content'}>
         {children}
       </main>
       {!mapPage && <Footer />}
-    </>
+    </div>
   );
 }

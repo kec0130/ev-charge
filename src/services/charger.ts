@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { ChargerAPIRes, ChargerDTO } from '@/types/charger';
+import { toCurrentDistrictCode } from '../utils/regions';
 
 const PAGE_SIZE = 9999;
 const api = axios.create({
@@ -16,7 +17,13 @@ export const getChargersAPI = async (districtCode: string): Promise<ChargerDTO[]
   let pageNo = 1;
   do {
     const { data } = await api.get<ChargerAPIRes>('/getChargerInfo', {
-      params: { serviceKey, numOfRows: PAGE_SIZE, pageNo, dataType: 'JSON', zscode: districtCode },
+      params: {
+        serviceKey,
+        numOfRows: PAGE_SIZE,
+        pageNo,
+        dataType: 'JSON',
+        zscode: toCurrentDistrictCode(districtCode),
+      },
     });
     if (!data || !['00', '0'].includes(String(data.resultCode))) {
       throw new Error('Charger provider returned an unsuccessful response');

@@ -8,6 +8,9 @@ export const currentDistrictAtom = atomWithReset(INITIAL_DISTRICT_CODE);
 
 export const currentStationAtom = atomWithReset('');
 
+export type StationSheetState = 'collapsed' | 'preview' | 'expanded';
+export const stationSheetAtom = atom<StationSheetState>('collapsed');
+
 export const currentLocationAtom = atom<Coord>(INITIAL_CENTER);
 
 export const isLoadingLocationAtom = atom(true);
