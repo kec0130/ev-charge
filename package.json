@@ -9,9 +9,6 @@
     "lint": "next lint",
     "test": "tsc -p tests/tsconfig.json && node --test .test-build/tests/*.test.js"
   },
-  "engines": {
-    "node": "22.x"
-  },
   "dependencies": {
     "@chakra-ui/next-js": "^2.1.5",
     "@chakra-ui/react": "^2.8.0",
