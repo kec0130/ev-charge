@@ -6,16 +6,16 @@ import { generateDateStrings } from '@/utils/usedCars';
 import UsedCars from '@/components/UsedCars';
 import Metadata from '@/components/Common/Metadata';
 
-const Page = ({ usedCars }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Page = ({ usedCars, month }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <>
       <Metadata
-        title='중고시세'
-        description='중고 전기차 시세를 월별로 확인해보세요.'
+        title={`${month} 중고 전기차 가격 기록`}
+        description={`${month}에 조사한 중고 전기차 매물의 가격 범위입니다. 현재 시세나 실거래가가 아닌 과거 참고 자료입니다.`}
         keywords='중고 전기차 시세, 전기차 중고 시세, 중고 전기차 가격, 전기차 중고 가격'
-        url='/used-cars'
+        url={`/used-cars/${month}`}
       />
-      <UsedCars usedCars={usedCars} />
+      <UsedCars usedCars={usedCars} month={month} />
     </>
   );
 };
@@ -32,12 +32,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps<{ usedCars: UsedCar[] }> = async ({ params }) => {
-  const { usedCars } = await getUsedCarsByMonth(params?.month as string);
+export const getStaticProps: GetStaticProps<{ usedCars: UsedCar[]; month: string }> = async ({ params }) => {
+  const month = params?.month as string;
+  const { usedCars } = await getUsedCarsByMonth(month);
+  if (!usedCars.length) return { notFound: true };
 
   return {
     props: {
       usedCars,
+      month,
     },
   };
 };

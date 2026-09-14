@@ -13,7 +13,7 @@ const DEFAULT_META: Required<Props> = {
   description:
     '전기차 충전소 찾기. 전기차 충전소 조회. 실시간 전기차 충전소를 빠르고 쉽게 찾아드립니다. 사용자 위치 기반 시스템을 적용하여 전국 어디서든 편리하게 이용 가능합니다.',
   keywords: '전기차, 충전소, 전기차 충전소, 충전소 위치, 충전소 정보, 충전기 현황, 급속 충전',
-  url: process.env.NEXT_PUBLIC_BASE_URL!,
+  url: process.env.NEXT_PUBLIC_BASE_URL || 'https://ev-charge.chaechae.life',
   image: '/og.png',
 };
 
@@ -25,7 +25,8 @@ const Metadata = ({
   image = DEFAULT_META.image,
 }: Props) => {
   const titleTemplate = `${title} - 전기차G`;
-  const fullUrl = `${DEFAULT_META.url}${url}`;
+  const fullUrl = new URL(url, DEFAULT_META.url).href;
+  const fullImageUrl = new URL(image, DEFAULT_META.url).href;
 
   return (
     <Head>
@@ -34,12 +35,13 @@ const Metadata = ({
       <meta name='title' content={titleTemplate} />
       <meta name='description' content={description} />
       <meta name='keywords' content={keywords} />
+      <link rel='canonical' href={fullUrl} />
       {/* Open Graph / Facebook */}
       <meta property='og:type' content='website' />
       <meta property='og:url' content={fullUrl} />
       <meta property='og:title' content={titleTemplate} />
       <meta property='og:description' content={description} />
-      <meta property='og:image' content={image} />
+      <meta property='og:image' content={fullImageUrl} />
       <meta property='og:image:width' content='1200' />
       <meta property='og:image:height' content='630' />
       <meta property='og:locale' content='ko_KR' />
@@ -48,7 +50,7 @@ const Metadata = ({
       <meta property='twitter:url' content={fullUrl} />
       <meta property='twitter:title' content={titleTemplate} />
       <meta property='twitter:description' content={description} />
-      <meta property='twitter:image' content={image} />
+      <meta property='twitter:image' content={fullImageUrl} />
     </Head>
   );
 };

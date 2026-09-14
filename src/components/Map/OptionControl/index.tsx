@@ -8,11 +8,11 @@ const OptionControl = () => {
   const theme = useTheme();
 
   return (
-    <Box pos='absolute' zIndex={theme.zIndex.select} pt={2} pl={3}>
+    <Box pos='absolute' zIndex={theme.zIndex.select} pt={2} px={3} maxW='full'>
       <Flex gap={3}>
         <AddressSelector />
       </Flex>
-      <Flex gap={3} mt={2}>
+      <Flex gap={2} mt={2} alignItems='flex-start'>
         <Filter />
         <MarkerInfoModal />
       </Flex>

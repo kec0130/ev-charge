@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { ChangeEventHandler, useState } from 'react';
+import { ChangeEventHandler } from 'react';
 import { Flex, Select } from '@chakra-ui/react';
 
 import { SortOption } from '@/types/usedCars';
@@ -18,12 +18,11 @@ const SORT_OPTIONS: { value: SortOption; label: string }[] = [
 
 const Options = ({ sortOption, handleSortOptionChange }: Props) => {
   const router = useRouter();
-  const [month, setMonth] = useState(router.query.month as string);
+  const month = router.query.month as string;
   const allMonths = generateDateStrings().reverse();
 
   const handleMonthChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
     const { value } = e.target;
-    setMonth(value);
     router.push(`/used-cars/${value}`, undefined, { scroll: false });
   };
 

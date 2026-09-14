@@ -1,17 +1,19 @@
-import { MARKER_TYPE, MarkerType } from '@/constants/map';
+import { MARKER_TYPE, MarkerType } from '../constants/map';
 import { ChargerStatus, ChargerType } from '@/types/charger';
 import { Coord } from '@/types/map';
 
 export function isFastCharge(chargerType: ChargerType) {
-  return chargerType !== '02';
+  return ['01', '03', '04', '05', '06', '07'].includes(chargerType);
 }
 
 export function isAvailable(stat: ChargerStatus) {
   return stat === '2';
 }
 
-export function removeNullString(text: string) {
-  return text.replace('null', '');
+export function removeNullString(text: string | null | undefined) {
+  if (typeof text !== 'string') return '';
+  const value = text.trim();
+  return value.toLowerCase() === 'null' ? '' : value;
 }
 
 export function convertToBoolean(text: string) {
@@ -22,8 +24,8 @@ export function convertToBooleanOrNull(text: string) {
   return text === 'Y' ? true : text === 'N' ? false : null;
 }
 
-export function convertUseTime(useTime: string) {
-  return useTime.startsWith('24') ? '24시간' : removeNullString(useTime);
+export function convertUseTime(useTime: string | null | undefined) {
+  return removeNullString(useTime);
 }
 
 export function getMarkerType(availableCount: number, hasFastCharger: boolean): MarkerType {

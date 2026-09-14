@@ -1,5 +1,15 @@
 # 전기차G
 
+## 재운영 작업
+
+- [프로젝트 분석과 90일 개선안](docs/revival-plan.md)
+- [헤르메스 콘텐츠 자동화 작업안](docs/hermes-content-workflow.md)
+- 검증: `npm test`, `npm run lint`, `npm run build`
+- 로컬 실행: `npm ci` 후 `.env.example`을 참고해 `.env.local`을 설정하고 `npm run dev`
+- 충전소 API 인증키는 서버 전용 `EV_CHARGER_SERVICE_KEY`를 사용합니다. 기존 배포의 `NEXT_PUBLIC_API_SERVICE_KEY`도 호환됩니다.
+- 지도는 기본적으로 공공데이터상 이용제한이 없는 충전소만 표시합니다. 정보가 모호한 곳은 필터를 해제해 확인할 수 있습니다.
+- 중고차 가격은 2024년 5월까지의 과거 기록입니다.
+
 ## 서비스 소개
 
 > <https://ev-charge.chaechae.life>

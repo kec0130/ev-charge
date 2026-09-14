@@ -5,8 +5,8 @@ export interface ChargerAPIRes {
   resultMsg: string;
   totalCount: number;
   items: {
-    item: ChargerDTO[];
-  };
+    item?: ChargerDTO[] | ChargerDTO | null;
+  } | null;
   pageNo: number;
   resultCode: string;
   numOfRows: number;
@@ -79,10 +79,13 @@ export interface StationDTO {
   limitDetail: string;
   delDetail: string;
   availableCount: number;
+  access: StationAccess;
   hasFastCharger: boolean;
   markerType: MarkerType;
   chargers: ChargerSimpleDTO[];
 }
+
+export type StationAccess = 'public' | 'restricted' | 'unknown';
 
 export interface ChargerSimpleDTO {
   chgerId: string;

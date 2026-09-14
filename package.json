@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "contentlayer dev & next dev",
-    "build": "contentlayer build & next build",
+    "dev": "next dev",
+    "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "tsc -p tests/tsconfig.json && node --test .test-build/tests/*.test.js"
   },
   "engines": {
     "node": "22.x"

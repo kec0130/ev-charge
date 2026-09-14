@@ -11,11 +11,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       <url>
         <loc>${process.env.NEXT_PUBLIC_BASE_URL}</loc>
-        <lastmod>${new Date().toISOString()}</lastmod>
       </url>
       <url>
         <loc>${process.env.NEXT_PUBLIC_BASE_URL}/blog</loc>
-        <lastmod>${new Date().toISOString()}</lastmod>
       </url>
     ${allPosts
       .map(

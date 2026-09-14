@@ -9,6 +9,7 @@ const StationTable = ({ station }: { station: StationDTO }) => {
     location,
     note,
     limitDetail,
+    access,
     parkingFree,
     kindDetail,
     useTime,
@@ -46,7 +47,14 @@ const StationTable = ({ station }: { station: StationDTO }) => {
           )}
           <Tr>
             <Td>이용제한</Td>
-            <Td>{limitDetail || '없음'}</Td>
+            <Td>
+              {access === 'public'
+                ? '공공데이터상 제한 없음'
+                : access === 'restricted'
+                ? '이용자 제한 있음'
+                : '이용 가능 대상 확인 필요'}
+              {limitDetail && ` · ${limitDetail}`}
+            </Td>
           </Tr>
           <Tr>
             <Td>주차요금</Td>

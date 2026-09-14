@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { ChangeEventHandler, MouseEventHandler, useEffect, useState } from 'react';
-import { Box, Heading, List, Text } from '@chakra-ui/react';
+import { Alert, AlertIcon, Box, Heading, List, Text } from '@chakra-ui/react';
 
 import { UsedCar } from '@/types/supabase';
 import { SortOption } from '@/types/usedCars';
@@ -10,7 +10,7 @@ import Options from './Options';
 import Status from '../Common/Status';
 import ResponsiveAds from '../Common/AdSense/ResponsiveAds';
 
-const UsedCars = ({ usedCars }: { usedCars: UsedCar[] }) => {
+const UsedCars = ({ usedCars, month }: { usedCars: UsedCar[]; month: string }) => {
   const [inputValue, setInputValue] = useState('');
   const [sortOption, setSortOption] = useState<SortOption>('name');
   const [searchResult, setSearchResult] = useState<UsedCar[]>(usedCars);
@@ -28,7 +28,7 @@ const UsedCars = ({ usedCars }: { usedCars: UsedCar[] }) => {
   };
 
   const sortCars = (arr: UsedCar[], option: SortOption) =>
-    arr.sort((a, b) => {
+    [...arr].sort((a, b) => {
       if (option === 'name') return a.name.localeCompare(b.name, 'ko');
       if (option === 'minPrice') return a.min_price - b.min_price;
       if (option === 'maxPrice') return b.max_price - a.max_price;
@@ -38,7 +38,7 @@ const UsedCars = ({ usedCars }: { usedCars: UsedCar[] }) => {
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { value } = e.target;
     setInputValue(value);
-    setSearchResult(searchCars(usedCars, value));
+    setSearchResult(sortCars(searchCars(usedCars, value), sortOption));
   };
 
   const handleClearButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
@@ -55,12 +55,19 @@ const UsedCars = ({ usedCars }: { usedCars: UsedCar[] }) => {
   return (
     <>
       <Heading as='h2' size={['lg', 'xl']}>
-        중고 전기차 시세
+        중고 전기차 가격 기록
       </Heading>
       <Text color='gray.500' my={[2, 4]}>
-        월별 중고 전기차 시세를 확인해보세요. 이 데이터는 온라인으로 검색된 중고매물의 가격 분포를
-        조사한 것으로 대략적인 시세 파악에 참고해주시기 바랍니다.
+        {month.replace('-', '년 ')}월에 온라인 중고매물에서 조사한 차종별 가격 범위입니다.
+        연식·주행거리·트림·사고 이력을 통제한 통계나 실거래가는 아닙니다.
       </Text>
+      <Alert status='info' alignItems='flex-start' borderRadius='md' mb={4}>
+        <AlertIcon />
+        <Text fontSize='sm'>
+          과거 자료입니다. 가격 자료는 2024년 5월까지 제공하며, 현재 시세는 중고차 전문 사이트의
+          최신 매물에서 확인해주세요.
+        </Text>
+      </Alert>
       <ResponsiveAds />
 
       <Box my={[6, 8]}>

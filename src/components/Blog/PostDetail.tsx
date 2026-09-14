@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Box, Button, Divider, Heading, Text } from '@chakra-ui/react';
 import { Post } from 'contentlayer/generated';
+import type { PostSummary } from '@/types/blog';
 
 import Mdx from './Mdx';
 import PostList from './PostList';
@@ -9,7 +10,7 @@ import BlogInfeedAds from '../Common/AdSense/BlogInfeedAds';
 
 interface Props {
   post: Post;
-  relatedPosts: Post[];
+  relatedPosts: PostSummary[];
 }
 
 const PostDetail = ({ post, relatedPosts }: Props) => {
@@ -21,6 +22,9 @@ const PostDetail = ({ post, relatedPosts }: Props) => {
         </Heading>
         <Text fontSize='sm' color='gray.500' mt={3}>
           {post.created_at.split('T')[0]}
+        </Text>
+        <Text fontSize='sm' color='gray.600' mt={2}>
+          작성 시점의 정보입니다. 가격·지원 제도·출시 일정·서비스 이용 조건은 현재와 다를 수 있습니다.
         </Text>
         <Divider my={6} />
         <BlogInarticleAds />

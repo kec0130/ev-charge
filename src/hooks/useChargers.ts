@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import { useAtomValue } from 'jotai';
 import useSWR from 'swr';
 import axios from 'axios';
@@ -6,6 +6,7 @@ import axios from 'axios';
 import { ChargerInfoRes } from '@/types/charger';
 import { currentDistrictAtom, currentLocationAtom, filterOptionAtom } from '@/states/map';
 import { Coord } from '@/types/map';
+import { filterStations } from '@/utils/stations';
 
 const fetcher = (url: string, districtCode: string, currentLocation: Coord) =>
   axios
@@ -19,7 +20,6 @@ const fetcher = (url: string, districtCode: string, currentLocation: Coord) =>
     .then((res) => res.data);
 
 const useChargers = () => {
-  const [filteredData, setFilteredData] = useState<ChargerInfoRes>();
   const currentLocation = useAtomValue(currentLocationAtom);
   const districtCode = useAtomValue(currentDistrictAtom);
   const filterOption = useAtomValue(filterOptionAtom);
@@ -32,28 +32,13 @@ const useChargers = () => {
       dedupingInterval: 10000,
       errorRetryInterval: 3000,
       errorRetryCount: 3,
-      onSuccess: (data) => setFilteredData(data),
     }
   );
 
-  useEffect(() => {
-    const filterData = () => {
-      if (!data) return;
-
-      const { onlyAvailable, onlyFastCharger } = filterOption;
-      const filteredStations = data.stations
-        .filter((station) => (onlyAvailable ? station.availableCount > 0 : true))
-        .filter((station) => (onlyFastCharger ? station.hasFastCharger : true));
-
-      setFilteredData({
-        ...data,
-        stations: filteredStations,
-        stationCount: filteredStations.length,
-      });
-    };
-
-    filterData();
-  }, [data, filterOption]);
+  const filteredData = useMemo(
+    () => data ? filterStations(data, filterOption) : undefined,
+    [data, filterOption]
+  );
 
   return {
     data: filteredData,

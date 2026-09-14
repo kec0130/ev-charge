@@ -35,6 +35,7 @@ export default function Marker({ map, coord, type, id, isSelected, isCurrentLoca
   };
 
   useEffect(() => {
+    if (!map) return;
     const markerIcon: naver.maps.ImageIcon = isCurrentLocation
       ? {
           url: MARKER_IMAGES[MARKER_IMAGES.length - 1],
@@ -54,13 +55,14 @@ export default function Marker({ map, coord, type, id, isSelected, isCurrentLoca
 
     const marker = new naver.maps.Marker(markerOptions);
 
-    naver.maps.Event.addListener(marker, 'click', handleMarkerClick);
+    const listener = naver.maps.Event.addListener(marker, 'click', handleMarkerClick);
 
     return () => {
+      naver.maps.Event.removeListener(listener);
       marker.setMap(null);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [map, isSelected]);
+  }, [map, isSelected, coord[0], coord[1], type, id, isCurrentLocation]);
 
   return <></>;
 }

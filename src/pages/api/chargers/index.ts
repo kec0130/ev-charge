@@ -1,114 +1,36 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import axios from 'axios';
 
-import { ChargerInfoRes, Error, StationDTO } from '@/types/charger';
+import { ChargerInfoRes, Error } from '@/types/charger';
 import { getChargersAPI } from '@/services/charger';
-import {
-  convertToBooleanOrNull,
-  convertToCoord,
-  convertUseTime,
-  getMarkerType,
-  haversineDistance,
-  isAvailable,
-  isFastCharge,
-  removeNullString,
-} from '@/utils/charger';
+import { buildStations, isValidCoord } from '@/utils/stations';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ChargerInfoRes | Error>
 ) {
-  const { districtCode, lat: currentLat, lng: currentLng } = req.query;
+  if (req.method !== 'GET') {
+    res.setHeader('Allow', 'GET');
+    res.status(405).json({ message: 'Method Not Allowed' });
+    return;
+  }
 
-  const isInvalidQuery =
-    typeof districtCode !== 'string' ||
-    typeof currentLat !== 'string' ||
-    typeof currentLng !== 'string';
-
-  if (isInvalidQuery) {
-    res.status(400).json({ message: 'Bad Request' });
+  const { districtCode, lat, lng } = req.query;
+  if (typeof districtCode !== 'string' || !/^\d{5}$/.test(districtCode) ||
+    typeof lat !== 'string' || typeof lng !== 'string' || !lat.trim() || !lng.trim() ||
+    !isValidCoord(Number(lat), Number(lng))) {
+    res.status(400).json({ message: '올바른 지역 코드와 좌표가 필요합니다.' });
     return;
   }
 
   try {
-    const chargerData = await getChargersAPI(districtCode);
-
-    const {
-      totalCount,
-      items: { item: data },
-    } = chargerData;
-
-    const stations = data
-      .reduce<StationDTO[]>((acc, cur) => {
-        const existingStation = acc.find((station) => station.statId === cur.statId);
-
-        if (!existingStation) {
-          acc.push({
-            statId: cur.statId,
-            statNm: cur.statNm,
-            addr: cur.addr,
-            lat: cur.lat,
-            lng: cur.lng,
-            distance: haversineDistance(
-              convertToCoord(currentLat, currentLng),
-              convertToCoord(cur.lat, cur.lng)
-            ),
-            location: removeNullString(cur.location),
-            useTime: convertUseTime(cur.useTime),
-            bnm: removeNullString(cur.bnm),
-            busiCall: removeNullString(cur.busiCall),
-            kindDetail: removeNullString(cur.kindDetail),
-            parkingFree: convertToBooleanOrNull(cur.parkingFree),
-            note: removeNullString(cur.note),
-            limitDetail: removeNullString(cur.limitDetail),
-            delDetail: removeNullString(cur.delDetail),
-            availableCount: isAvailable(cur.stat) ? 1 : 0,
-            hasFastCharger: isFastCharge(cur.chgerType),
-            markerType: 0,
-            chargers: [
-              {
-                chgerType: cur.chgerType,
-                chgerId: cur.chgerId,
-                stat: cur.stat,
-                statUpdDt: cur.statUpdDt,
-                lastTedt: cur.lastTedt,
-                nowTsdt: cur.nowTsdt,
-                output: cur.output,
-              },
-            ],
-          });
-        } else {
-          existingStation.availableCount += isAvailable(cur.stat) ? 1 : 0;
-          existingStation.hasFastCharger =
-            existingStation.hasFastCharger || isFastCharge(cur.chgerType);
-          existingStation.chargers.push({
-            chgerId: cur.chgerId,
-            chgerType: cur.chgerType,
-            stat: cur.stat,
-            statUpdDt: cur.statUpdDt,
-            lastTedt: cur.lastTedt,
-            nowTsdt: cur.nowTsdt,
-            output: cur.output,
-          });
-        }
-
-        return acc;
-      }, [])
-      .map((station) => {
-        const { availableCount, hasFastCharger } = station;
-        return {
-          ...station,
-          markerType: getMarkerType(availableCount, hasFastCharger),
-        };
-      })
-      .sort((a, b) => a.distance - b.distance);
-
-    res.status(200).json({
-      chargerCount: totalCount,
-      stationCount: stations.length,
-      stations,
+    const chargers = await getChargersAPI(districtCode);
+    res.status(200).json(buildStations(chargers, [Number(lat), Number(lng)]));
+  } catch (error: unknown) {
+    // Axios errors include the service key in their config: do not log the full error.
+    const timedOut = axios.isAxiosError(error) && error.code === 'ECONNABORTED';
+    res.status(timedOut ? 504 : 502).json({
+      message: '충전소 정보를 불러오지 못했습니다. 잠시 후 다시 시도해주세요.',
     });
-  } catch (e: any) {
-    console.error(e.response.statusText);
-    res.status(e.response.status).json({ message: e.response.statusText });
   }
 }

@@ -6,7 +6,7 @@ import Footer from './Footer';
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const theme = useTheme();
   const router = useRouter();
-  const mapPage = router.asPath === '/';
+  const mapPage = router.pathname === '/';
 
   return (
     <>

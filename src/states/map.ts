@@ -17,10 +17,12 @@ export const isLocationOffAtom = atom(false);
 export const currentLocationDistrictAtom = atom('');
 
 export const showNearbyStationsAtom = atom(
-  (get) => get(currentDistrictAtom) === get(currentLocationDistrictAtom)
+  (get) => !get(isLocationOffAtom) &&
+    get(currentDistrictAtom) === get(currentLocationDistrictAtom)
 );
 
 export const filterOptionAtom = atomWithReset<FilterOption>({
+  onlyPublic: true,
   onlyAvailable: false,
   onlyFastCharger: false,
 });

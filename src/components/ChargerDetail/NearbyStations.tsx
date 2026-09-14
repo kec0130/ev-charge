@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { Fragment } from 'react';
 import { useSetAtom } from 'jotai';
-import { Box, Divider, Flex, Heading, Text } from '@chakra-ui/react';
+import { Badge, Box, Divider, Flex, Heading, Text } from '@chakra-ui/react';
 
 import { Coord } from '@/types/map';
 import { StationDTO } from '@/types/charger';
@@ -25,6 +25,10 @@ const NearbyStations = ({ stations }: { stations: StationDTO[] }) => {
       <Heading as='h3' size='md' p={4} pt={1}>
         내 주변 충전소
       </Heading>
+      <Text px={4} pb={3} fontSize='sm' color='gray.600'>
+        출처: 한국환경공단. ‘제한 없는 곳’은 공공데이터상 이용제한이 없는 곳입니다.
+        실제 출입 조건과 운영시간은 방문 전 확인해주세요.
+      </Text>
       <Divider />
       <MapFixedHeightAds />
 
@@ -50,6 +54,11 @@ const NearbyStations = ({ stations }: { stations: StationDTO[] }) => {
                   <Text mb={1} fontSize='lg' fontWeight='semibold' noOfLines={1}>
                     {statNm}
                   </Text>
+                  {station.access !== 'public' && (
+                    <Badge colorScheme='orange' mb={1}>
+                      {station.access === 'restricted' ? '이용자 제한 있음' : '이용 대상 확인 필요'}
+                    </Badge>
+                  )}
                   <Flex alignItems='center'>
                     <Text fontWeight='medium'>{convertDistance(distance)}</Text>
                     <Divider orientation='vertical' h={4} mx={1.5} borderColor='gray.300' />

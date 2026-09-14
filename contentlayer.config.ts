@@ -3,6 +3,7 @@ import remarkGfm from 'remark-gfm';
 import remarkToc from 'remark-toc';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import { existsSync } from 'node:fs';
 
 export const Post = defineDocumentType(() => ({
   name: 'Post',
@@ -33,7 +34,12 @@ export const Post = defineDocumentType(() => ({
     },
     image_url: {
       type: 'string',
-      resolve: (doc) => `/images/blog/${doc._raw.flattenedPath}/01.jpg`,
+      resolve: (doc) => {
+        const directory = `/images/blog/${doc._raw.flattenedPath}`;
+        return ['jpg', 'png', 'webp']
+          .map((extension) => `${directory}/01.${extension}`)
+          .find((path) => existsSync(`public${path}`)) || '/og.png';
+      },
     },
   },
 }));

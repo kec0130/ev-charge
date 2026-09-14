@@ -9,7 +9,7 @@ const Filter = () => {
   const theme = useTheme();
 
   const handleFilterChange = (value: string[]) => {
-    const filterKeys: FilterType[] = ['onlyAvailable', 'onlyFastCharger'];
+    const filterKeys: FilterType[] = ['onlyPublic', 'onlyAvailable', 'onlyFastCharger'];
     const option: FilterOption = { ...filterOption };
 
     filterKeys.forEach((key) => {
@@ -21,12 +21,18 @@ const Filter = () => {
 
   return (
     <Card px={3} shadow={theme.shadows.onMap}>
-      <CheckboxGroup colorScheme='green' size='sm' onChange={handleFilterChange}>
-        <Flex alignItems='center' gap={3} h={8}>
+      <CheckboxGroup
+        colorScheme='green'
+        size='sm'
+        value={Object.keys(filterOption).filter((key) => filterOption[key as FilterType])}
+        onChange={handleFilterChange}
+      >
+        <Flex alignItems='center' flexWrap='wrap' gap={3} minH={8} py={1}>
           <Text as='span' fontSize='sm' fontWeight='semibold'>
             필터
           </Text>
-          <Checkbox value='onlyAvailable'>사용가능</Checkbox>
+          <Checkbox value='onlyPublic'>제한 없는 곳</Checkbox>
+          <Checkbox value='onlyAvailable'>충전가능</Checkbox>
           <Checkbox value='onlyFastCharger'>급속충전</Checkbox>
         </Flex>
       </CheckboxGroup>

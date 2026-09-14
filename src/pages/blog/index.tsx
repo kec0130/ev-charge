@@ -1,5 +1,6 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
-import { allPosts, Post } from 'contentlayer/generated';
+import { allPosts } from 'contentlayer/generated';
+import { PostSummary, toPostSummary } from '@/types/blog';
 
 import generateRssFeed from '@/utils/rss';
 import Metadata from '@/components/Common/Metadata';
@@ -24,14 +25,17 @@ const Blog = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
   );
 };
 
-export const getStaticProps: GetStaticProps<{ posts: Post[] }> = async () => {
-  const posts = allPosts.sort((a, b) => (b.created_at > a.created_at ? 1 : -1));
-  const orderedPosts = [posts[posts.length - 1], ...posts.slice(0, -1)];
-  generateRssFeed();
+export const getStaticProps: GetStaticProps<{ posts: PostSummary[] }> = async () => {
+  const posts = [...allPosts].sort((a, b) => b.created_at.localeCompare(a.created_at));
+  const introduction = posts.find((post) => post.slug === 'ev-charge-introduction');
+  const orderedPosts = introduction
+    ? [introduction, ...posts.filter((post) => post.slug !== introduction.slug)]
+    : posts;
+  await generateRssFeed();
 
   return {
     props: {
-      posts: orderedPosts,
+      posts: orderedPosts.map(toPostSummary),
     },
   };
 };

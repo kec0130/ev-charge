@@ -22,7 +22,14 @@ const useCurrentLocation = () => {
   const getCurrentLocation = () => {
     setIsLoadingLocation(true);
     setIsLocationOff(false);
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    if (!navigator.geolocation) {
+      onError();
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(onSuccess, onError, {
+      timeout: 10000,
+      maximumAge: 60000,
+    });
   };
 
   return { getCurrentLocation };

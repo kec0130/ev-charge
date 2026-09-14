@@ -23,8 +23,12 @@ const ChargerDetail = () => {
       return <Status type='loading' text='충전소 정보를 불러오는 중입니다.' />;
     }
 
-    if (error || data?.chargerCount === 0) {
+    if (error) {
       return <Status type='error' text={`충전소 정보를 불러올 수 없습니다.\n다시 시도해주세요.`} />;
+    }
+
+    if (data?.stationCount === 0) {
+      return <Status type='success' text={`조건에 맞는 충전소가 없습니다.\n필터를 변경하거나 다른 지역을 확인해주세요.`} />;
     }
 
     if (data && data.chargerCount > 0 && !currentStation) {

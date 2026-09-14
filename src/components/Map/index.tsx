@@ -1,6 +1,6 @@
 import { useAtomValue } from 'jotai';
 
-import { currentLocationAtom, currentStationAtom, isLoadingLocationAtom } from '@/states/map';
+import { currentLocationAtom, currentStationAtom, isLoadingLocationAtom, isLocationOffAtom } from '@/states/map';
 import { convertToCoord } from '@/utils/charger';
 import useMap from '@/hooks/useMap';
 import useChargers from '@/hooks/useChargers';
@@ -13,6 +13,7 @@ export default function Map() {
   const currentStation = useAtomValue(currentStationAtom);
   const currentLocation = useAtomValue(currentLocationAtom);
   const isLoadingLocation = useAtomValue(isLoadingLocationAtom);
+  const isLocationOff = useAtomValue(isLocationOffAtom);
 
   const { map } = useMap();
   const { data } = useChargers();
@@ -21,7 +22,7 @@ export default function Map() {
     <>
       <OptionControl />
       <NaverMap>
-        {!isLoadingLocation && <Marker map={map} coord={currentLocation} isCurrentLocation />}
+        {!isLoadingLocation && !isLocationOff && <Marker map={map} coord={currentLocation} isCurrentLocation />}
         {data &&
           data.stations.map(({ lat, lng, statId, markerType }) => (
             <Marker
