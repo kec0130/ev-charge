@@ -25,9 +25,9 @@ export default function NearbyStations({
         sort === 'available'
           ? getStationAvailability(b, onlyFastCharger).available -
               getStationAvailability(a, onlyFastCharger).available || a.distance - b.distance
-          : a.distance - b.distance,
+          : a.distance - b.distance
       ),
-    [stations, sort, onlyFastCharger],
+    [stations, sort, onlyFastCharger]
   );
   const selected = stations.find((station) => station.statId === current);
   const visible = sorted.slice(0, limit);
@@ -64,69 +64,69 @@ export default function NearbyStations({
           const state = getStationAvailability(station, onlyFastCharger);
           const active = station.statId === current;
           return (
-            <li
-              id={`station-${station.statId}`}
-              key={station.statId}
-              className={`station-card${active ? ' selected' : ''}`}
-            >
+            <li id={`station-${station.statId}`} key={station.statId}>
               <button
-                className='station-select'
+                className={`station-card${active ? ' selected' : ''}`}
+                onClick={() => choose(station)}
                 aria-label={`${station.statNm} 지도에서 보기`}
                 aria-pressed={active}
-                onClick={() => choose(station)}
               >
-                <h3>{station.statNm}</h3>
-                <Icon name='chevron' size={17} />
+                <div className='station-card-header'>
+                  <h3>{station.statNm}</h3>
+                  <button onClick={() => onDetails(station.statId)} aria-label='상세보기'>
+                    <Icon name='chevron' size={17} />
+                  </button>
+                </div>
+                <strong className={`station-availability ${state.state}`}>
+                  {state.available
+                    ? `${state.type} ${state.available}대 충전 가능`
+                    : '사용 중 또는 상태 미확인'}
+                </strong>
+                <p className='station-counts'>
+                  {state.fastTotal > 0 && `급속 ${state.fastAvailable}/${state.fastTotal}`}
+                  {state.fastTotal > 0 && state.slowTotal > 0 && ' · '}
+                  {state.slowTotal > 0 && `완속 ${state.slowAvailable}/${state.slowTotal}`}
+                  {state.fastTotal === 0 && state.slowTotal === 0 && '충전기 유형 확인 필요'}
+                </p>
+                <p className='station-meta'>
+                  <Icon name='pin' size={14} />
+                  <span>
+                    {convertDistance(station.distance)} · {station.addr}
+                  </span>
+                </p>
+                <p className='station-meta'>
+                  <Icon name='clock' size={14} />
+                  <span>
+                    {station.useTime || '운영시간 확인 필요'} ·{' '}
+                    {station.parkingFree === true
+                      ? '주차 무료'
+                      : station.parkingFree === false
+                        ? '주차 유료'
+                        : '주차요금 확인 필요'}
+                  </span>
+                </p>
+                <span className={`access-badge${station.access === 'public' ? '' : ' caution'}`}>
+                  {station.access === 'public'
+                    ? '공공데이터상 제한 없음'
+                    : station.access === 'restricted'
+                      ? '이용자 제한 있음'
+                      : '이용 대상 확인 필요'}
+                </span>
+                <div className='station-actions'>
+                  <a
+                    className={active ? 'primary-button' : 'outline-button'}
+                    href={getDirectionsUrl(station)}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                  >
+                    <Icon name='navigate' size={15} />
+                    길찾기
+                  </a>
+                  <button className='outline-button' onClick={() => onDetails(station.statId)}>
+                    상세보기
+                  </button>
+                </div>
               </button>
-              <span className={`access-badge${station.access === 'public' ? '' : ' caution'}`}>
-                {station.access === 'public'
-                  ? '공공데이터상 제한 없음'
-                  : station.access === 'restricted'
-                    ? '이용자 제한 있음'
-                    : '이용 대상 확인 필요'}
-              </span>
-              <strong className={`station-availability ${state.state}`}>
-                {state.available
-                  ? `${state.type} ${state.available}대 충전 가능`
-                  : '사용 중 또는 상태 미확인'}
-              </strong>
-              <p className='station-counts'>
-                {state.fastTotal > 0 && `급속 ${state.fastAvailable}/${state.fastTotal}`}
-                {state.fastTotal > 0 && state.slowTotal > 0 && ' · '}
-                {state.slowTotal > 0 && `완속 ${state.slowAvailable}/${state.slowTotal}`}
-                {state.fastTotal === 0 && state.slowTotal === 0 && '충전기 유형 확인 필요'}
-              </p>
-              <p className='station-meta'>
-                <Icon name='pin' size={14} />
-                <span>
-                  {convertDistance(station.distance)} · {station.addr}
-                </span>
-              </p>
-              <p className='station-meta'>
-                <Icon name='clock' size={14} />
-                <span>
-                  {station.useTime || '운영시간 확인 필요'} ·{' '}
-                  {station.parkingFree === true
-                    ? '주차 무료'
-                    : station.parkingFree === false
-                      ? '주차 유료'
-                      : '주차요금 확인 필요'}
-                </span>
-              </p>
-              <div className='station-actions'>
-                <a
-                  className={active ? 'primary-button' : 'outline-button'}
-                  href={getDirectionsUrl(station)}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                >
-                  <Icon name='navigate' size={15} />
-                  길찾기
-                </a>
-                <button className='outline-button' onClick={() => onDetails(station.statId)}>
-                  상세보기
-                </button>
-              </div>
             </li>
           );
         })}

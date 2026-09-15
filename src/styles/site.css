@@ -918,7 +918,7 @@ svg {
   display: flex;
   align-items: center;
   gap: 5px;
-  font-size: 11px;
+  font-size: 12px;
   color: #425e4d;
   white-space: nowrap;
 }
@@ -996,6 +996,8 @@ svg {
   margin: 0;
 }
 .station-card {
+  width: 100%;
+  text-align: left;
   border: 1px solid var(--line);
   border-radius: 10px;
   padding: 15px;
@@ -1006,7 +1008,7 @@ svg {
   background: var(--mint);
   border-color: var(--green);
 }
-.station-select {
+.station-card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1015,12 +1017,23 @@ svg {
   text-align: left;
   margin-bottom: 10px;
 }
-.station-select h3 {
+.station-card-header h3 {
   font-size: 16px;
   font-weight: 750;
   line-height: 1.5;
 }
-.station-select svg {
+.station-card-header button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.station-card-header button:hover {
+  background: var(--mint);
+}
+.station-card-header svg {
   color: var(--muted);
 }
 .access-badge {
@@ -1030,7 +1043,7 @@ svg {
   padding: 3px 8px;
   background: #e0f1e7;
   color: #286847;
-  margin-bottom: 7px;
+  margin: 8px 0 4px;
 }
 .access-badge.caution {
   background: #fff0d7;
@@ -1227,7 +1240,7 @@ svg {
     left: 12px;
   }
   .legend-item {
-    font-size: 10px;
+    font-size: 11px;
   }
 }
 @media (max-width: 767px) {
@@ -1665,14 +1678,14 @@ svg {
   }
   .map-legend {
     bottom: auto;
-    top: 10px;
-    left: 10px;
+    top: 6px;
+    left: 6px;
     gap: 9px;
     padding: 6px 9px;
     border-radius: 6px;
   }
   .legend-item {
-    font-size: 9px;
+    font-size: 10px;
     gap: 4px;
   }
   .legend-dot {
@@ -1693,7 +1706,7 @@ svg {
     overscroll-behavior: contain;
   }
   .station-panel-content {
-    min-height: 0;
+    /* min-height: 0; */
     overflow-y: auto;
     overscroll-behavior: contain;
   }
