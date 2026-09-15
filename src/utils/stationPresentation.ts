@@ -36,17 +36,17 @@ export function escapeMarkup(value: string) {
   return value.replace(
     /[&<>"']/g,
     (character) =>
-      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]!,
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]!
   );
 }
 export function stationMarkerContent(
   station: StationDTO,
   selected: boolean,
   onlyFast = false,
-  showLabel = true,
+  showLabel = true
 ) {
   const { state, label } = getStationAvailability(station, onlyFast);
   const color = state === 'fast' ? '#147A4B' : state === 'slow' ? '#A5DBB8' : '#939DA3';
-  const bolt = state === 'slow' ? '#145B37' : '#FFFFFF';
+  const bolt = state === 'fast' ? '#F4B400' : state === 'slow' ? '#145B37' : '#FFFFFF';
   return `<button type="button" class="charging-pin${selected ? ' selected' : ''}" aria-label="${escapeMarkup(station.statNm + ', ' + label)}" aria-pressed="${selected}"><svg viewBox="0 0 38 48" aria-hidden="true"><path d="M19 46S2 28 2 19a17 17 0 1 1 34 0c0 9-17 27-17 27Z" fill="${color}" stroke="white" stroke-width="2.5"/><path d="m22 7-12 15h8l-2 11 12-16h-8Z" fill="${bolt}"/></svg>${showLabel || selected ? `<span>${label}</span>` : ''}</button>`;
 }

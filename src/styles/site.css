@@ -1133,7 +1133,7 @@ svg {
 }
 .charging-pin svg {
   position: relative;
-  z-index: 1;
+  z-index: 10;
   width: 32px;
   height: 42px;
   overflow: visible;
@@ -1142,26 +1142,26 @@ svg {
   position: relative;
   z-index: 0;
   border-radius: 0 20px 20px 0;
-  margin-left: -6px;
+  margin-left: -10px;
   background: white;
-  padding: 4px 9px;
-  font-size: 12px;
+  padding: 4px 8px 4px 10px;
+  font-size: 11px;
   font-weight: 750;
   white-space: nowrap;
 }
 .charging-pin.selected {
-  transform: scale(1.15);
-  z-index: 2;
+  transform: scale(1.2);
+  z-index: 20;
 }
 .charging-pin.selected:before {
   content: '';
   position: absolute;
-  width: 54px;
-  height: 54px;
+  width: 28px;
+  height: 12px;
   border-radius: 50%;
   background: #147a4b24;
-  left: -8px;
-  top: -7px;
+  left: -4px;
+  bottom: -10px;
   z-index: -1;
   border: 5px solid #147a4b16;
 }
