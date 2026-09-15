@@ -34,8 +34,11 @@ const BlogImage = ({
   />
 );
 const components: MDXComponents = { Image: BlogImage, a: CustomLink, AdSense: BlogInarticleAds };
+// Contentlayer includes globals in its memo dependencies. Keep the object stable
+// so TOC updates do not remount the article and request its ads again.
+const mdxGlobals = {};
 export default function Mdx({ code }: { code: string }) {
-  const Component = useMDXComponent(code);
+  const Component = useMDXComponent(code, mdxGlobals);
   return (
     <article className='mdx-prose'>
       <Component components={components} />

@@ -534,6 +534,25 @@ svg {
   line-height: 1.85;
   color: #395747;
 }
+.article-ad {
+  margin: 28px 0;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  min-width: 0;
+}
+.article-ad-label {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+}
+.article-ad .adsbygoogle {
+  min-height: 160px;
+}
 .article-sidebar {
   position: sticky;
   top: 100px;

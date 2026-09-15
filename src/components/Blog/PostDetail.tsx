@@ -5,6 +5,7 @@ import type { PostSummary } from '@/types/blog';
 import { formatPostDate, getPostCategory } from '@/utils/blog';
 import Icon from '../Common/Icon';
 import { MapGuideCard } from '../Common/GuideSidebar';
+import BlogInarticleAds from '../Common/AdSense/BlogInarticleAds';
 import Mdx from './Mdx';
 
 export default function PostDetail({
@@ -72,16 +73,18 @@ export default function PostDetail({
           <h2>이 글에서 알아볼 내용</h2>
           <p>{post.description}</p>
         </section>
+        <BlogInarticleAds key={`${post.slug}-top`} placement='top' />
         {headings.length > 0 && (
           <details className='mobile-toc'>
             <summary>목차 · {headings.length}개 항목</summary>
             {toc}
           </details>
         )}
-        <Mdx code={post.body.code} />
+        <Mdx key={post.slug} code={post.body.code} />
         <div className='article-mobile-guide'>
           <MapGuideCard />
         </div>
+        <BlogInarticleAds key={`${post.slug}-bottom`} placement='bottom' />
         <Link href='/blog' className='article-back'>
           <Icon name='back' size={17} />
           블로그 목록으로
