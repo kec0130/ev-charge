@@ -65,17 +65,24 @@ const ChargerTable = ({ chargers, availableCount }: Props) => {
           <Tbody>
             {chargers.map(({ chgerId, chgerType, output, stat }) => (
               <Tr key={chgerId}>
-                <Td w={50}>{chgerId}</Td>
-                <Td w={100}>
+                <Td p={2}>{chgerId}</Td>
+                <Td p={2}>
                   <Flex alignItems='center' gap={1.5}>
                     <Circle size='7px' bg={getStatusColor(stat)} />
                     {STATUS[stat] || '상태 확인 필요'}
                   </Flex>
                 </Td>
-                <Td w={50}>
-                  {isFastCharge(chgerType) ? '급속' : chgerType === '02' ? '완속' : '유형 확인 필요'} {output && `${output}kW`}
+                <Td p={2}>
+                  {isFastCharge(chgerType)
+                    ? '급속'
+                    : chgerType === '02'
+                      ? '완속'
+                      : '유형 확인 필요'}
+                  {output && ` ${output}kW`}
                 </Td>
-                <Td sx={{ whiteSpace: 'normal' }}>{CHARGER_TYPE[chgerType] || '타입 확인 필요'}</Td>
+                <Td p={2} flexWrap='nowrap'>
+                  {CHARGER_TYPE[chgerType] || '타입 확인 필요'}
+                </Td>
               </Tr>
             ))}
           </Tbody>

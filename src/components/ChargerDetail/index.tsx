@@ -126,9 +126,13 @@ export default function ChargerDetail() {
           <div className='station-detail'>
             <button className='detail-back' onClick={() => setDetailId('')}>
               <Icon name='back' size={16} />
-              충전소 목록으로
+              충전소 목록
             </button>
             <StationInfo station={detail} />
+            <button className='detail-back' onClick={() => setDetailId('')}>
+              <Icon name='back' size={16} />
+              충전소 목록
+            </button>
           </div>
         ) : data ? (
           <NearbyStations
