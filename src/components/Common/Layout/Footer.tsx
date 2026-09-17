@@ -7,7 +7,7 @@ export default function Footer() {
         <Link href='/' aria-label='전기차G 홈'>
           <Logo />
         </Link>
-        <p>충전부터 구매까지, 전기차 생활을 더 편하게.</p>
+        <p>전기차 생활을 더 편하게.</p>
         <small>© {new Date().getFullYear()} EV Charge.</small>
       </div>
       <div className='footer-links'>
