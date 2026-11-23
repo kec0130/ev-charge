@@ -1,16 +1,13 @@
-export const generateDateStrings = () => {
-  const startYear = 2023;
-  const startMonth = 9;
-  const currentYear = 2024; // new Date().getFullYear();
-  const currentMonth = 5; // new Date().getMonth() + 1;
+export const getUsedCarMonthRange = (month: string) => {
+  if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(month)) return null;
 
-  let dates = [];
-  for (let year = startYear; year <= currentYear; year++) {
-    let start = year === startYear ? startMonth : 1;
-    let end = year === currentYear ? currentMonth : 12;
-    for (let month = start; month <= end; month++) {
-      dates.push(`${year}-${month.toString().padStart(2, '0')}`);
-    }
-  }
-  return dates;
+  const [year, monthNumber] = month.split('-').map(Number);
+  if (year === 0) return null;
+
+  const nextYear = monthNumber === 12 ? year + 1 : year;
+  const nextMonth = monthNumber === 12 ? 1 : monthNumber + 1;
+  return {
+    start: `${month}-01`,
+    end: `${String(nextYear).padStart(4, '0')}-${String(nextMonth).padStart(2, '0')}-01`,
+  };
 };

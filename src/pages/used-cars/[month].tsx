@@ -1,12 +1,11 @@
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
+import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
-import { UsedCar } from '@/types/supabase';
-import { getUsedCarsByMonth } from '@/services/usedCars';
-import { generateDateStrings } from '@/utils/usedCars';
+import { getUsedCarMonths, getUsedCarsByMonth } from '@/services/usedCars';
+import { getUsedCarMonthRange } from '@/utils/usedCars';
 import UsedCars from '@/components/UsedCars';
 import Metadata from '@/components/Common/Metadata';
 
-const Page = ({ usedCars, month }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Page = ({ usedCars, month, months }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
     <>
       <Metadata
@@ -15,32 +14,27 @@ const Page = ({ usedCars, month }: InferGetStaticPropsType<typeof getStaticProps
         keywords='중고 전기차 시세, 전기차 중고 시세, 중고 전기차 가격, 전기차 중고 가격'
         url={`/used-cars/${month}`}
       />
-      <UsedCars usedCars={usedCars} month={month} />
+      <UsedCars usedCars={usedCars} month={month} months={months} />
     </>
   );
 };
 
 export default Page;
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const months = generateDateStrings();
-  const paths = months.map((month) => ({ params: { month } }));
+export const getServerSideProps = (async ({ params }) => {
+  const month = params?.month;
+  if (typeof month !== 'string') return { notFound: true };
+  const range = getUsedCarMonthRange(month);
+  if (!range) return { notFound: true };
 
-  return {
-    paths,
-    fallback: false,
-  };
-};
-
-export const getStaticProps: GetStaticProps<{ usedCars: UsedCar[]; month: string }> = async ({ params }) => {
-  const month = params?.month as string;
-  const { usedCars } = await getUsedCarsByMonth(month);
+  const [usedCars, months] = await Promise.all([getUsedCarsByMonth(range), getUsedCarMonths()]);
   if (!usedCars.length) return { notFound: true };
 
   return {
     props: {
       usedCars,
       month,
+      months,
     },
   };
-};
+}) satisfies GetServerSideProps;

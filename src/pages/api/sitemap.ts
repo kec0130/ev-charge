@@ -1,8 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { allPosts } from 'contentlayer/generated';
-import { generateDateStrings } from '@/utils/usedCars';
+import { getUsedCarMonths } from '@/services/usedCars';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  let months: string[];
+  try {
+    months = await getUsedCarMonths();
+  } catch {
+    return res.status(503).send('Sitemap temporarily unavailable');
+  }
+
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/xml');
   res.setHeader('Cache-control', 'stale-while-revalidate, s-maxage=3600');
@@ -24,12 +31,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       </url>`
       )
       .join('')}
-    ${generateDateStrings()
+    ${months
       .map(
         (date) =>
           `<url>
         <loc>${process.env.NEXT_PUBLIC_BASE_URL}/used-cars/${date}</loc>
-        <lastmod>${new Date(date).toISOString()}</lastmod>
       </url>`
       )
       .join('')}

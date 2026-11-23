@@ -10,7 +10,7 @@
 - 로컬 실행: `npm ci` 후 `.env.example`을 참고해 `.env.local`을 설정하고 `npm run dev`
 - 충전소 API 인증키는 서버 전용 `EV_CHARGER_SERVICE_KEY`를 사용합니다. 기존 배포의 `NEXT_PUBLIC_API_SERVICE_KEY`도 호환됩니다.
 - 지도는 기본적으로 공공데이터상 이용제한이 없는 충전소만 표시합니다. 정보가 모호한 곳은 필터를 해제해 확인할 수 있습니다.
-- 중고차 가격은 2024년 5월까지의 과거 기록입니다.
+- 중고차 가격은 Supabase `used_car`의 조사 기록입니다. `created_at`의 연월로 분류하므로 해당 조사 월을 지정해 행을 추가하면 재배포 없이 목록에 반영됩니다.
 
 ## 서비스 소개
 

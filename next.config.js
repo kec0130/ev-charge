@@ -13,15 +13,6 @@ const nextConfig = {
       },
     ],
   },
-  async redirects() {
-    return [
-      {
-        source: '/used-cars',
-        destination: '/used-cars/2024-05',
-        permanent: true,
-      },
-    ];
-  },
   async rewrites() {
     return [
       {

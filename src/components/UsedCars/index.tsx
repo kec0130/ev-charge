@@ -8,7 +8,15 @@ import Options from './Options';
 import Icon from '../Common/Icon';
 import { AdPanel } from '../Common/GuideSidebar';
 
-export default function UsedCars({ usedCars, month }: { usedCars: UsedCar[]; month: string }) {
+export default function UsedCars({
+  usedCars,
+  month,
+  months,
+}: {
+  usedCars: UsedCar[];
+  month: string;
+  months: string[];
+}) {
   const [query, setQuery] = useState('');
   const [sort, setSort] = useState<SortOption>('name');
   const results = useMemo(() => {
@@ -38,6 +46,8 @@ export default function UsedCars({ usedCars, month }: { usedCars: UsedCar[]; mon
           handleClearButtonClick={() => setQuery('')}
         />
         <Options
+          month={month}
+          months={months}
           sortOption={sort}
           handleSortOptionChange={(e) => setSort(e.target.value as SortOption)}
         />
@@ -63,8 +73,7 @@ export default function UsedCars({ usedCars, month }: { usedCars: UsedCar[]; mon
       )}
       <p className='car-footnote'>
         조사 당시 온라인 매물의 최저·최고 가격입니다. 연식·주행거리·트림·사고 이력을 통제한 통계나
-        실거래가가 아닙니다. 가격 자료는 2024년 5월까지 제공하며, 최신 매물은 중고차 전문 사이트에서
-        확인해주세요.
+        실거래가가 아닙니다. 최신 매물은 중고차 전문 사이트에서 확인해주세요.
       </p>
       <section className='purchase-guide'>
         <div className='guide-icon'>
